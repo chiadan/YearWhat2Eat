@@ -186,7 +186,7 @@ HTTP_PROXY=http://127.0.0.1:7897 HTTPS_PROXY=http://127.0.0.1:7897 python doc/do
 
 ```
 YeahWhat2Eat/
-├── README.md / AGENTS.md / .gitignore / .gitattributes
+├── README.md / AGENTS.md / LICENSE / .gitignore / .gitattributes
 ├── backend/                          # FastAPI 后端（分层，§11）
 │   ├── app/
 │   │   ├── main.py                   # 应用入口（lifespan 迁移 + 路由注册）
@@ -235,5 +235,5 @@ M1 数据管道 ✅ → M2 基础问答 ✅ → M3 推荐 Agent ✅ → M4 千�
 
 ## ⚖️ 数据源与许可
 
-- 菜谱数据：[Anduin2017/HowToCook](https://github.com/Anduin2017/HowToCook) v1.6.0（遵循其 LICENSE）
-- 本项目代码许可：待定（建议 MIT）
+- **本项目代码**：[MIT License](LICENSE)（Copyright (c) 2026 jiahao）——允许商用/修改/分发，保留版权声明即可
+- **菜谱数据**：[Anduin2017/HowToCook](https://github.com/Anduin2017/HowToCook) v1.6.0，采用 **The Unlicense**（公有领域 Public Domain，见 `data/HowToCook-1.6.0/LICENSE`）——数据可自由使用，与本项目 MIT 许可无冲突
