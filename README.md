@@ -2,7 +2,8 @@
 
 > **千人千面**的菜谱推荐 RAG Agent —— 用自然语言问"今天吃什么"，系统结合菜谱知识库与你的个人画像，给出因人而异的推荐与做法解答。
 
-> 前端展示名默认为 **"是啊吃什么"**，可通过 `frontend/.env` 的 `VITE_APP_NAME` 修改（开发直接生效；生产经 Dockerfile ARG 注入，见设计文档 §10/§12.3）。
+> 前端展示名默认为 **"是啊吃什么"**，可通过 `frontend/.env` 的 `VITE_APP_NAME` 修改（开发直接生效；生产经 Dockerfile ARG
+> 注入，见设计文档 §10/§12.3）。
 
 基于《程序员做饭指南》（HowToCook-1.6.0，357 道菜谱 + 18 篇厨房技巧）构建。
 
@@ -17,6 +18,7 @@
 - [📁 项目结构](#项目结构)
 - [📚 文档](#文档)
 - [🚦 当前进度](#当前进度)
+- [💰 花费](#花费)
 - [⚖️ 数据源与许可](#数据源与许可)
 
 ## ✨ 功能特性
@@ -24,19 +26,22 @@
 - 🍽️ **智能推荐**：按人数、餐次、口味、忌口、时间、工具、荤素搭配等约束推荐"今日菜单"并说明理由；场景快捷入口（深夜食堂/减脂餐/招待朋友）一键推荐
 - 💬 **聊天式问答**：Claude/ChatGPT 风格界面——历史会话列表（可折叠）、SSE 流式输出、工具调用过程展示、中断/停止、回答正文与菜单中的菜名可点击跳转菜谱详情
 - 🎛️ **模型与强度可选**：模型（deepseek-v4-flash / deepseek-chat）+ 强度（快速/均衡/深度）随对话切换
-- 🔌 **多模型接入（BYOK）**：默认 DeepSeek，可自配 OpenAI 兼容 / Anthropic 任意接入（Base URL + 模型列表 + Key），模型下拉即选即用；DeepSeek 也支持换用自己的 Key——密钥全部加密存后端、永不回显
+- 🔌 **多模型接入（BYOK）**：默认 DeepSeek，可自配 OpenAI 兼容 / Anthropic 任意接入（Base URL + 模型列表 +
+  Key），模型下拉即选即用；DeepSeek 也支持换用自己的 Key——密钥全部加密存后端、永不回显
 - 📊 **AI 用量与预算**：个人中心查看今日/近 7 天/累计用量（按日趋势 + 按模型/节点拆分），可设每日 token 上限防超支
 - 💬 **会话管理**：提问即命名 → AI 仅首轮精炼标题一次（后续手动改名锁定）、归档/取消归档、一键分叉、导出 Markdown 对话记录
 - 🗑️ **软删除单轮问答**：任意一组问答 hover 即删——仅从聊天界面隐藏（AI 上下文同步排除），历史记录与导出仍保留
 - ⏳ **AI 过程可见**：提问后显示 Claude 式阶段状态条（理解需求→检索知识库→精排候选→生成回答）+ 工具调用过程展示
 - 📁 **会话分组**：未分组会话归"默认分组"，可自定义分组（侧边栏一键新建/移动，组可折叠）；个人中心历史会话同步按组展示
-- 🍽️ **推荐与问答分流**：开放式推荐走千人千面（忌口/难度/工具等硬过滤）；问"XX 怎么做"这类具体菜谱则全量检索、不被画像拦截——回答与菜单中的菜名都可点击直达菜谱详情，正文引用直接带菜名（"农家一碗香[1]"）
-- 🖼️ **菜谱详情与成品图**：内容与数据源 md 完全一致（必备/可选原料、计算定量、分版本步骤、附加内容），成品图封面 + 缩略图切换；**收藏状态进入即知**（已收藏显示高亮，点击可收藏/取消）
+- 🍽️ **推荐与问答分流**：开放式推荐走千人千面（忌口/难度/工具等硬过滤）；问"XX
+  怎么做"这类具体菜谱则全量检索、不被画像拦截——回答与菜单中的菜名都可点击直达菜谱详情，正文引用直接带菜名（"农家一碗香[1]"）
+- 🖼️ **菜谱详情与成品图**：内容与数据源 md 完全一致（必备/可选原料、计算定量、分版本步骤、附加内容），成品图封面 + 缩略图切换；
+  **收藏状态进入即知**（已收藏显示高亮，点击可收藏/取消）
 - 🔥 **热门菜谱流**：首页未推荐时展示"大家喜欢"（按行为热度聚合）
 - 🎯 **千人千面**：显式画像问卷 + 隐式行为学习（浏览/收藏/评分/做过）+ 反馈闭环
 - 🛒 **购物清单**：一键导出 Markdown 购物清单（含人数换算定量）
 - 🌗 **5 套主流主题**：Solarized 浅/深、GitHub 浅/深、Nord——所有组件（含 Element Plus）风格统一，随时切换
-- 👤 **账号体系**：注册/登录/游客模式（游客数据可一键转正合并）；**强制登录**——未登录访问任意页面跳转登录页（游客也算登录态，千人千面前置）
+- 👤 **账号体系**：注册/登录/游客模式（游客数据可一键转正合并）； **强制登录**——未登录访问任意页面跳转登录页（游客也算登录态，千人千面前置）
 
 ## 🧭 系统架构
 
@@ -46,29 +51,45 @@
 
 **架构描述（文字版，可直接交给多模态模型生成架构图）**：
 
-> 本项目为**前后端分离的千人千面菜谱推荐 RAG Agent**，浏览器访问，按"前端 -> API -> 服务/Agent -> 存储 -> 外部 LLM"五层组织：
+> 本项目为 **前后端分离的千人千面菜谱推荐 RAG Agent**，浏览器访问，按"前端 -> API -> 服务/Agent -> 存储 -> 外部 LLM"五层组织：
 >
-> **前端层（Vue3 + TypeScript + Element Plus）**：页面含推荐首页（规则推荐毫秒级）、聊天页（SSE 流式 + 过程状态条）、菜谱列表、菜谱详情（收藏/评分/相关菜）、个人中心（画像问卷/AI 设置/用量统计/收藏/行为历史/历史会话）、登录注册；关键组件 StreamChat（SSE 客户端）、MdRender（markdown + 菜名链接 + 引用替换）、DishCard/SourceCard/MenuCard/FlavorTags/RatingStars/ProfileForm/ThemeToggle（5 套主题）；Pinia 状态（user/theme/aiConfig）；http 拦截器处理 JWT 刷新与 401 单飞。与后端通信：REST（/api/v1/*）+ SSE（/chat/stream 流式）。
+> **前端层（Vue3 + TypeScript + Element Plus）**：页面含推荐首页（规则推荐毫秒级）、聊天页（SSE 流式 +
+> 过程状态条）、菜谱列表、菜谱详情（收藏/评分/相关菜）、个人中心（画像问卷/AI 设置/用量统计/收藏/行为历史/历史会话）、登录注册；关键组件
+> StreamChat（SSE 客户端）、MdRender（markdown + 菜名链接 +
+> 引用替换）、DishCard/SourceCard/MenuCard/FlavorTags/RatingStars/ProfileForm/ThemeToggle（5 套主题）；Pinia
+> 状态（user/theme/aiConfig）；http 拦截器处理 JWT 刷新与 401 单飞。与后端通信：REST（/api/v1/*）+ SSE（/chat/stream 流式）。
 >
-> **API 层（FastAPI + Pydantic v2 + SQLModel）**：auth（注册/登录/JWT/游客转正）、users（画像/反馈/收藏/历史/AI 用量/BYOK/多 Provider）、dishes（列表/详情/相关/热门/菜名映射）、chat（SSE 流式，LangGraph 驱动）、admin（ETL 触发）、health。
+> **API 层（FastAPI + Pydantic v2 + SQLModel）**：auth（注册/登录/JWT/游客转正）、users（画像/反馈/收藏/历史/AI 用量/BYOK/多
+> Provider）、dishes（列表/详情/相关/热门/菜名映射）、chat（SSE 流式，LangGraph 驱动）、admin（ETL 触发）、health。
 >
-> **Agent 层（LangGraph）**：分层 State（Input/Output/Context/Query/Retrieval/Planning）；状态图：intent_router（意图识别 + personalize 分流）-> query_rewriter（扩写 + 指代解析）-> query_analyzer（约束解析）-> retrieve（三路并行 Send）-> rerank（RRF 融合 + bge-reranker 精排）-> rank_fuse（融合打分）-> planner（荤素规划，仅推荐）或 generate（SSE 流式生成）；节点=单文件（app/rag/nodes/）；chitchat 直通 generate。
+> **Agent 层（LangGraph）**：分层 State（Input/Output/Context/Query/Retrieval/Planning）；状态图：intent_router（意图识别 +
+> personalize 分流）-> query_rewriter（扩写 + 指代解析）-> query_analyzer（约束解析）-> retrieve（三路并行 Send）-> rerank（RRF
+> 融合 + bge-reranker 精排）-> rank_fuse（融合打分）-> planner（荤素规划，仅推荐）或 generate（SSE
+> 流式生成）；节点=单文件（app/rag/nodes/）；chitchat 直通 generate。
 >
-> **检索器（三路互补）**：向量召回（Qdrant/Milvus，bge-small-zh embedding）、图召回（Neo4j/Kùzu 预置 Cypher 模板 T1~T4）、规则硬过滤（忌口/时长/难度/工具，千人千面）。
+> **检索器（三路互补）**：向量召回（Qdrant/Milvus，bge-small-zh embedding）、图召回（Neo4j/Kùzu 预置 Cypher 模板 T1~
+> T4）、规则硬过滤（忌口/时长/难度/工具，千人千面）。
 >
-> **存储层（统一接口 + 工厂切换，全部可替换）**：关系型 SQLite（默认，文件）<-> PostgreSQL（企业级容器）；向量 Qdrant（默认）<-> Milvus（企业级容器）；图 Neo4j（默认容器）<-> Kùzu（嵌入式文件）；抽象于 core/clients/base.py，工厂 core/clients/factory.py。
+> **存储层（统一接口 + 工厂切换，全部可替换）**：关系型 SQLite（默认，文件）<-> PostgreSQL（企业级容器）；向量 Qdrant（默认）<->
+> Milvus（企业级容器）；图 Neo4j（默认容器）<-> Kùzu（嵌入式文件）；抽象于 core/clients/base.py，工厂 core/clients/factory.py。
 >
-> **外部依赖**：DeepSeek API（LLM，deepseek-v4-flash，可 BYOK/多 Provider）；本地 sentence-transformers（embedding/reranker，CUDA 自动）；数据源 data/HowToCook-1.6.0（只读，357 菜 + 18 tips）。
+> **外部依赖**：DeepSeek API（LLM，deepseek-v4-flash，可 BYOK/多 Provider）；本地
+> sentence-transformers（embedding/reranker，CUDA 自动）；数据源 data/HowToCook-1.6.0（只读，357 菜 + 18 tips）。
 >
-> **部署形态**：本地开发（uvicorn:8000 + vite:5173 + 中间件容器）；Lite 模式（SQLite+Kùzu+Qdrant 文件全嵌入后端，frontend+backend 两容器，零外部依赖）；企业级模式（PostgreSQL+Milvus+Neo4j 每库一容器 + 前后端，三库参数 .env 自定义）。
+> **部署形态**：本地开发（uvicorn:8000 + vite:5173 + 中间件容器）；Lite 模式（SQLite+Kùzu+Qdrant 文件全嵌入后端，frontend+backend
+> 两容器，零外部依赖）；企业级模式（PostgreSQL+Milvus+Neo4j 每库一容器 + 前后端，三库参数 .env 自定义）。
 >
-> **核心数据流**：用户提问 -> intent_router 意图识别（chitchat 直答；其余走检索）-> 查询扩写 -> 约束解析 -> 三路并行检索 -> RRF 融合 + reranker 精排 -> 融合打分 -> planner 输出今日菜单（推荐）或直接 generate -> SSE 流式回答（正文 + 引用菜谱 + 菜单）-> 行为反馈（view/like/rating/made）落 SQLite -> 画像聚合更新 + Neo4j 用户偏好镜像。
+> **核心数据流**：用户提问 -> intent_router 意图识别（chitchat 直答；其余走检索）-> 查询扩写 -> 约束解析 -> 三路并行检索 ->
+> RRF 融合 + reranker 精排 -> 融合打分 -> planner 输出今日菜单（推荐）或直接 generate -> SSE 流式回答（正文 + 引用菜谱 +
+> 菜单）-> 行为反馈（view/like/rating/made）落 SQLite -> 画像聚合更新 + Neo4j 用户偏好镜像。
 
-**LangGraph 状态图**（一次提问的节点流转，由 LangGraph 从 `backend/app/rag/graph.py` 实测导出，与代码一一对应；分层 State 定义见 [`design.md §6.1`](doc/design/design.md)）：
+**LangGraph 状态图**（一次提问的节点流转，由 LangGraph 从 `backend/app/rag/graph.py` 实测导出，与代码一一对应；分层 State
+定义见 [`design.md §6.1`](doc/design/design.md)）：
 
 <img src="doc/image/readme_core_process .png" alt="核心处理流程（LangGraph 状态图）" width="860" />
 
-**场景分流**：`intent_router` 判定 `personalize=true`（开放式推荐）时千人千面硬过滤生效；点名具体菜/做法/技巧（`dish_qa`/`tips_qa`）走全量检索不拦截，回答只引用点名菜；推荐结果经 `planner` 输出今日菜单，问答/闲聊直达 `generate`。
+**场景分流**：`intent_router` 判定 `personalize=true`（开放式推荐）时千人千面硬过滤生效；点名具体菜/做法/技巧（`dish_qa`/
+`tips_qa`）走全量检索不拦截，回答只引用点名菜；推荐结果经 `planner` 输出今日菜单，问答/闲聊直达 `generate`。
 
 ## 🖼️ 界面预览
 
@@ -104,17 +125,18 @@
 
 ## 🧱 技术栈
 
-| 端 | 技术 |
-|---|---|
-| 后端 | FastAPI + Pydantic v2 + SQLModel(SQLite, WAL) + alembic |
-| Agent | LangChain + LangGraph（分层 State，Mermaid 流程见设计文档） |
-| 模型 | DeepSeek `deepseek-v4-flash`（默认，OpenAI 兼容，可 BYOK）+ 用户自定义接入（OpenAI 兼容 / Anthropic）；Embedding / Reranker 本地 `sentence-transformers`（CUDA 自动/CPU 兜底） |
-| 存储 | **可替换**：关系型 SQLite（默认，可换 PostgreSQL）+ 向量 Qdrant（默认，可换 Milvus）+ 图 Neo4j（默认，可换 **Kùzu** 嵌入式——原生 Python API、Cypher 兼容）——统一接口 + 工厂切换（§12.0） |
-| 前端 | Vue 3 + Vite + TypeScript + Vue Router + Pinia + Element Plus + ECharts（按需） |
-| 主题 | 5 套（Solarized 浅/深、GitHub 浅/深、Nord），CSS 变量 + Element Plus 变量统一 |
-| 部署 | docker compose 一键启动（`doc/docker/docker-compose.yml`，Compose v2.20+）+ 跨平台 Python 部署脚本 |
+| 端    | 技术                                                                                                                                                                                     |
+|-------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 后端  | FastAPI + Pydantic v2 + SQLModel(SQLite, WAL) + alembic                                                                                                                                  |
+| Agent | LangChain + LangGraph（分层 State，Mermaid 流程见设计文档）                                                                                                                              |
+| 模型  | DeepSeek `deepseek-v4-flash`（默认，OpenAI 兼容，可 BYOK）+ 用户自定义接入（OpenAI 兼容 / Anthropic）；Embedding / Reranker 本地 `sentence-transformers`（CUDA 自动/CPU 兜底）           |
+| 存储  | **可替换**：关系型 SQLite（默认，可换 PostgreSQL）+ 向量 Qdrant（默认，可换 Milvus）+ 图 Neo4j（默认，可换 **Kùzu** 嵌入式——原生 Python API、Cypher 兼容）——统一接口 + 工厂切换（§12.0） |
+| 前端  | Vue 3 + Vite + TypeScript + Vue Router + Pinia + Element Plus + ECharts（按需）                                                                                                          |
+| 主题  | 5 套（Solarized 浅/深、GitHub 浅/深、Nord），CSS 变量 + Element Plus 变量统一                                                                                                            |
+| 部署  | docker compose 一键启动（`doc/docker/docker-compose.yml`，Compose v2.20+）+ 跨平台 Python 部署脚本                                                                                       |
 
-> 完整设计见 [`doc/design/design.md`](doc/design/design.md)（数据建模 / 检索融合算法 / 千人千面 / 流式协议 / 部署 / 评测，16 章，决策点已全部确认 ✅）。
+> 完整设计见 [`doc/design/design.md`](doc/design/design.md)（数据建模 / 检索融合算法 / 千人千面 / 流式协议 / 部署 / 评测，16
+> 章，决策点已全部确认 ✅）。
 
 ## 🚀 快速开始
 
@@ -253,20 +275,29 @@ YeahWhat2Eat/
 
 ## 📚 文档
 
-| 文档 | 读者 | 内容 |
-|---|---|---|
-| [`doc/design/design.md`](doc/design/design.md) | 人 / AI | 完整系统设计（16 章，v0.17） |
-| [`AGENTS.md`](AGENTS.md) | AI 代理 | 开发入口指引：技术栈、命令、硬性约束 |
+| 文档                                           | 读者    | 内容                                 |
+|------------------------------------------------|---------|--------------------------------------|
+| [`doc/design/design.md`](doc/design/design.md) | 人 / AI | 完整系统设计（16 章，v0.17）         |
+| [`AGENTS.md`](AGENTS.md)                       | AI 代理 | 开发入口指引：技术栈、命令、硬性约束 |
 
 ## 🚦 当前进度
 
 **M1~M6 全部完成 ✅（0.1 定版）**
 
-M1 数据管道 ✅ → M2 基础问答 ✅ → M3 推荐 Agent ✅ → M4 千人千面 ✅ → M5 前端 ✅ → **M6 部署 ✅（Lite 与企业级两种模式测试通过）**
+M1 数据管道 ✅ → M2 基础问答 ✅ → M3 推荐 Agent ✅ → M4 千人千面 ✅ → M5 前端 ✅ → **M6 部署 ✅（Lite
+与企业级两种模式测试通过）**
 
-> 最近新增：多模型接入（OpenAI 兼容/Anthropic + BYOK）、AI 用量统计与每日预算、会话分组（默认/自定义，拖拽移动 + 组内新建）、具体菜谱问答与推荐检索分流（意图 agent 判定 + 点名菜聚焦 + 指代解析）、回答正文菜名全量链接化（引用带菜名）、AI 过程状态指示、软删除单轮问答、会话滚动摘要记忆、**存储可替换（SQLite/PostgreSQL + Qdrant/Milvus + Neo4j/Kùzu）**、**Lite/企业级双模式部署 + 镜像离线分发 + 数据隔离备份**、**菜谱收藏状态初始化与收藏/取消即时反馈**、**详情页加载优化（相关菜不阻塞主内容）**。详见 [`doc/design/design.md`](doc/design/design.md)（v0.17）。
+> 最近新增：多模型接入（OpenAI 兼容/Anthropic + BYOK）、AI 用量统计与每日预算、会话分组（默认/自定义，拖拽移动 +
+> 组内新建）、具体菜谱问答与推荐检索分流（意图 agent 判定 + 点名菜聚焦 + 指代解析）、回答正文菜名全量链接化（引用带菜名）、AI
+> 过程状态指示、软删除单轮问答、会话滚动摘要记忆、 **存储可替换（SQLite/PostgreSQL + Qdrant/Milvus + Neo4j/Kùzu）**、
+> **Lite/企业级双模式部署 + 镜像离线分发 + 数据隔离备份**、 **菜谱收藏状态初始化与收藏/取消即时反馈**、
+> **详情页加载优化（相关菜不阻塞主内容）**。详见 [`doc/design/design.md`](doc/design/design.md)（v0.17）。
 
+## 花费
+
+<img src="doc/image/readme_cost_image.png" alt="首页" width="780" />
 ## ⚖️ 数据源与许可
 
 - **本项目代码**：[MIT License](LICENSE)（Copyright (c) 2026 jiahao）——允许商用/修改/分发，保留版权声明即可
-- **菜谱数据**：[Anduin2017/HowToCook](https://github.com/Anduin2017/HowToCook) v1.6.0，采用 **The Unlicense**（公有领域 Public Domain，见 `data/HowToCook-1.6.0/LICENSE`）——数据可自由使用，与本项目 MIT 许可无冲突
+- **菜谱数据**：[Anduin2017/HowToCook](https://github.com/Anduin2017/HowToCook) v1.6.0，采用 **The Unlicense**（公有领域
+  Public Domain，见 `data/HowToCook-1.6.0/LICENSE`）——数据可自由使用，与本项目 MIT 许可无冲突
