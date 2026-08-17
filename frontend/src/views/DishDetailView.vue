@@ -39,16 +39,29 @@ const stepsOfVersion = computed(() =>
 const allImages = computed(() => dish.value?.images ?? [])
 
 async function load() {
-  loading.value = true
-  // 每次加载动态读取路由参数（相关菜跳转时 dishId 会变化，§10）
   const currentId = String(route.params.id)
+  // 切换菜谱时立即清空旧数据：进入/切换即全新加载，避免旧内容残留被误读为"数据已有"（§10 详情页刷新）
+  dish.value = null
+  related.value = []
+  loading.value = true
   try {
-    dish.value = await apiDishDetail(currentId)
-    if (dish.value.image) activeImage.value = dish.value.image
-    related.value = await apiDishRelated(currentId)
+    const d = await apiDishDetail(currentId)
+    if (String(route.params.id) !== currentId) return // 竞态：已被更新的导航覆盖，丢弃过期响应
+    dish.value = d
+    if (d.image) activeImage.value = d.image
+    favorite.value = !!d.is_favorite // §10 收藏状态初始化
   } finally {
-    loading.value = false
+    if (String(route.params.id) === currentId) loading.value = false
   }
+  // 相关菜不阻塞主内容：详情先渲染，相关菜后台静默加载（图不可用降级同分类，失败静默）
+  try {
+    const rel = await apiDishRelated(currentId)
+    if (String(route.params.id) === currentId) related.value = rel
+  } catch {
+    /* 静默 */
+  }
+  // §8.2 view 行为上报（不阻塞、失败静默；热门榜/画像聚合用）
+  void apiFeedback({ dish_id: currentId, action: 'view' }).catch(() => undefined)
 }
 
 // 相关菜跳转：同一路由组件复用，params 变化需重新加载 + 复位滚动（§10 详情页刷新）
@@ -76,7 +89,7 @@ async function toggleFavorite() {
       await apiAddFavorite(currentId)
       favorite.value = true
     }
-    void apiFeedback({ dish_id: currentId, action: favorite.value ? 'like' : 'dislike' }).catch(() => undefined)
+    // 收藏/取消的信号由后端 add/remove_favorite 内置（§8.2 like/dislike），前端不重复上报
   } catch {
     /* 拦截器已提示 */
   }

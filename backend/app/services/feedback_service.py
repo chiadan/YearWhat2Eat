@@ -110,7 +110,21 @@ def remove_favorite(user_id: int, dish_id: str) -> dict:
         if exists is not None:
             session.delete(exists)
             session.commit()
+    record_feedback(user_id, dish_id, "dislike")  # 取消收藏即 dislike 信号（§8.2 对称）
     return {"dish_id": dish_id, "favorited": False}
+
+
+def is_favorite(user_id: int, dish_id: str) -> bool:
+    """当前用户是否已收藏（§10 详情页收藏状态初始化）。"""
+    with Session(get_engine()) as session:
+        return (
+            session.exec(
+                select(UserFavorite).where(
+                    UserFavorite.user_id == user_id, UserFavorite.dish_id == dish_id
+                )
+            ).first()
+            is not None
+        )
 
 
 def list_favorites(user_id: int, page: int = 1, page_size: int = 20) -> dict:

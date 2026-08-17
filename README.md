@@ -6,6 +6,18 @@
 
 基于《程序员做饭指南》（HowToCook-1.6.0，357 道菜谱 + 18 篇厨房技巧）构建。
 
+## 📑 目录
+
+- [✨ 功能特性](#功能特性)
+- [🖼️ 界面预览](#界面预览)
+- [🧱 技术栈](#技术栈)
+- [🚀 快速开始](#快速开始)
+- [🐳 一键部署](#一键部署)
+- [📁 项目结构](#项目结构)
+- [📚 文档](#文档)
+- [🚦 当前进度](#当前进度)
+- [⚖️ 数据源与许可](#数据源与许可)
+
 ## ✨ 功能特性
 
 - 🍽️ **智能推荐**：按人数、餐次、口味、忌口、时间、工具、荤素搭配等约束推荐"今日菜单"并说明理由；场景快捷入口（深夜食堂/减脂餐/招待朋友）一键推荐
@@ -18,12 +30,44 @@
 - ⏳ **AI 过程可见**：提问后显示 Claude 式阶段状态条（理解需求→检索知识库→精排候选→生成回答）+ 工具调用过程展示
 - 📁 **会话分组**：未分组会话归"默认分组"，可自定义分组（侧边栏一键新建/移动，组可折叠）；个人中心历史会话同步按组展示
 - 🍽️ **推荐与问答分流**：开放式推荐走千人千面（忌口/难度/工具等硬过滤）；问"XX 怎么做"这类具体菜谱则全量检索、不被画像拦截——回答与菜单中的菜名都可点击直达菜谱详情，正文引用直接带菜名（"农家一碗香[1]"）
-- 🖼️ **菜谱详情与成品图**：内容与数据源 md 完全一致（必备/可选原料、计算定量、分版本步骤、附加内容），成品图封面 + 缩略图切换
+- 🖼️ **菜谱详情与成品图**：内容与数据源 md 完全一致（必备/可选原料、计算定量、分版本步骤、附加内容），成品图封面 + 缩略图切换；**收藏状态进入即知**（已收藏显示高亮，点击可收藏/取消）
 - 🔥 **热门菜谱流**：首页未推荐时展示"大家喜欢"（按行为热度聚合）
 - 🎯 **千人千面**：显式画像问卷 + 隐式行为学习（浏览/收藏/评分/做过）+ 反馈闭环
 - 🛒 **购物清单**：一键导出 Markdown 购物清单（含人数换算定量）
 - 🌗 **5 套主流主题**：Solarized 浅/深、GitHub 浅/深、Nord——所有组件（含 Element Plus）风格统一，随时切换
 - 👤 **账号体系**：注册/登录/游客模式（游客数据可一键转正合并）；**强制登录**——未登录访问任意页面跳转登录页（游客也算登录态，千人千面前置）
+
+## 🖼️ 界面预览
+
+**首页（千人千面规则推荐，毫秒级无 LLM）**
+
+<img src="doc/image/readme_index_image.png" alt="首页" width="780" />
+
+**聊天问答（SSE 流式 + 过程状态 + 菜名链接）**
+
+<img src="doc/image/readme_chat_image.png" alt="聊天问答" width="780" />
+
+**菜谱浏览（分类/筛选/搜索/分页卡片）**
+
+<img src="doc/image/readme_dishes_image.png" alt="菜谱浏览" width="780" />
+
+**菜谱详情（原料/分版本步骤/收藏/评分/相关菜）**
+
+<img src="doc/image/readme_dishes_detail_dish_image.png" alt="菜谱详情" width="780" />
+
+**个人中心（画像问卷 / AI 设置 / API 用量 / 我的收藏 / 行为历史 / 历史会话）**
+
+<img src="doc/image/readme_profile_user_profile_questionnaire_image.png" alt="画像问卷" width="780" />
+
+<img src="doc/image/readme_profile_ai_setting_image.png" alt="AI 设置" width="780" />
+
+<img src="doc/image/readme_profile_api_use_image.png" alt="API 用量" width="780" />
+
+<img src="doc/image/readme_profile_my_favorites_image.png" alt="我的收藏" width="780" />
+
+<img src="doc/image/readme_profile_action_history_image.png" alt="行为历史" width="780" />
+
+<img src="doc/image/reade_profile_history_talk_image.png" alt="历史会话" width="780" />
 
 ## 🧱 技术栈
 
@@ -35,7 +79,7 @@
 | 存储 | **可替换**：关系型 SQLite（默认，可换 PostgreSQL）+ 向量 Qdrant（默认，可换 Milvus）+ 图 Neo4j（默认，可换 **Kùzu** 嵌入式——原生 Python API、Cypher 兼容）——统一接口 + 工厂切换（§12.0） |
 | 前端 | Vue 3 + Vite + TypeScript + Vue Router + Pinia + Element Plus + ECharts（按需） |
 | 主题 | 5 套（Solarized 浅/深、GitHub 浅/深、Nord），CSS 变量 + Element Plus 变量统一 |
-| 部署 | docker compose 一键启动（`doc/docker/docker-compose.yml`，Compose v2.20+） |
+| 部署 | docker compose 一键启动（`doc/docker/docker-compose.yml`，Compose v2.20+）+ 跨平台 Python 部署脚本 |
 
 > 完整设计见 [`doc/design/design.md`](doc/design/design.md)（数据建模 / 检索融合算法 / 千人千面 / 流式协议 / 部署 / 评测，16 章，决策点已全部确认 ✅）。
 
@@ -85,7 +129,7 @@ cp .env.example .env
 npm run dev                 # http://localhost:5173（/api 自动代理到 8000）
 ```
 
-    ### 一键部署（§12 M6：两种模式，脚本化）
+## 🐳 一键部署
 
 **推荐方式（一条命令，跨平台脚本：Windows/Linux/macOS 均可，仅需 Python 3.8+ 与 docker CLI）**：
 
@@ -133,36 +177,61 @@ python doc/docker/backup.py enterprise    # 企业级：pg_dump + neo4j/milvus �
 ```
 
 **代理（可选，不写死端口）**：宿主机需代理时设置环境变量即透传（构建与运行均生效）：
+
 ```bash
 HTTP_PROXY=http://127.0.0.1:7897 HTTPS_PROXY=http://127.0.0.1:7897 python doc/docker/deploy.py lite
 ```
 
-## 📁 目录结构
+## 📁 项目结构
 
 ```
 YeahWhat2Eat/
-├── doc/             # 文档与部署编排
-│   ├── design/      #   设计文档（design.md + golden_qa.draft.json 评测草稿）
-│   └── docker/      #   部署编排（lite/ 嵌入模式 + 企业级根编排 + pg/milvus/neo4j/qdrant + deploy.py/build_release.py/backup.py + .env.example）
-├── data/HowToCook-1.6.0/   # 菜谱数据源（只读）
-├── backend/         # FastAPI 后端（分层：api/services/db/repositories/rag/pipeline）
-└── frontend/        # Vue3 前端（create-vue 官方脚手架默认结构）
+├── README.md / AGENTS.md / .gitignore / .gitattributes
+├── backend/                          # FastAPI 后端（分层，§11）
+│   ├── app/
+│   │   ├── main.py                   # 应用入口（lifespan 迁移 + 路由注册）
+│   │   ├── api/                      # API 层：v1/{auth, users, dishes, chat, admin, health} + deps
+│   │   ├── services/                 # 业务服务：dish / feedback / profile / auth / recommend ...
+│   │   ├── db/                       # SQLModel 模型 + alembic 迁移（0001~0011）
+│   │   ├── repositories/             # 数据访问层
+│   │   ├── rag/                      # LangGraph Agent：nodes / prompts / state / rule_engine
+│   │   ├── pipeline/                 # ETL 管道：runner / indexer / tagger
+│   │   ├── core/                     # 配置 / 日志 / 异常 / 缓存
+│   │   │   └── clients/              # 存储抽象：base / factory / qdrant / milvus / neo4j / kuzu / llm
+│   │   └── schemas/                  # API DTO
+│   ├── scripts/                      # 工具：init_data / diagnostics（数据与检索验收）
+│   ├── tests/                        # 单测 / 集成 / RAG 评测（golden 集）
+│   └── Dockerfile / requirements.txt / docker-entrypoint.sh / .env.example
+├── frontend/                         # Vue3 前端（Vite + TS + Element Plus）
+│   ├── src/
+│   │   ├── views/                    # 页面：Home / Chat / DishList / DishDetail / Profile / Login / Register
+│   │   ├── components/               # StreamChat / MdRender / DishCard / SourceCard / MenuCard ...
+│   │   ├── api/                      # API 封装（http 拦截器 + 各模块 API）
+│   │   ├── stores/                   # Pinia：user / theme / aiConfig
+│   │   ├── router/                   # 路由（强制登录守卫）
+│   │   └── styles/                   # tokens.css（5 套主题变量）
+│   └── Dockerfile / nginx.conf / package.json / .env.example
+├── doc/
+│   ├── design/                       # 设计文档（design.md，16 章）+ 评测草稿
+│   ├── docker/                       # 部署编排：lite/ 嵌入模式 + 企业级子 compose + deploy.py / build_release.py / backup.py
+│   └── image/                        # README 界面截图
+└── data/HowToCook-1.6.0/             # 菜谱数据源（只读，357 菜 + 18 tips，图片不入库）
 ```
 
 ## 📚 文档
 
 | 文档 | 读者 | 内容 |
 |---|---|---|
-| [`doc/design/design.md`](doc/design/design.md) | 人 / AI | 完整系统设计（16 章，v0.16） |
+| [`doc/design/design.md`](doc/design/design.md) | 人 / AI | 完整系统设计（16 章，v0.17） |
 | [`AGENTS.md`](AGENTS.md) | AI 代理 | 开发入口指引：技术栈、命令、硬性约束 |
 
 ## 🚦 当前进度
 
-**M1~M6 全部完成 ✅**
+**M1~M6 全部完成 ✅（0.1 定版）**
 
 M1 数据管道 ✅ → M2 基础问答 ✅ → M3 推荐 Agent ✅ → M4 千人千面 ✅ → M5 前端 ✅ → **M6 部署 ✅（Lite 与企业级两种模式测试通过）**
 
-> 最近新增：多模型接入（OpenAI 兼容/Anthropic + BYOK）、AI 用量统计与每日预算、会话分组（默认/自定义，拖拽移动 + 组内新建）、具体菜谱问答与推荐检索分流（意图 agent 判定 + 点名菜聚焦 + 指代解析）、回答正文菜名全量链接化（引用带菜名）、AI 过程状态指示、软删除单轮问答、会话滚动摘要记忆、**存储可替换（SQLite/PG + Qdrant/Milvus + Neo4j/Kùzu）**、**Lite/企业级双模式部署 + 镜像离线分发 + 数据隔离备份**。详见 [`doc/design/design.md`](doc/design/design.md)（v0.16）。
+> 最近新增：多模型接入（OpenAI 兼容/Anthropic + BYOK）、AI 用量统计与每日预算、会话分组（默认/自定义，拖拽移动 + 组内新建）、具体菜谱问答与推荐检索分流（意图 agent 判定 + 点名菜聚焦 + 指代解析）、回答正文菜名全量链接化（引用带菜名）、AI 过程状态指示、软删除单轮问答、会话滚动摘要记忆、**存储可替换（SQLite/PG + Qdrant/Milvus + Neo4j/Kùzu）**、**Lite/企业级双模式部署 + 镜像离线分发 + 数据隔离备份**、**菜谱收藏状态初始化与收藏/取消即时反馈**、**详情页加载优化（相关菜不阻塞主内容）**。详见 [`doc/design/design.md`](doc/design/design.md)（v0.17）。
 
 ## ⚖️ 数据源与许可
 

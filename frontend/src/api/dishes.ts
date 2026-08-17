@@ -46,6 +46,8 @@ export interface DishDetail extends DishSummary {
   steps: { version: string; order: number; text: string }[]
   notes?: string | null
   images?: string[]
+  /** 当前用户是否已收藏（§10 详情页收藏状态初始化，未登录为 false） */
+  is_favorite?: boolean
 }
 
 export async function apiDishList(params: DishListQuery) {

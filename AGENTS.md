@@ -45,6 +45,7 @@
 - **rerank→generate 数据契约**：`rerank` 节点输出**扁平结构**（`text`/`name`/`dish_id` 在顶层，无 `payload` 字段）；`generate._build_context_and_sources` 兼容扁平与历史 payload 两种结构（勿只读 `payload.text`，否则 context 恒空、回答恒"检索为空"）；**rerank 合并 text 选取：`dishes` 集合完整摘要优先于 `chunks` 步骤片段**（`source=="dishes"` 无条件覆盖），difficulty 仅非 None 时赋值——否则具体问答会引用步骤片段而非完整做法
 - **引用通用性（§9.1）**：sources 参考菜谱适用于所有检索类意图——问答（dish_qa/tips_qa）= 检索命中（dish_qa 聚焦点名菜）；推荐（recommend/plan_menu）= 今日菜单中的菜（source="plan"）；plan 为空 = 检索候选兜底；仅 chitchat 无引用（无检索）
 - **前端渲染要点（§10）**：正文菜名全量链接化（`/dishes/names` 模块级缓存）+ **`[n]` 引用替换为菜名链接**（`MdRender.sourceMap`，引用前已出现菜名则保留角标——勿用纯 endsWith 判断，markdown 加粗会失效导致菜名重复）；参考菜谱 `SourceCard` 竖排列表（编号+菜名+箭头）；助手消息纵向排列（正文->菜单->参考菜谱，`.msg` 必须 `flex-direction: column`）；过程状态指示条消费 `status` 帧；软删除单轮问答 hover 按钮
+- **菜谱浏览与收藏（§10/§8.2）**：详情接口 `/dishes/{id}` 返回 `is_favorite`（可选鉴权，未登录 false）供前端**初始化收藏状态**；收藏/取消信号由后端内置——`add_favorite` 写 `like`、`remove_favorite` 写 `dislike`（§8.2 对称），**前端禁止重复上报 feedback**；详情页加载成功后上报 `view`（fire-and-forget，热门榜/画像聚合用）；**详情页加载规则**：进入/切换菜谱即清空旧数据（不残留旧内容）、详情先行渲染、**相关菜后台加载不阻塞主内容**、竞态保护（过期响应丢弃）
 - **软删除单轮问答（§9）**：`chat_messages.hidden`（迁移 0010）——`PATCH /chat/messages/{id}` `{hidden}` 成对隐藏 user+assistant；聊天加载与 AI 上下文均排除 hidden，数据行保留（导出含全部）；done 帧带 `message_ids` 供前端删除入口
 
 ## 常用命令
@@ -87,8 +88,12 @@ python scripts/diagnostics/check_data.py            # 数据完整性：图片�
 python scripts/diagnostics/debug_retrieve.py "宫保鸡丁怎么做"   # 检索链路：向量命中 + rerank text 合并检查
 python scripts/diagnostics/build_graph.py           # 图构建冒烟 + 意图/场景判定用例
 
-# 一键部署（§12 M6，两种模式）
-# Lite：SQLite + Kùzu + Qdrant 文件全嵌入后端，零外部依赖
+# 一键部署（§12 M6，两种模式；推荐用跨平台 Python 脚本，Windows/Linux/macOS 通用）
+python doc/docker/deploy.py lite          # Lite 模式（SQLite+Kùzu+Qdrant 文件嵌入，零外部依赖）
+python doc/docker/deploy.py enterprise    # 企业级模式（PG+Milvus+Neo4j 每库一容器 + 前后端）
+python doc/docker/deploy.py status        # 查看运行状态
+python doc/docker/deploy.py down          # 停止两种模式
+# 手动方式（等价的底层命令）：
 cp doc/docker/.env.example doc/docker/.env        # 填 DEEPSEEK_API_KEY 等
 docker compose -f doc/docker/lite/docker-compose.yml up -d --build
 # 测试联调可叠加 dev override（复用本机 backend/data 数据）：

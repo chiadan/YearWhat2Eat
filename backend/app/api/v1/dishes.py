@@ -1,8 +1,10 @@
 """菜谱浏览接口（§9）：列表 / 详情 / 相关菜 / 热门。"""
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Depends, Query
 
+from app.api.deps import get_current_user_optional
 from app.core.exceptions import NotFoundError
-from app.services import dish_service
+from app.db.models import User
+from app.services import dish_service, feedback_service
 
 router = APIRouter()
 
@@ -41,10 +43,15 @@ def list_dish_names() -> dict:
 
 
 @router.get("/dishes/{dish_id}")
-def get_dish(dish_id: str) -> dict:
+def get_dish(
+    dish_id: str,
+    user: User | None = Depends(get_current_user_optional),
+) -> dict:
     detail = dish_service.get_detail(dish_id)
     if detail is None:
         raise NotFoundError(f"菜谱 {dish_id} 不存在")
+    # §10 详情页收藏状态初始化（可选鉴权：未登录返回 false）
+    detail["is_favorite"] = feedback_service.is_favorite(user.id, dish_id) if user else False
     return detail
 
 
