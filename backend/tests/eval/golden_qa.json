@@ -1,0 +1,3078 @@
+{
+  "version": "0.2-auto-draft",
+  "note": "AI 自动生成草稿（决策 11 ✅）：60 推荐 + 30 问答 + 10 技巧 + 20 人工示例；检索指标按 expect.ref_doc 校验，需人工审核后作为评测基准",
+  "item_count": 120,
+  "items": [
+    {
+      "id": "auto-rec-9245b0",
+      "type": "recommend",
+      "query": "2 人，夜宵，想吃咸鲜口，15 分钟内搞定，不吃内脏",
+      "user_profile": {
+        "avoid_list": [
+          "内脏"
+        ]
+      },
+      "expect": {
+        "people": 2,
+        "meal_type": "夜宵",
+        "flavors": [
+          "咸鲜"
+        ],
+        "avoids": [
+          "内脏"
+        ],
+        "max_time_min": 15
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，夜宵，想吃咸鲜口，15 分钟内搞定，不吃内脏",
+        "entities": {
+          "meal_type": [
+            "夜宵"
+          ],
+          "people": 2,
+          "flavors": [
+            "咸鲜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-205ab0",
+      "type": "recommend",
+      "query": "2 人，午餐，想吃点甜的，30 分钟内搞定，不吃内脏",
+      "user_profile": {
+        "avoid_list": [
+          "内脏"
+        ]
+      },
+      "expect": {
+        "people": 2,
+        "meal_type": "午餐",
+        "flavors": [
+          "甜"
+        ],
+        "avoids": [
+          "内脏"
+        ],
+        "max_time_min": 30
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，午餐，想吃点甜的，30 分钟内搞定，不吃内脏",
+        "entities": {
+          "meal_type": [
+            "午餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "甜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-ce34a7",
+      "type": "recommend",
+      "query": "2 人，晚餐，想吃咸鲜口，45 分钟内搞定，不吃海鲜",
+      "user_profile": {
+        "avoid_list": [
+          "海鲜"
+        ]
+      },
+      "expect": {
+        "people": 2,
+        "meal_type": "晚餐",
+        "flavors": [
+          "咸鲜"
+        ],
+        "avoids": [
+          "海鲜"
+        ],
+        "max_time_min": 45
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，晚餐，想吃咸鲜口，45 分钟内搞定，不吃海鲜",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "咸鲜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-a0ab3bffe95d",
+      "type": "dish_qa",
+      "query": "怎么做徽派红烧肉",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/meat_dish/徽派红烧肉/徽派红烧肉.md",
+        "keywords": [
+          "徽派红烧肉"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "徽派红烧肉 做法",
+        "entities": {
+          "dish_names": [
+            "徽派红烧肉"
+          ]
+        }
+      }
+    },
+    {
+      "id": "rec-002",
+      "type": "recommend",
+      "query": "一个人晚上随便吃点，不想太麻烦",
+      "user_profile": {
+        "skill_level": "新手"
+      },
+      "expect": {
+        "people": 1,
+        "meal_type": "晚餐",
+        "difficulty_max": 3,
+        "fast": true
+      },
+      "expect_rewrite": {
+        "rewritten_query": "一人晚餐，简单快手，半小时内",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 1,
+          "max_time_min": 30
+        }
+      }
+    },
+    {
+      "id": "rec-011",
+      "type": "recommend",
+      "query": "深夜一个人饿了，想快速煮个面",
+      "user_profile": null,
+      "expect": {
+        "people": 1,
+        "meal_type": "夜宵",
+        "category": [
+          "staple"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "深夜夜宵，快速煮面",
+        "entities": {
+          "meal_type": [
+            "夜宵"
+          ],
+          "max_time_min": 20,
+          "category": [
+            "staple"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-417bb98a1b80",
+      "type": "dish_qa",
+      "query": "柱候牛腩怎么做",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/meat_dish/柱候牛腩/柱候牛腩.md",
+        "keywords": [
+          "柱候牛腩"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "柱候牛腩 做法",
+        "entities": {
+          "dish_names": [
+            "柱候牛腩"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-tip-55cdd02c566d",
+      "type": "tips_qa",
+      "query": "微波炉一般怎么做",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "tips/learn/微波炉.md",
+        "keywords": [
+          "微波炉"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "微波炉 技巧",
+        "entities": {
+          "techniques": [
+            "微波炉"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-f3bc25",
+      "type": "recommend",
+      "query": "2 人，晚餐，想吃清淡的，45 分钟内搞定，不吃内脏",
+      "user_profile": {
+        "avoid_list": [
+          "内脏"
+        ]
+      },
+      "expect": {
+        "people": 2,
+        "meal_type": "晚餐",
+        "flavors": [
+          "清淡"
+        ],
+        "avoids": [
+          "内脏"
+        ],
+        "max_time_min": 45
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，晚餐，想吃清淡的，45 分钟内搞定，不吃内脏",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "清淡"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-tip-55cdd02c566d",
+      "type": "tips_qa",
+      "query": "微波炉要注意什么",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "tips/learn/微波炉.md",
+        "keywords": [
+          "微波炉"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "微波炉 技巧",
+        "entities": {
+          "techniques": [
+            "微波炉"
+          ]
+        }
+      }
+    },
+    {
+      "id": "rec-012",
+      "type": "recommend",
+      "query": "家里有鸡胸肉和青椒，两个人能做什么",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "use_ingredients": [
+          "鸡胸肉",
+          "青椒"
+        ],
+        "ingredient_match": true
+      },
+      "expect_rewrite": {
+        "rewritten_query": "用鸡胸肉和青椒做的菜",
+        "entities": {
+          "ingredients": [
+            "鸡胸肉",
+            "青椒"
+          ]
+        }
+      }
+    },
+    {
+      "id": "qa-004",
+      "type": "dish_qa",
+      "query": "蛋炒饭怎么才能粒粒分明",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/staple/蛋炒饭.md",
+        "keywords": [
+          "隔夜饭",
+          "粒粒分明"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "蛋炒饭 粒粒分明 做法",
+        "entities": {
+          "dish_names": [
+            "蛋炒饭"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-53759d",
+      "type": "recommend",
+      "query": "1 人，晚餐，想吃酸的",
+      "user_profile": null,
+      "expect": {
+        "people": 1,
+        "meal_type": "晚餐",
+        "flavors": [
+          "酸"
+        ],
+        "avoids": [],
+        "max_time_min": null
+      },
+      "expect_rewrite": {
+        "rewritten_query": "1 人，晚餐，想吃酸的",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 1,
+          "flavors": [
+            "酸"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-445bea",
+      "type": "recommend",
+      "query": "2 人，晚餐，想吃清淡的，60 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "晚餐",
+        "flavors": [
+          "清淡"
+        ],
+        "avoids": [],
+        "max_time_min": 60
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，晚餐，想吃清淡的，60 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "清淡"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-3b2c2c2d4540",
+      "type": "dish_qa",
+      "query": "蒸花卷的步骤是什么",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/breakfast/蒸花卷.md",
+        "keywords": [
+          "蒸花卷"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "蒸花卷 做法",
+        "entities": {
+          "dish_names": [
+            "蒸花卷"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-77c9e0",
+      "type": "recommend",
+      "query": "4 人，晚餐，想吃点甜的，30 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 4,
+        "meal_type": "晚餐",
+        "flavors": [
+          "甜"
+        ],
+        "avoids": [],
+        "max_time_min": 30
+      },
+      "expect_rewrite": {
+        "rewritten_query": "4 人，晚餐，想吃点甜的，30 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 4,
+          "flavors": [
+            "甜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-88ad24",
+      "type": "recommend",
+      "query": "2 人，晚餐，想吃清淡的，15 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "晚餐",
+        "flavors": [
+          "清淡"
+        ],
+        "avoids": [],
+        "max_time_min": 15
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，晚餐，想吃清淡的，15 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "清淡"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-df5b93",
+      "type": "recommend",
+      "query": "1 人，晚餐，想吃咸鲜口，15 分钟内搞定，不吃海鲜",
+      "user_profile": {
+        "avoid_list": [
+          "海鲜"
+        ]
+      },
+      "expect": {
+        "people": 1,
+        "meal_type": "晚餐",
+        "flavors": [
+          "咸鲜"
+        ],
+        "avoids": [
+          "海鲜"
+        ],
+        "max_time_min": 15
+      },
+      "expect_rewrite": {
+        "rewritten_query": "1 人，晚餐，想吃咸鲜口，15 分钟内搞定，不吃海鲜",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 1,
+          "flavors": [
+            "咸鲜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-607035e51e8e",
+      "type": "dish_qa",
+      "query": "虎皮肘子怎么做",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/meat_dish/虎皮肘子.md",
+        "keywords": [
+          "虎皮肘子"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "虎皮肘子 做法",
+        "entities": {
+          "dish_names": [
+            "虎皮肘子"
+          ]
+        }
+      }
+    },
+    {
+      "id": "tip-001",
+      "type": "tips_qa",
+      "query": "焯水一般要多久，怎么判断好了",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "tips/learn/学习焯水.md",
+        "keywords": [
+          "焯水",
+          "变色"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "焯水时间与判断标准",
+        "entities": {
+          "techniques": [
+            "焯水"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-tip-59a36f117702",
+      "type": "tips_qa",
+      "query": "学习焯水要注意什么",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "tips/learn/学习焯水.md",
+        "keywords": [
+          "学习焯水"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "学习焯水 技巧",
+        "entities": {
+          "techniques": [
+            "学习焯水"
+          ]
+        }
+      }
+    },
+    {
+      "id": "rec-006",
+      "type": "recommend",
+      "query": "不吃香菜，两个人中午吃什么",
+      "user_profile": {
+        "avoid_list": [
+          "香菜"
+        ]
+      },
+      "expect": {
+        "people": 2,
+        "meal_type": "午餐",
+        "avoids": [
+          "香菜"
+        ],
+        "no_coriander": true
+      },
+      "expect_rewrite": {
+        "rewritten_query": "两人午餐，不含香菜",
+        "entities": {
+          "meal_type": [
+            "午餐"
+          ],
+          "people": 2,
+          "avoids": [
+            "香菜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-97b808bb32ab",
+      "type": "dish_qa",
+      "query": "生汆丸子汤需要注意什么",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/soup/生汆丸子汤.md",
+        "keywords": [
+          "生汆丸子汤"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "生汆丸子汤 做法",
+        "entities": {
+          "dish_names": [
+            "生汆丸子汤"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-06e4dd",
+      "type": "recommend",
+      "query": "2 人，早餐，想吃清淡的，15 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "早餐",
+        "flavors": [
+          "清淡"
+        ],
+        "avoids": [],
+        "max_time_min": 15
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，早餐，想吃清淡的，15 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "清淡"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-c58339",
+      "type": "recommend",
+      "query": "3 人，早餐，想吃辣，45 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 3,
+        "meal_type": "早餐",
+        "flavors": [
+          "辣"
+        ],
+        "avoids": [],
+        "max_time_min": 45
+      },
+      "expect_rewrite": {
+        "rewritten_query": "3 人，早餐，想吃辣，45 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 3,
+          "flavors": [
+            "辣"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-50895f",
+      "type": "recommend",
+      "query": "2 人，夜宵，想吃清淡的，45 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "夜宵",
+        "flavors": [
+          "清淡"
+        ],
+        "avoids": [],
+        "max_time_min": 45
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，夜宵，想吃清淡的，45 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "夜宵"
+          ],
+          "people": 2,
+          "flavors": [
+            "清淡"
+          ]
+        }
+      }
+    },
+    {
+      "id": "rec-007",
+      "type": "recommend",
+      "query": "家里只有微波炉和电饭煲，两个人能做什么菜",
+      "user_profile": {
+        "tools": [
+          "微波炉",
+          "电饭煲"
+        ]
+      },
+      "expect": {
+        "people": 2,
+        "tools": [
+          "微波炉",
+          "电饭煲"
+        ],
+        "tool_match": true
+      },
+      "expect_rewrite": {
+        "rewritten_query": "只用微波炉和电饭煲可做的菜",
+        "entities": {
+          "tools": [
+            "微波炉",
+            "电饭煲"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-04561c",
+      "type": "recommend",
+      "query": "3 人，早餐，想吃辣，15 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 3,
+        "meal_type": "早餐",
+        "flavors": [
+          "辣"
+        ],
+        "avoids": [],
+        "max_time_min": 15
+      },
+      "expect_rewrite": {
+        "rewritten_query": "3 人，早餐，想吃辣，15 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 3,
+          "flavors": [
+            "辣"
+          ]
+        }
+      }
+    },
+    {
+      "id": "qa-006",
+      "type": "dish_qa",
+      "query": "西红柿炒鸡蛋先炒蛋还是先炒西红柿",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/vegetable_dish/西红柿炒鸡蛋.md",
+        "keywords": [
+          "先炒鸡蛋"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "西红柿炒鸡蛋 先后顺序",
+        "entities": {
+          "dish_names": [
+            "西红柿炒鸡蛋"
+          ]
+        }
+      }
+    },
+    {
+      "id": "rec-010",
+      "type": "recommend",
+      "query": "给小孩做点甜口的菜，三个人",
+      "user_profile": {
+        "family": "有小孩"
+      },
+      "expect": {
+        "people": 3,
+        "flavors": [
+          "甜"
+        ],
+        "kid_friendly": true
+      },
+      "expect_rewrite": {
+        "rewritten_query": "三人份，甜口，适合小孩的菜",
+        "entities": {
+          "people": 3,
+          "flavors": [
+            "甜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-6755b9",
+      "type": "recommend",
+      "query": "3 人，午餐，想吃酸的，15 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 3,
+        "meal_type": "午餐",
+        "flavors": [
+          "酸"
+        ],
+        "avoids": [],
+        "max_time_min": 15
+      },
+      "expect_rewrite": {
+        "rewritten_query": "3 人，午餐，想吃酸的，15 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "午餐"
+          ],
+          "people": 3,
+          "flavors": [
+            "酸"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-d82acdc56844",
+      "type": "dish_qa",
+      "query": "猪皮冻需要注意什么",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/meat_dish/猪皮冻/猪皮冻.md",
+        "keywords": [
+          "猪皮冻"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "猪皮冻 做法",
+        "entities": {
+          "dish_names": [
+            "猪皮冻"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-603e46",
+      "type": "recommend",
+      "query": "2 人，夜宵，想吃酸的",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "夜宵",
+        "flavors": [
+          "酸"
+        ],
+        "avoids": [],
+        "max_time_min": null
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，夜宵，想吃酸的",
+        "entities": {
+          "meal_type": [
+            "夜宵"
+          ],
+          "people": 2,
+          "flavors": [
+            "酸"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-be3987",
+      "type": "recommend",
+      "query": "2 人，午餐，想吃点甜的",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "午餐",
+        "flavors": [
+          "甜"
+        ],
+        "avoids": [],
+        "max_time_min": null
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，午餐，想吃点甜的",
+        "entities": {
+          "meal_type": [
+            "午餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "甜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-ba0dda",
+      "type": "recommend",
+      "query": "1 人，晚餐，想吃辣，60 分钟内搞定，不吃海鲜",
+      "user_profile": {
+        "avoid_list": [
+          "海鲜"
+        ]
+      },
+      "expect": {
+        "people": 1,
+        "meal_type": "晚餐",
+        "flavors": [
+          "辣"
+        ],
+        "avoids": [
+          "海鲜"
+        ],
+        "max_time_min": 60
+      },
+      "expect_rewrite": {
+        "rewritten_query": "1 人，晚餐，想吃辣，60 分钟内搞定，不吃海鲜",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 1,
+          "flavors": [
+            "辣"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-1748ca0a7075",
+      "type": "dish_qa",
+      "query": "微波葱姜黑鳕鱼需要注意什么",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/aquatic/微波葱姜黑鳕鱼.md",
+        "keywords": [
+          "微波葱姜黑鳕鱼"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "微波葱姜黑鳕鱼 做法",
+        "entities": {
+          "dish_names": [
+            "微波葱姜黑鳕鱼"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-tip-55cdd02c566d",
+      "type": "tips_qa",
+      "query": "怎么微波炉",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "tips/learn/微波炉.md",
+        "keywords": [
+          "微波炉"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "微波炉 技巧",
+        "entities": {
+          "techniques": [
+            "微波炉"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-1fc19d",
+      "type": "recommend",
+      "query": "4 人，午餐，想吃点甜的，15 分钟内搞定，不吃内脏",
+      "user_profile": {
+        "avoid_list": [
+          "内脏"
+        ]
+      },
+      "expect": {
+        "people": 4,
+        "meal_type": "午餐",
+        "flavors": [
+          "甜"
+        ],
+        "avoids": [
+          "内脏"
+        ],
+        "max_time_min": 15
+      },
+      "expect_rewrite": {
+        "rewritten_query": "4 人，午餐，想吃点甜的，15 分钟内搞定，不吃内脏",
+        "entities": {
+          "meal_type": [
+            "午餐"
+          ],
+          "people": 4,
+          "flavors": [
+            "甜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-d7f381869ed1",
+      "type": "dish_qa",
+      "query": "杀猪菜要多久能做好",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/meat_dish/杀猪菜.md",
+        "keywords": [
+          "杀猪菜"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "杀猪菜 做法",
+        "entities": {
+          "dish_names": [
+            "杀猪菜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-36c7ccdb27d2",
+      "type": "dish_qa",
+      "query": "小炒黄牛肉要多久能做好",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/meat_dish/小炒黄牛肉/小炒黄牛肉.md",
+        "keywords": [
+          "小炒黄牛肉"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "小炒黄牛肉 做法",
+        "entities": {
+          "dish_names": [
+            "小炒黄牛肉"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-4fd7bb",
+      "type": "recommend",
+      "query": "2 人，早餐，想吃咸鲜口，60 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "早餐",
+        "flavors": [
+          "咸鲜"
+        ],
+        "avoids": [],
+        "max_time_min": 60
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，早餐，想吃咸鲜口，60 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "咸鲜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-db896e",
+      "type": "recommend",
+      "query": "4 人，早餐，想吃辣，不吃海鲜",
+      "user_profile": {
+        "avoid_list": [
+          "海鲜"
+        ]
+      },
+      "expect": {
+        "people": 4,
+        "meal_type": "早餐",
+        "flavors": [
+          "辣"
+        ],
+        "avoids": [
+          "海鲜"
+        ],
+        "max_time_min": null
+      },
+      "expect_rewrite": {
+        "rewritten_query": "4 人，早餐，想吃辣，不吃海鲜",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 4,
+          "flavors": [
+            "辣"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-ef9313",
+      "type": "recommend",
+      "query": "1 人，早餐，想吃清淡的，60 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 1,
+        "meal_type": "早餐",
+        "flavors": [
+          "清淡"
+        ],
+        "avoids": [],
+        "max_time_min": 60
+      },
+      "expect_rewrite": {
+        "rewritten_query": "1 人，早餐，想吃清淡的，60 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 1,
+          "flavors": [
+            "清淡"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-4fd7bb",
+      "type": "recommend",
+      "query": "2 人，早餐，想吃咸鲜口，60 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "早餐",
+        "flavors": [
+          "咸鲜"
+        ],
+        "avoids": [],
+        "max_time_min": 60
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，早餐，想吃咸鲜口，60 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "咸鲜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-08d37b",
+      "type": "recommend",
+      "query": "1 人，午餐，想吃酸的，60 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 1,
+        "meal_type": "午餐",
+        "flavors": [
+          "酸"
+        ],
+        "avoids": [],
+        "max_time_min": 60
+      },
+      "expect_rewrite": {
+        "rewritten_query": "1 人，午餐，想吃酸的，60 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "午餐"
+          ],
+          "people": 1,
+          "flavors": [
+            "酸"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-b2cdd3",
+      "type": "recommend",
+      "query": "4 人，早餐，想吃点甜的",
+      "user_profile": null,
+      "expect": {
+        "people": 4,
+        "meal_type": "早餐",
+        "flavors": [
+          "甜"
+        ],
+        "avoids": [],
+        "max_time_min": null
+      },
+      "expect_rewrite": {
+        "rewritten_query": "4 人，早餐，想吃点甜的",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 4,
+          "flavors": [
+            "甜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-0f9791",
+      "type": "recommend",
+      "query": "1 人，晚餐，想吃咸鲜口，60 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 1,
+        "meal_type": "晚餐",
+        "flavors": [
+          "咸鲜"
+        ],
+        "avoids": [],
+        "max_time_min": 60
+      },
+      "expect_rewrite": {
+        "rewritten_query": "1 人，晚餐，想吃咸鲜口，60 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 1,
+          "flavors": [
+            "咸鲜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-93e103",
+      "type": "recommend",
+      "query": "3 人，夜宵，想吃咸鲜口，60 分钟内搞定，不吃香菜",
+      "user_profile": {
+        "avoid_list": [
+          "香菜"
+        ]
+      },
+      "expect": {
+        "people": 3,
+        "meal_type": "夜宵",
+        "flavors": [
+          "咸鲜"
+        ],
+        "avoids": [
+          "香菜"
+        ],
+        "max_time_min": 60
+      },
+      "expect_rewrite": {
+        "rewritten_query": "3 人，夜宵，想吃咸鲜口，60 分钟内搞定，不吃香菜",
+        "entities": {
+          "meal_type": [
+            "夜宵"
+          ],
+          "people": 3,
+          "flavors": [
+            "咸鲜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-c78ba7392ccf",
+      "type": "dish_qa",
+      "query": "怎么做小炒藕丁",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/vegetable_dish/小炒藕丁/小炒藕丁.md",
+        "keywords": [
+          "小炒藕丁"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "小炒藕丁 做法",
+        "entities": {
+          "dish_names": [
+            "小炒藕丁"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-070ee8",
+      "type": "recommend",
+      "query": "4 人，夜宵，想吃咸鲜口，15 分钟内搞定，不吃海鲜",
+      "user_profile": {
+        "avoid_list": [
+          "海鲜"
+        ]
+      },
+      "expect": {
+        "people": 4,
+        "meal_type": "夜宵",
+        "flavors": [
+          "咸鲜"
+        ],
+        "avoids": [
+          "海鲜"
+        ],
+        "max_time_min": 15
+      },
+      "expect_rewrite": {
+        "rewritten_query": "4 人，夜宵，想吃咸鲜口，15 分钟内搞定，不吃海鲜",
+        "entities": {
+          "meal_type": [
+            "夜宵"
+          ],
+          "people": 4,
+          "flavors": [
+            "咸鲜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "rec-001",
+      "type": "recommend",
+      "query": "3 人晚餐想吃辣",
+      "user_profile": null,
+      "expect": {
+        "people": 3,
+        "meal_type": "晚餐",
+        "meat_count": 2,
+        "veg_count": 2,
+        "spicy": true,
+        "avoids": []
+      },
+      "expect_rewrite": {
+        "rewritten_query": "三人晚餐，想吃辣味的菜",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 3,
+          "flavors": [
+            "辣"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-735476",
+      "type": "recommend",
+      "query": "1 人，夜宵，想吃点甜的，45 分钟内搞定，不吃内脏",
+      "user_profile": {
+        "avoid_list": [
+          "内脏"
+        ]
+      },
+      "expect": {
+        "people": 1,
+        "meal_type": "夜宵",
+        "flavors": [
+          "甜"
+        ],
+        "avoids": [
+          "内脏"
+        ],
+        "max_time_min": 45
+      },
+      "expect_rewrite": {
+        "rewritten_query": "1 人，夜宵，想吃点甜的，45 分钟内搞定，不吃内脏",
+        "entities": {
+          "meal_type": [
+            "夜宵"
+          ],
+          "people": 1,
+          "flavors": [
+            "甜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-6cb347",
+      "type": "recommend",
+      "query": "1 人，晚餐，想吃酸的，45 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 1,
+        "meal_type": "晚餐",
+        "flavors": [
+          "酸"
+        ],
+        "avoids": [],
+        "max_time_min": 45
+      },
+      "expect_rewrite": {
+        "rewritten_query": "1 人，晚餐，想吃酸的，45 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 1,
+          "flavors": [
+            "酸"
+          ]
+        }
+      }
+    },
+    {
+      "id": "rec-003",
+      "type": "recommend",
+      "query": "两个人早餐吃什么",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "早餐",
+        "meat_count": 1,
+        "veg_count": 1
+      },
+      "expect_rewrite": {
+        "rewritten_query": "两人早餐",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 2
+        }
+      }
+    },
+    {
+      "id": "qa-005",
+      "type": "dish_qa",
+      "query": "水煮鱼最后淋热油是为什么",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/aquatic/水煮鱼.md",
+        "keywords": [
+          "热油",
+          "激香"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "水煮鱼 淋热油 作用",
+        "entities": {
+          "dish_names": [
+            "水煮鱼"
+          ]
+        }
+      }
+    },
+    {
+      "id": "qa-001",
+      "type": "dish_qa",
+      "query": "宫保鸡丁怎么勾芡",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/meat_dish/宫保鸡丁/宫保鸡丁.md",
+        "keywords": [
+          "水淀粉",
+          "收汁"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "宫保鸡丁 勾芡 步骤",
+        "entities": {
+          "dish_names": [
+            "宫保鸡丁"
+          ],
+          "techniques": [
+            "勾芡"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-f270d5",
+      "type": "recommend",
+      "query": "1 人，晚餐，想吃酸的，不吃香菜",
+      "user_profile": {
+        "avoid_list": [
+          "香菜"
+        ]
+      },
+      "expect": {
+        "people": 1,
+        "meal_type": "晚餐",
+        "flavors": [
+          "酸"
+        ],
+        "avoids": [
+          "香菜"
+        ],
+        "max_time_min": null
+      },
+      "expect_rewrite": {
+        "rewritten_query": "1 人，晚餐，想吃酸的，不吃香菜",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 1,
+          "flavors": [
+            "酸"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-a446ac",
+      "type": "recommend",
+      "query": "2 人，午餐，想吃辣",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "午餐",
+        "flavors": [
+          "辣"
+        ],
+        "avoids": [],
+        "max_time_min": null
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，午餐，想吃辣",
+        "entities": {
+          "meal_type": [
+            "午餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "辣"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-05b440602dd4",
+      "type": "dish_qa",
+      "query": "醪糟小汤圆怎么做",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/staple/醪糟小汤圆.md",
+        "keywords": [
+          "醪糟小汤圆"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "醪糟小汤圆 做法",
+        "entities": {
+          "dish_names": [
+            "醪糟小汤圆"
+          ]
+        }
+      }
+    },
+    {
+      "id": "rec-008",
+      "type": "recommend",
+      "query": "冬天晚餐想喝汤，两个人",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "晚餐",
+        "include_soup": true,
+        "season": "冬"
+      },
+      "expect_rewrite": {
+        "rewritten_query": "两人冬天晚餐，想喝热汤",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 2,
+          "category": [
+            "soup"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-e00e90",
+      "type": "recommend",
+      "query": "2 人，夜宵，想吃点甜的，30 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "夜宵",
+        "flavors": [
+          "甜"
+        ],
+        "avoids": [],
+        "max_time_min": 30
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，夜宵，想吃点甜的，30 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "夜宵"
+          ],
+          "people": 2,
+          "flavors": [
+            "甜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-15a8f5",
+      "type": "recommend",
+      "query": "3 人，午餐，想吃点甜的，15 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 3,
+        "meal_type": "午餐",
+        "flavors": [
+          "甜"
+        ],
+        "avoids": [],
+        "max_time_min": 15
+      },
+      "expect_rewrite": {
+        "rewritten_query": "3 人，午餐，想吃点甜的，15 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "午餐"
+          ],
+          "people": 3,
+          "flavors": [
+            "甜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-0541e8",
+      "type": "recommend",
+      "query": "3 人，早餐，想吃点甜的，60 分钟内搞定，不吃香菜",
+      "user_profile": {
+        "avoid_list": [
+          "香菜"
+        ]
+      },
+      "expect": {
+        "people": 3,
+        "meal_type": "早餐",
+        "flavors": [
+          "甜"
+        ],
+        "avoids": [
+          "香菜"
+        ],
+        "max_time_min": 60
+      },
+      "expect_rewrite": {
+        "rewritten_query": "3 人，早餐，想吃点甜的，60 分钟内搞定，不吃香菜",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 3,
+          "flavors": [
+            "甜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-68d8b8",
+      "type": "recommend",
+      "query": "3 人，晚餐，想吃清淡的，60 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 3,
+        "meal_type": "晚餐",
+        "flavors": [
+          "清淡"
+        ],
+        "avoids": [],
+        "max_time_min": 60
+      },
+      "expect_rewrite": {
+        "rewritten_query": "3 人，晚餐，想吃清淡的，60 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 3,
+          "flavors": [
+            "清淡"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-2ef2d5",
+      "type": "recommend",
+      "query": "2 人，早餐，想吃咸鲜口，45 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "早餐",
+        "flavors": [
+          "咸鲜"
+        ],
+        "avoids": [],
+        "max_time_min": 45
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，早餐，想吃咸鲜口，45 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "咸鲜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-0e4695",
+      "type": "recommend",
+      "query": "3 人，夜宵，想吃辣，15 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 3,
+        "meal_type": "夜宵",
+        "flavors": [
+          "辣"
+        ],
+        "avoids": [],
+        "max_time_min": 15
+      },
+      "expect_rewrite": {
+        "rewritten_query": "3 人，夜宵，想吃辣，15 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "夜宵"
+          ],
+          "people": 3,
+          "flavors": [
+            "辣"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-7e6225fe2286",
+      "type": "dish_qa",
+      "query": "蒜香酱油怎么做",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/condiment/蒜香酱油.md",
+        "keywords": [
+          "蒜香酱油"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "蒜香酱油 做法",
+        "entities": {
+          "dish_names": [
+            "蒜香酱油"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-8aac24c1786c",
+      "type": "dish_qa",
+      "query": "雷椒皮蛋要多久能做好",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/vegetable_dish/雷椒皮蛋.md",
+        "keywords": [
+          "雷椒皮蛋"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "雷椒皮蛋 做法",
+        "entities": {
+          "dish_names": [
+            "雷椒皮蛋"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-a4f263",
+      "type": "recommend",
+      "query": "3 人，早餐，想吃酸的，45 分钟内搞定，不吃香菜",
+      "user_profile": {
+        "avoid_list": [
+          "香菜"
+        ]
+      },
+      "expect": {
+        "people": 3,
+        "meal_type": "早餐",
+        "flavors": [
+          "酸"
+        ],
+        "avoids": [
+          "香菜"
+        ],
+        "max_time_min": 45
+      },
+      "expect_rewrite": {
+        "rewritten_query": "3 人，早餐，想吃酸的，45 分钟内搞定，不吃香菜",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 3,
+          "flavors": [
+            "酸"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-ca398ad5cd41",
+      "type": "dish_qa",
+      "query": "冬瓜茶的步骤是什么",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/drink/冬瓜茶.md",
+        "keywords": [
+          "冬瓜茶"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "冬瓜茶 做法",
+        "entities": {
+          "dish_names": [
+            "冬瓜茶"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-80a4a1",
+      "type": "recommend",
+      "query": "2 人，午餐，想吃点甜的，60 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "午餐",
+        "flavors": [
+          "甜"
+        ],
+        "avoids": [],
+        "max_time_min": 60
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，午餐，想吃点甜的，60 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "午餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "甜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "qa-003",
+      "type": "dish_qa",
+      "query": "清蒸鲈鱼要蒸多久",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/aquatic/清蒸鲈鱼/清蒸鲈鱼.md",
+        "keywords": [
+          "蒸",
+          "时间"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "清蒸鲈鱼 蒸制时间",
+        "entities": {
+          "dish_names": [
+            "清蒸鲈鱼"
+          ],
+          "techniques": [
+            "蒸"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-tip-bfd3b1dfdcfd",
+      "type": "tips_qa",
+      "query": "去腥要注意什么",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "tips/learn/去腥.md",
+        "keywords": [
+          "去腥"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "去腥 技巧",
+        "entities": {
+          "techniques": [
+            "去腥"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-db5e54933716",
+      "type": "dish_qa",
+      "query": "温泉蛋怎么做",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/breakfast/温泉蛋/温泉蛋.md",
+        "keywords": [
+          "温泉蛋"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "温泉蛋 做法",
+        "entities": {
+          "dish_names": [
+            "温泉蛋"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-7caa03",
+      "type": "recommend",
+      "query": "1 人，午餐，想吃清淡的，45 分钟内搞定，不吃内脏",
+      "user_profile": {
+        "avoid_list": [
+          "内脏"
+        ]
+      },
+      "expect": {
+        "people": 1,
+        "meal_type": "午餐",
+        "flavors": [
+          "清淡"
+        ],
+        "avoids": [
+          "内脏"
+        ],
+        "max_time_min": 45
+      },
+      "expect_rewrite": {
+        "rewritten_query": "1 人，午餐，想吃清淡的，45 分钟内搞定，不吃内脏",
+        "entities": {
+          "meal_type": [
+            "午餐"
+          ],
+          "people": 1,
+          "flavors": [
+            "清淡"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-80dff4bed452",
+      "type": "dish_qa",
+      "query": "金针菇汤需要注意什么",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/soup/金针菇汤.md",
+        "keywords": [
+          "金针菇汤"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "金针菇汤 做法",
+        "entities": {
+          "dish_names": [
+            "金针菇汤"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-126882",
+      "type": "recommend",
+      "query": "4 人，夜宵，想吃清淡的，15 分钟内搞定，不吃内脏",
+      "user_profile": {
+        "avoid_list": [
+          "内脏"
+        ]
+      },
+      "expect": {
+        "people": 4,
+        "meal_type": "夜宵",
+        "flavors": [
+          "清淡"
+        ],
+        "avoids": [
+          "内脏"
+        ],
+        "max_time_min": 15
+      },
+      "expect_rewrite": {
+        "rewritten_query": "4 人，夜宵，想吃清淡的，15 分钟内搞定，不吃内脏",
+        "entities": {
+          "meal_type": [
+            "夜宵"
+          ],
+          "people": 4,
+          "flavors": [
+            "清淡"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-520e3e16bf13",
+      "type": "dish_qa",
+      "query": "怎么做螺蛳粉",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/staple/螺蛳粉.md",
+        "keywords": [
+          "螺蛳粉"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "螺蛳粉 做法",
+        "entities": {
+          "dish_names": [
+            "螺蛳粉"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-80dff4bed452",
+      "type": "dish_qa",
+      "query": "金针菇汤要多久能做好",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/soup/金针菇汤.md",
+        "keywords": [
+          "金针菇汤"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "金针菇汤 做法",
+        "entities": {
+          "dish_names": [
+            "金针菇汤"
+          ]
+        }
+      }
+    },
+    {
+      "id": "rec-009",
+      "type": "recommend",
+      "query": "想吃鱼，两个人，不想太麻烦，30 分钟内搞定",
+      "user_profile": {
+        "skill_level": "进阶"
+      },
+      "expect": {
+        "people": 2,
+        "max_time_min": 30,
+        "main_ingredient": "鱼",
+        "fast": true
+      },
+      "expect_rewrite": {
+        "rewritten_query": "半小时内能完成的鱼料理",
+        "entities": {
+          "ingredients": [
+            "鱼"
+          ],
+          "max_time_min": 30
+        }
+      }
+    },
+    {
+      "id": "auto-rec-f23543",
+      "type": "recommend",
+      "query": "2 人，午餐，想吃点甜的，15 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "午餐",
+        "flavors": [
+          "甜"
+        ],
+        "avoids": [],
+        "max_time_min": 15
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，午餐，想吃点甜的，15 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "午餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "甜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-947d9f7f1e39",
+      "type": "dish_qa",
+      "query": "响油鳝丝要多久能做好",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/aquatic/响油鳝丝.md",
+        "keywords": [
+          "响油鳝丝"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "响油鳝丝 做法",
+        "entities": {
+          "dish_names": [
+            "响油鳝丝"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-d6b950",
+      "type": "recommend",
+      "query": "4 人，早餐，想吃辣，不吃内脏",
+      "user_profile": {
+        "avoid_list": [
+          "内脏"
+        ]
+      },
+      "expect": {
+        "people": 4,
+        "meal_type": "早餐",
+        "flavors": [
+          "辣"
+        ],
+        "avoids": [
+          "内脏"
+        ],
+        "max_time_min": null
+      },
+      "expect_rewrite": {
+        "rewritten_query": "4 人，早餐，想吃辣，不吃内脏",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 4,
+          "flavors": [
+            "辣"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-81cec2",
+      "type": "recommend",
+      "query": "3 人，午餐，想吃酸的，30 分钟内搞定，不吃海鲜",
+      "user_profile": {
+        "avoid_list": [
+          "海鲜"
+        ]
+      },
+      "expect": {
+        "people": 3,
+        "meal_type": "午餐",
+        "flavors": [
+          "酸"
+        ],
+        "avoids": [
+          "海鲜"
+        ],
+        "max_time_min": 30
+      },
+      "expect_rewrite": {
+        "rewritten_query": "3 人，午餐，想吃酸的，30 分钟内搞定，不吃海鲜",
+        "entities": {
+          "meal_type": [
+            "午餐"
+          ],
+          "people": 3,
+          "flavors": [
+            "酸"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-db5e54933716",
+      "type": "dish_qa",
+      "query": "温泉蛋需要注意什么",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/breakfast/温泉蛋/温泉蛋.md",
+        "keywords": [
+          "温泉蛋"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "温泉蛋 做法",
+        "entities": {
+          "dish_names": [
+            "温泉蛋"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-a7e0727f734c",
+      "type": "dish_qa",
+      "query": "蛋炒饭的步骤是什么",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/staple/蛋炒饭.md",
+        "keywords": [
+          "蛋炒饭"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "蛋炒饭 做法",
+        "entities": {
+          "dish_names": [
+            "蛋炒饭"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-57baeb1f0401",
+      "type": "dish_qa",
+      "query": "莴笋叶煎饼需要注意什么",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/vegetable_dish/莴笋叶煎饼/莴笋叶煎饼.md",
+        "keywords": [
+          "莴笋叶煎饼"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "莴笋叶煎饼 做法",
+        "entities": {
+          "dish_names": [
+            "莴笋叶煎饼"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-f2ad5c",
+      "type": "recommend",
+      "query": "3 人，早餐，想吃咸鲜口，60 分钟内搞定，不吃香菜",
+      "user_profile": {
+        "avoid_list": [
+          "香菜"
+        ]
+      },
+      "expect": {
+        "people": 3,
+        "meal_type": "早餐",
+        "flavors": [
+          "咸鲜"
+        ],
+        "avoids": [
+          "香菜"
+        ],
+        "max_time_min": 60
+      },
+      "expect_rewrite": {
+        "rewritten_query": "3 人，早餐，想吃咸鲜口，60 分钟内搞定，不吃香菜",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 3,
+          "flavors": [
+            "咸鲜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-cf32de",
+      "type": "recommend",
+      "query": "4 人，晚餐，想吃咸鲜口，60 分钟内搞定，不吃内脏",
+      "user_profile": {
+        "avoid_list": [
+          "内脏"
+        ]
+      },
+      "expect": {
+        "people": 4,
+        "meal_type": "晚餐",
+        "flavors": [
+          "咸鲜"
+        ],
+        "avoids": [
+          "内脏"
+        ],
+        "max_time_min": 60
+      },
+      "expect_rewrite": {
+        "rewritten_query": "4 人，晚餐，想吃咸鲜口，60 分钟内搞定，不吃内脏",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 4,
+          "flavors": [
+            "咸鲜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-104b53",
+      "type": "recommend",
+      "query": "1 人，早餐，想吃咸鲜口，30 分钟内搞定，不吃香菜",
+      "user_profile": {
+        "avoid_list": [
+          "香菜"
+        ]
+      },
+      "expect": {
+        "people": 1,
+        "meal_type": "早餐",
+        "flavors": [
+          "咸鲜"
+        ],
+        "avoids": [
+          "香菜"
+        ],
+        "max_time_min": 30
+      },
+      "expect_rewrite": {
+        "rewritten_query": "1 人，早餐，想吃咸鲜口，30 分钟内搞定，不吃香菜",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 1,
+          "flavors": [
+            "咸鲜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-35a6cc",
+      "type": "recommend",
+      "query": "2 人，早餐，想吃辣，不吃香菜",
+      "user_profile": {
+        "avoid_list": [
+          "香菜"
+        ]
+      },
+      "expect": {
+        "people": 2,
+        "meal_type": "早餐",
+        "flavors": [
+          "辣"
+        ],
+        "avoids": [
+          "香菜"
+        ],
+        "max_time_min": null
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，早餐，想吃辣，不吃香菜",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "辣"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-dcf28b",
+      "type": "recommend",
+      "query": "1 人，午餐，想吃酸的，30 分钟内搞定，不吃香菜",
+      "user_profile": {
+        "avoid_list": [
+          "香菜"
+        ]
+      },
+      "expect": {
+        "people": 1,
+        "meal_type": "午餐",
+        "flavors": [
+          "酸"
+        ],
+        "avoids": [
+          "香菜"
+        ],
+        "max_time_min": 30
+      },
+      "expect_rewrite": {
+        "rewritten_query": "1 人，午餐，想吃酸的，30 分钟内搞定，不吃香菜",
+        "entities": {
+          "meal_type": [
+            "午餐"
+          ],
+          "people": 1,
+          "flavors": [
+            "酸"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-e8ed07",
+      "type": "recommend",
+      "query": "2 人，早餐，想吃酸的，不吃海鲜",
+      "user_profile": {
+        "avoid_list": [
+          "海鲜"
+        ]
+      },
+      "expect": {
+        "people": 2,
+        "meal_type": "早餐",
+        "flavors": [
+          "酸"
+        ],
+        "avoids": [
+          "海鲜"
+        ],
+        "max_time_min": null
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，早餐，想吃酸的，不吃海鲜",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "酸"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-5e7363",
+      "type": "recommend",
+      "query": "4 人，午餐，想吃咸鲜口，45 分钟内搞定，不吃海鲜",
+      "user_profile": {
+        "avoid_list": [
+          "海鲜"
+        ]
+      },
+      "expect": {
+        "people": 4,
+        "meal_type": "午餐",
+        "flavors": [
+          "咸鲜"
+        ],
+        "avoids": [
+          "海鲜"
+        ],
+        "max_time_min": 45
+      },
+      "expect_rewrite": {
+        "rewritten_query": "4 人，午餐，想吃咸鲜口，45 分钟内搞定，不吃海鲜",
+        "entities": {
+          "meal_type": [
+            "午餐"
+          ],
+          "people": 4,
+          "flavors": [
+            "咸鲜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "rec-005",
+      "type": "recommend",
+      "query": "最近在减肥，一个人晚餐想吃清淡的",
+      "user_profile": {
+        "diet_type": "减脂"
+      },
+      "expect": {
+        "people": 1,
+        "meal_type": "晚餐",
+        "diet_type": "减脂",
+        "flavors": [
+          "清淡"
+        ],
+        "avoid_heavy": true
+      },
+      "expect_rewrite": {
+        "rewritten_query": "减脂晚餐，清淡低油",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "diet_type": [
+            "减脂"
+          ],
+          "flavors": [
+            "清淡"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-c5df5e",
+      "type": "recommend",
+      "query": "2 人，晚餐，想吃清淡的，60 分钟内搞定，不吃海鲜",
+      "user_profile": {
+        "avoid_list": [
+          "海鲜"
+        ]
+      },
+      "expect": {
+        "people": 2,
+        "meal_type": "晚餐",
+        "flavors": [
+          "清淡"
+        ],
+        "avoids": [
+          "海鲜"
+        ],
+        "max_time_min": 60
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，晚餐，想吃清淡的，60 分钟内搞定，不吃海鲜",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "清淡"
+          ]
+        }
+      }
+    },
+    {
+      "id": "qa-002",
+      "type": "dish_qa",
+      "query": "红烧肉炒糖色有什么技巧",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "tips/advanced/糖色的炒制.md",
+        "keywords": [
+          "糖色",
+          "小火"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "红烧肉 炒糖色 技巧",
+        "entities": {
+          "dish_names": [
+            "红烧肉"
+          ],
+          "techniques": [
+            "炒糖色"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-a2c99279d978",
+      "type": "dish_qa",
+      "query": "怎么做水煮肉片",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/meat_dish/水煮肉片.md",
+        "keywords": [
+          "水煮肉片"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "水煮肉片 做法",
+        "entities": {
+          "dish_names": [
+            "水煮肉片"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-tip-14c2def0a243",
+      "type": "tips_qa",
+      "query": "怎么食品安全",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "tips/learn/食品安全.md",
+        "keywords": [
+          "食品安全"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "食品安全 技巧",
+        "entities": {
+          "techniques": [
+            "食品安全"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-9a2d61",
+      "type": "recommend",
+      "query": "2 人，午餐，想吃清淡的，45 分钟内搞定，不吃内脏",
+      "user_profile": {
+        "avoid_list": [
+          "内脏"
+        ]
+      },
+      "expect": {
+        "people": 2,
+        "meal_type": "午餐",
+        "flavors": [
+          "清淡"
+        ],
+        "avoids": [
+          "内脏"
+        ],
+        "max_time_min": 45
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，午餐，想吃清淡的，45 分钟内搞定，不吃内脏",
+        "entities": {
+          "meal_type": [
+            "午餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "清淡"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-c9f2ff",
+      "type": "recommend",
+      "query": "2 人，早餐，想吃清淡的，45 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "早餐",
+        "flavors": [
+          "清淡"
+        ],
+        "avoids": [],
+        "max_time_min": 45
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，早餐，想吃清淡的，45 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "清淡"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-b589db4300db",
+      "type": "dish_qa",
+      "query": "无厨师机蜂蜜面包要多久能做好",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/dessert/无厨师机蜂蜜面包/无厨师机蜂蜜面包.md",
+        "keywords": [
+          "无厨师机蜂蜜面包"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "无厨师机蜂蜜面包 做法",
+        "entities": {
+          "dish_names": [
+            "无厨师机蜂蜜面包"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-c2319ceda2d3",
+      "type": "dish_qa",
+      "query": "口水鸡需要注意什么",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/meat_dish/口水鸡/口水鸡.md",
+        "keywords": [
+          "口水鸡"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "口水鸡 做法",
+        "entities": {
+          "dish_names": [
+            "口水鸡"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-tip-55cdd02c566d",
+      "type": "tips_qa",
+      "query": "怎么微波炉",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "tips/learn/微波炉.md",
+        "keywords": [
+          "微波炉"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "微波炉 技巧",
+        "entities": {
+          "techniques": [
+            "微波炉"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-tip-b7fe181b8eb2",
+      "type": "tips_qa",
+      "query": "糖色的炒制有什么讲究",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "tips/advanced/糖色的炒制.md",
+        "keywords": [
+          "糖色的炒制"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "糖色的炒制 技巧",
+        "entities": {
+          "techniques": [
+            "糖色的炒制"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-582b9794972a",
+      "type": "dish_qa",
+      "query": "怎么做荷兰豆炒腊肠",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/meat_dish/荷兰豆炒腊肠/荷兰豆炒腊肠.md",
+        "keywords": [
+          "荷兰豆炒腊肠"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "荷兰豆炒腊肠 做法",
+        "entities": {
+          "dish_names": [
+            "荷兰豆炒腊肠"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-b7b470",
+      "type": "recommend",
+      "query": "2 人，夜宵，想吃咸鲜口，45 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "夜宵",
+        "flavors": [
+          "咸鲜"
+        ],
+        "avoids": [],
+        "max_time_min": 45
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，夜宵，想吃咸鲜口，45 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "夜宵"
+          ],
+          "people": 2,
+          "flavors": [
+            "咸鲜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-d0ed2e37aa32",
+      "type": "dish_qa",
+      "query": "牛排怎么做",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/meat_dish/牛排/牛排.md",
+        "keywords": [
+          "牛排"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "牛排 做法",
+        "entities": {
+          "dish_names": [
+            "牛排"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-tip-49bfd449eda1",
+      "type": "tips_qa",
+      "query": "高级专业术语要注意什么",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "tips/advanced/高级专业术语.md",
+        "keywords": [
+          "高级专业术语"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "高级专业术语 技巧",
+        "entities": {
+          "techniques": [
+            "高级专业术语"
+          ]
+        }
+      }
+    },
+    {
+      "id": "rec-004",
+      "type": "recommend",
+      "query": "周末请 4 个朋友来家里吃晚饭，想做点硬菜",
+      "user_profile": {
+        "skill_level": "熟练"
+      },
+      "expect": {
+        "people": 4,
+        "meal_type": "晚餐",
+        "meat_count": 3,
+        "veg_count": 2,
+        "hearty": true,
+        "animal_diversity": true
+      },
+      "expect_rewrite": {
+        "rewritten_query": "四人聚餐晚餐，肉类硬菜，招待朋友",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 4,
+          "flavors": [
+            "浓郁"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-c0d6cd",
+      "type": "recommend",
+      "query": "4 人，午餐，想吃清淡的，60 分钟内搞定，不吃内脏",
+      "user_profile": {
+        "avoid_list": [
+          "内脏"
+        ]
+      },
+      "expect": {
+        "people": 4,
+        "meal_type": "午餐",
+        "flavors": [
+          "清淡"
+        ],
+        "avoids": [
+          "内脏"
+        ],
+        "max_time_min": 60
+      },
+      "expect_rewrite": {
+        "rewritten_query": "4 人，午餐，想吃清淡的，60 分钟内搞定，不吃内脏",
+        "entities": {
+          "meal_type": [
+            "午餐"
+          ],
+          "people": 4,
+          "flavors": [
+            "清淡"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-04561c",
+      "type": "recommend",
+      "query": "3 人，早餐，想吃辣，15 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 3,
+        "meal_type": "早餐",
+        "flavors": [
+          "辣"
+        ],
+        "avoids": [],
+        "max_time_min": 15
+      },
+      "expect_rewrite": {
+        "rewritten_query": "3 人，早餐，想吃辣，15 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 3,
+          "flavors": [
+            "辣"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-3083b0cc253b",
+      "type": "dish_qa",
+      "query": "尖叫牛蛙怎么做",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/meat_dish/尖叫牛蛙/尖叫牛蛙.md",
+        "keywords": [
+          "尖叫牛蛙"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "尖叫牛蛙 做法",
+        "entities": {
+          "dish_names": [
+            "尖叫牛蛙"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-1ed01ecb8f3f",
+      "type": "dish_qa",
+      "query": "炒年糕的步骤是什么",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/staple/炒年糕.md",
+        "keywords": [
+          "炒年糕"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "炒年糕 做法",
+        "entities": {
+          "dish_names": [
+            "炒年糕"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-fdc118",
+      "type": "recommend",
+      "query": "1 人，早餐，想吃点甜的，15 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 1,
+        "meal_type": "早餐",
+        "flavors": [
+          "甜"
+        ],
+        "avoids": [],
+        "max_time_min": 15
+      },
+      "expect_rewrite": {
+        "rewritten_query": "1 人，早餐，想吃点甜的，15 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "早餐"
+          ],
+          "people": 1,
+          "flavors": [
+            "甜"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-tip-9558c250c670",
+      "type": "tips_qa",
+      "query": "食材相克与禁忌要注意什么",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "tips/食材相克与禁忌.md",
+        "keywords": [
+          "食材相克与禁忌"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "食材相克与禁忌 技巧",
+        "entities": {
+          "techniques": [
+            "食材相克与禁忌"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-b056c0",
+      "type": "recommend",
+      "query": "2 人，午餐，想吃辣，15 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "午餐",
+        "flavors": [
+          "辣"
+        ],
+        "avoids": [],
+        "max_time_min": 15
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，午餐，想吃辣，15 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "午餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "辣"
+          ]
+        }
+      }
+    },
+    {
+      "id": "tip-002",
+      "type": "tips_qa",
+      "query": "怎么判断油温到几成热",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "tips/advanced/油温判断技巧.md",
+        "keywords": [
+          "油温",
+          "筷子"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "油温判断 几成热 方法",
+        "entities": {
+          "techniques": [
+            "油温判断"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-qa-3a84626fc522",
+      "type": "dish_qa",
+      "query": "烤箱版巴斯克芝士蛋糕要多久能做好",
+      "user_profile": null,
+      "expect": {
+        "ref_doc": "dishes/dessert/烤箱版巴斯克芝士蛋糕/烤箱版巴斯克芝士蛋糕.md",
+        "keywords": [
+          "烤箱版巴斯克芝士蛋糕"
+        ]
+      },
+      "expect_rewrite": {
+        "rewritten_query": "烤箱版巴斯克芝士蛋糕 做法",
+        "entities": {
+          "dish_names": [
+            "烤箱版巴斯克芝士蛋糕"
+          ]
+        }
+      }
+    },
+    {
+      "id": "auto-rec-d1c3f6",
+      "type": "recommend",
+      "query": "2 人，晚餐，想吃酸的，30 分钟内搞定",
+      "user_profile": null,
+      "expect": {
+        "people": 2,
+        "meal_type": "晚餐",
+        "flavors": [
+          "酸"
+        ],
+        "avoids": [],
+        "max_time_min": 30
+      },
+      "expect_rewrite": {
+        "rewritten_query": "2 人，晚餐，想吃酸的，30 分钟内搞定",
+        "entities": {
+          "meal_type": [
+            "晚餐"
+          ],
+          "people": 2,
+          "flavors": [
+            "酸"
+          ]
+        }
+      }
+    }
+  ]
+}

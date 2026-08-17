@@ -1,0 +1,24 @@
+# PostgreSQL 16（§12 M6 企业级部署：关系型可替换 SQLite）
+# 自定义参数：POSTGRES_PASSWORD / POSTGRES_DB / 端口映射在部署 .env 覆盖（doc/docker/.env.example）
+services:
+  pg:
+    image: postgres:16-alpine
+    restart: always
+    container_name: yeahwhat2eat-pg
+    environment:
+      POSTGRES_USER: ${PG_USER:-postgres}
+      POSTGRES_PASSWORD: ${PG_PASSWORD:-postgres123}
+      POSTGRES_DB: ${PG_DB:-yeahwhat2eat}
+    ports:
+      - "${PG_PORT:-5432}:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PG_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  pg_data:

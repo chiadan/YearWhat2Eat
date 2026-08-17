@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="solarized-light">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 展示名默认"是啊吃什么"，运行时由 main.ts 按 VITE_APP_NAME 覆盖（§10） -->
+    <title>是啊吃什么</title>
+    <script>
+      // 主题防闪烁（§10.1 多主题）：渲染前根据 localStorage 注入主题（暗色集合固定）
+      ;(function () {
+        var darkThemes = ['solarized-dark', 'github-dark']
+        var t = localStorage.getItem('yeahwhat2eat-theme')
+        var valid = ['solarized-light', 'solarized-dark', 'github-light', 'github-dark', 'nord'].indexOf(t) >= 0
+        if (!valid) {
+          t = window.matchMedia('(prefers-color-scheme: dark)').matches
+            ? 'solarized-dark'
+            : 'solarized-light'
+        }
+        document.documentElement.setAttribute('data-theme', t)
+        if (darkThemes.indexOf(t) >= 0) document.documentElement.classList.add('dark')
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

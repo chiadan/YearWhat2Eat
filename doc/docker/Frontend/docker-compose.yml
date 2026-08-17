@@ -1,0 +1,14 @@
+# 前端服务（§12 M6 部署）：nginx 托管 dist + 反代 /api、/static（SSE 关缓冲）
+services:
+  frontend:
+    build:
+      context: ../../../frontend
+      args:
+        VITE_API_BASE_URL: /api/v1
+        VITE_APP_NAME: ${VITE_APP_NAME:-是啊吃什么}
+    restart: always
+    container_name: yeahwhat2eat-frontend
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    depends_on:
+      - backend

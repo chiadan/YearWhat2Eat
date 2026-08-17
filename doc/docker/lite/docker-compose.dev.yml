@@ -1,0 +1,9 @@
+# ⚠️⚠️⚠️ 仅限本地测试联调，严禁用于生产 ⚠️⚠️⚠️
+# 本 override 把宿主机 backend/data 直接挂载为容器 /data —— 容器会【直接使用本地
+# SQLite/Kùzu/Qdrant 文件】，与生产隔离原则（数据在 docker 卷中）相悖。
+# 生产部署请只用 doc/docker/lite/docker-compose.yml（backend_data 命名卷，数据隔离）。
+# 用法：docker compose -f lite/docker-compose.yml -f lite/docker-compose.dev.yml up -d --build
+services:
+  backend:
+    volumes:
+      - ../../../backend/data:/data

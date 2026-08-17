@@ -1,0 +1,866 @@
+{
+  "timestamp": "2026-08-14 17:49:32",
+  "golden_version": "0.2-auto-draft",
+  "items_evaluated": 48,
+  "recall_at_5": 0.9792,
+  "mrr_at_10": 0.9792,
+  "targets": {
+    "recall_at_5": 0.8,
+    "mrr_at_10": 0.7
+  },
+  "constraint_pass_rate": 0.5,
+  "constraint_detail": [
+    {
+      "id": "auto-rec-b7955e",
+      "query": "2 人，夜宵，想吃咸鲜口，15 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 内脏 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-c2022a",
+      "query": "2 人，午餐，想吃点甜的，30 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 内脏 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-037795",
+      "query": "2 人，晚餐，想吃咸鲜口，45 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 海鲜 未解析出"
+      ]
+    },
+    {
+      "id": "rec-002",
+      "query": "一个人晚上随便吃点，不想太麻烦",
+      "ok": false,
+      "issues": [
+        "max_time: expect 30 got None"
+      ]
+    },
+    {
+      "id": "rec-011",
+      "query": "深夜饿了，想快速煮个面",
+      "ok": false,
+      "issues": [
+        "people: expect 1 got None",
+        "max_time: expect 20 got None"
+      ]
+    },
+    {
+      "id": "auto-rec-e45604",
+      "query": "2 人，晚餐，想吃清淡的，45 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 内脏 未解析出"
+      ]
+    },
+    {
+      "id": "rec-012",
+      "query": "家里有鸡胸肉和青椒，能做什么",
+      "ok": false,
+      "issues": [
+        "people: expect 2 got None"
+      ]
+    },
+    {
+      "id": "auto-rec-53759d",
+      "query": "1 人，晚餐，想吃酸的",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-445bea",
+      "query": "2 人，晚餐，想吃清淡的，60 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-77c9e0",
+      "query": "4 人，晚餐，想吃点甜的，30 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-88ad24",
+      "query": "2 人，晚餐，想吃清淡的，15 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-140f84",
+      "query": "1 人，晚餐，想吃咸鲜口，15 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 海鲜 未解析出"
+      ]
+    },
+    {
+      "id": "rec-006",
+      "query": "不吃香菜，两个人中午吃什么",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-06e4dd",
+      "query": "2 人，早餐，想吃清淡的，15 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-c58339",
+      "query": "3 人，早餐，想吃辣，45 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-50895f",
+      "query": "2 人，夜宵，想吃清淡的，45 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "rec-007",
+      "query": "家里只有微波炉和电饭煲，能做什么菜",
+      "ok": false,
+      "issues": [
+        "people: expect 2 got None"
+      ]
+    },
+    {
+      "id": "auto-rec-04561c",
+      "query": "3 人，早餐，想吃辣，15 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "rec-010",
+      "query": "给小孩做点甜口的菜，三个人",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-6755b9",
+      "query": "3 人，午餐，想吃酸的，15 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-603e46",
+      "query": "2 人，夜宵，想吃酸的",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-be3987",
+      "query": "2 人，午餐，想吃点甜的",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-21055e",
+      "query": "1 人，晚餐，想吃辣，60 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 海鲜 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-c21481",
+      "query": "4 人，午餐，想吃点甜的，15 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 内脏 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-4fd7bb",
+      "query": "2 人，早餐，想吃咸鲜口，60 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-af3692",
+      "query": "4 人，早餐，想吃辣",
+      "ok": false,
+      "issues": [
+        "avoid 海鲜 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-ef9313",
+      "query": "1 人，早餐，想吃清淡的，60 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-4fd7bb",
+      "query": "2 人，早餐，想吃咸鲜口，60 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-08d37b",
+      "query": "1 人，午餐，想吃酸的，60 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-b2cdd3",
+      "query": "4 人，早餐，想吃点甜的",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-0f9791",
+      "query": "1 人，晚餐，想吃咸鲜口，60 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-29dae6",
+      "query": "3 人，夜宵，想吃咸鲜口，60 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 香菜 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-9eae8e",
+      "query": "4 人，夜宵，想吃咸鲜口，15 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 海鲜 未解析出"
+      ]
+    },
+    {
+      "id": "rec-001",
+      "query": "3 人晚餐想吃辣",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-f78c39",
+      "query": "1 人，夜宵，想吃点甜的，45 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 内脏 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-6cb347",
+      "query": "1 人，晚餐，想吃酸的，45 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "rec-003",
+      "query": "两个人早餐吃什么",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-53759d",
+      "query": "1 人，晚餐，想吃酸的",
+      "ok": false,
+      "issues": [
+        "avoid 香菜 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-a446ac",
+      "query": "2 人，午餐，想吃辣",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "rec-008",
+      "query": "冬天想喝汤，两个人",
+      "ok": false,
+      "issues": [
+        "meal_type: expect 晚餐 got None"
+      ]
+    },
+    {
+      "id": "auto-rec-e00e90",
+      "query": "2 人，夜宵，想吃点甜的，30 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-15a8f5",
+      "query": "3 人，午餐，想吃点甜的，15 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-96d77a",
+      "query": "3 人，早餐，想吃点甜的，60 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 香菜 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-68d8b8",
+      "query": "3 人，晚餐，想吃清淡的，60 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-2ef2d5",
+      "query": "2 人，早餐，想吃咸鲜口，45 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-0e4695",
+      "query": "3 人，夜宵，想吃辣，15 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-f651bc",
+      "query": "3 人，早餐，想吃酸的，45 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 香菜 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-80a4a1",
+      "query": "2 人，午餐，想吃点甜的，60 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-203399",
+      "query": "1 人，午餐，想吃清淡的，45 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 内脏 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-0a853a",
+      "query": "4 人，夜宵，想吃清淡的，15 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 内脏 未解析出"
+      ]
+    },
+    {
+      "id": "rec-009",
+      "query": "想吃鱼，但不想太麻烦，30 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "people: expect 2 got None"
+      ]
+    },
+    {
+      "id": "auto-rec-f23543",
+      "query": "2 人，午餐，想吃点甜的，15 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-af3692",
+      "query": "4 人，早餐，想吃辣",
+      "ok": false,
+      "issues": [
+        "avoid 内脏 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-736289",
+      "query": "3 人，午餐，想吃酸的，30 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 海鲜 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-a0771a",
+      "query": "3 人，早餐，想吃咸鲜口，60 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 香菜 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-665a66",
+      "query": "4 人，晚餐，想吃咸鲜口，60 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 内脏 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-7bd74d",
+      "query": "1 人，早餐，想吃咸鲜口，30 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 香菜 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-234044",
+      "query": "2 人，早餐，想吃辣",
+      "ok": false,
+      "issues": [
+        "avoid 香菜 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-8f7534",
+      "query": "1 人，午餐，想吃酸的，30 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 香菜 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-76ed14",
+      "query": "2 人，早餐，想吃酸的",
+      "ok": false,
+      "issues": [
+        "avoid 海鲜 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-d45d33",
+      "query": "4 人，午餐，想吃咸鲜口，45 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 海鲜 未解析出"
+      ]
+    },
+    {
+      "id": "rec-005",
+      "query": "最近在减肥，晚餐想吃清淡的",
+      "ok": false,
+      "issues": [
+        "people: expect 1 got None"
+      ]
+    },
+    {
+      "id": "auto-rec-445bea",
+      "query": "2 人，晚餐，想吃清淡的，60 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 海鲜 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-28dc45",
+      "query": "2 人，午餐，想吃清淡的，45 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 内脏 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-c9f2ff",
+      "query": "2 人，早餐，想吃清淡的，45 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-b7b470",
+      "query": "2 人，夜宵，想吃咸鲜口，45 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "rec-004",
+      "query": "周末请 4 个朋友来家里吃饭，想做点硬菜",
+      "ok": false,
+      "issues": [
+        "meal_type: expect 晚餐 got None"
+      ]
+    },
+    {
+      "id": "auto-rec-f50aa3",
+      "query": "4 人，午餐，想吃清淡的，60 分钟内搞定",
+      "ok": false,
+      "issues": [
+        "avoid 内脏 未解析出"
+      ]
+    },
+    {
+      "id": "auto-rec-04561c",
+      "query": "3 人，早餐，想吃辣，15 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-fdc118",
+      "query": "1 人，早餐，想吃点甜的，15 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-b056c0",
+      "query": "2 人，午餐，想吃辣，15 分钟内搞定",
+      "ok": true,
+      "issues": []
+    },
+    {
+      "id": "auto-rec-d1c3f6",
+      "query": "2 人，晚餐，想吃酸的，30 分钟内搞定",
+      "ok": true,
+      "issues": []
+    }
+  ],
+  "misses": [
+    {
+      "id": "qa-002",
+      "type": "dish_qa",
+      "query": "红烧肉炒糖色有什么技巧",
+      "expect": "tips/advanced/糖色的炒制.md",
+      "rank": null
+    }
+  ],
+  "results": [
+    {
+      "id": "auto-qa-a0ab3bffe95d",
+      "type": "dish_qa",
+      "query": "怎么做徽派红烧肉",
+      "expect": "dishes/meat_dish/徽派红烧肉/徽派红烧肉.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-417bb98a1b80",
+      "type": "dish_qa",
+      "query": "柱候牛腩怎么做",
+      "expect": "dishes/meat_dish/柱候牛腩/柱候牛腩.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-55cdd02c566d",
+      "type": "tips_qa",
+      "query": "微波炉一般怎么做",
+      "expect": "tips/learn/微波炉.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-55cdd02c566d",
+      "type": "tips_qa",
+      "query": "微波炉要注意什么",
+      "expect": "tips/learn/微波炉.md",
+      "rank": 1
+    },
+    {
+      "id": "qa-004",
+      "type": "dish_qa",
+      "query": "蛋炒饭怎么才能粒粒分明",
+      "expect": "dishes/staple/蛋炒饭.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-3b2c2c2d4540",
+      "type": "dish_qa",
+      "query": "蒸花卷的步骤是什么",
+      "expect": "dishes/breakfast/蒸花卷.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-607035e51e8e",
+      "type": "dish_qa",
+      "query": "虎皮肘子怎么做",
+      "expect": "dishes/meat_dish/虎皮肘子.md",
+      "rank": 1
+    },
+    {
+      "id": "tip-001",
+      "type": "tips_qa",
+      "query": "焯水一般要多久，怎么判断好了",
+      "expect": "tips/learn/学习焯水.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-59a36f117702",
+      "type": "tips_qa",
+      "query": "学习焯水要注意什么",
+      "expect": "tips/learn/学习焯水.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-97b808bb32ab",
+      "type": "dish_qa",
+      "query": "生汆丸子汤需要注意什么",
+      "expect": "dishes/soup/生汆丸子汤.md",
+      "rank": 1
+    },
+    {
+      "id": "qa-006",
+      "type": "dish_qa",
+      "query": "西红柿炒鸡蛋先炒蛋还是先炒西红柿",
+      "expect": "dishes/vegetable_dish/西红柿炒鸡蛋.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-d82acdc56844",
+      "type": "dish_qa",
+      "query": "猪皮冻需要注意什么",
+      "expect": "dishes/meat_dish/猪皮冻/猪皮冻.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-1748ca0a7075",
+      "type": "dish_qa",
+      "query": "微波葱姜黑鳕鱼需要注意什么",
+      "expect": "dishes/aquatic/微波葱姜黑鳕鱼.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-55cdd02c566d",
+      "type": "tips_qa",
+      "query": "怎么微波炉",
+      "expect": "tips/learn/微波炉.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-d7f381869ed1",
+      "type": "dish_qa",
+      "query": "杀猪菜要多久能做好",
+      "expect": "dishes/meat_dish/杀猪菜.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-36c7ccdb27d2",
+      "type": "dish_qa",
+      "query": "小炒黄牛肉要多久能做好",
+      "expect": "dishes/meat_dish/小炒黄牛肉/小炒黄牛肉.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-c78ba7392ccf",
+      "type": "dish_qa",
+      "query": "怎么做小炒藕丁",
+      "expect": "dishes/vegetable_dish/小炒藕丁/小炒藕丁.md",
+      "rank": 1
+    },
+    {
+      "id": "qa-005",
+      "type": "dish_qa",
+      "query": "水煮鱼最后淋热油是为什么",
+      "expect": "dishes/aquatic/水煮鱼.md",
+      "rank": 1
+    },
+    {
+      "id": "qa-001",
+      "type": "dish_qa",
+      "query": "宫保鸡丁怎么勾芡",
+      "expect": "dishes/meat_dish/宫保鸡丁/宫保鸡丁.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-05b440602dd4",
+      "type": "dish_qa",
+      "query": "醪糟小汤圆怎么做",
+      "expect": "dishes/staple/醪糟小汤圆.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-7e6225fe2286",
+      "type": "dish_qa",
+      "query": "蒜香酱油怎么做",
+      "expect": "dishes/condiment/蒜香酱油.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-8aac24c1786c",
+      "type": "dish_qa",
+      "query": "雷椒皮蛋要多久能做好",
+      "expect": "dishes/vegetable_dish/雷椒皮蛋.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-ca398ad5cd41",
+      "type": "dish_qa",
+      "query": "冬瓜茶的步骤是什么",
+      "expect": "dishes/drink/冬瓜茶.md",
+      "rank": 1
+    },
+    {
+      "id": "qa-003",
+      "type": "dish_qa",
+      "query": "清蒸鲈鱼要蒸多久",
+      "expect": "dishes/aquatic/清蒸鲈鱼/清蒸鲈鱼.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-bfd3b1dfdcfd",
+      "type": "tips_qa",
+      "query": "去腥要注意什么",
+      "expect": "tips/learn/去腥.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-db5e54933716",
+      "type": "dish_qa",
+      "query": "温泉蛋怎么做",
+      "expect": "dishes/breakfast/温泉蛋/温泉蛋.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-80dff4bed452",
+      "type": "dish_qa",
+      "query": "金针菇汤需要注意什么",
+      "expect": "dishes/soup/金针菇汤.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-520e3e16bf13",
+      "type": "dish_qa",
+      "query": "怎么做螺蛳粉",
+      "expect": "dishes/staple/螺蛳粉.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-80dff4bed452",
+      "type": "dish_qa",
+      "query": "金针菇汤要多久能做好",
+      "expect": "dishes/soup/金针菇汤.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-947d9f7f1e39",
+      "type": "dish_qa",
+      "query": "响油鳝丝要多久能做好",
+      "expect": "dishes/aquatic/响油鳝丝.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-db5e54933716",
+      "type": "dish_qa",
+      "query": "温泉蛋需要注意什么",
+      "expect": "dishes/breakfast/温泉蛋/温泉蛋.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-a7e0727f734c",
+      "type": "dish_qa",
+      "query": "蛋炒饭的步骤是什么",
+      "expect": "dishes/staple/蛋炒饭.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-57baeb1f0401",
+      "type": "dish_qa",
+      "query": "莴笋叶煎饼需要注意什么",
+      "expect": "dishes/vegetable_dish/莴笋叶煎饼/莴笋叶煎饼.md",
+      "rank": 1
+    },
+    {
+      "id": "qa-002",
+      "type": "dish_qa",
+      "query": "红烧肉炒糖色有什么技巧",
+      "expect": "tips/advanced/糖色的炒制.md",
+      "rank": null
+    },
+    {
+      "id": "auto-qa-a2c99279d978",
+      "type": "dish_qa",
+      "query": "怎么做水煮肉片",
+      "expect": "dishes/meat_dish/水煮肉片.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-14c2def0a243",
+      "type": "tips_qa",
+      "query": "怎么食品安全",
+      "expect": "tips/learn/食品安全.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-b589db4300db",
+      "type": "dish_qa",
+      "query": "无厨师机蜂蜜面包要多久能做好",
+      "expect": "dishes/dessert/无厨师机蜂蜜面包/无厨师机蜂蜜面包.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-c2319ceda2d3",
+      "type": "dish_qa",
+      "query": "口水鸡需要注意什么",
+      "expect": "dishes/meat_dish/口水鸡/口水鸡.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-55cdd02c566d",
+      "type": "tips_qa",
+      "query": "怎么微波炉",
+      "expect": "tips/learn/微波炉.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-b7fe181b8eb2",
+      "type": "tips_qa",
+      "query": "糖色的炒制有什么讲究",
+      "expect": "tips/advanced/糖色的炒制.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-582b9794972a",
+      "type": "dish_qa",
+      "query": "怎么做荷兰豆炒腊肠",
+      "expect": "dishes/meat_dish/荷兰豆炒腊肠/荷兰豆炒腊肠.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-d0ed2e37aa32",
+      "type": "dish_qa",
+      "query": "牛排怎么做",
+      "expect": "dishes/meat_dish/牛排/牛排.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-49bfd449eda1",
+      "type": "tips_qa",
+      "query": "高级专业术语要注意什么",
+      "expect": "tips/advanced/高级专业术语.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-3083b0cc253b",
+      "type": "dish_qa",
+      "query": "尖叫牛蛙怎么做",
+      "expect": "dishes/meat_dish/尖叫牛蛙/尖叫牛蛙.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-1ed01ecb8f3f",
+      "type": "dish_qa",
+      "query": "炒年糕的步骤是什么",
+      "expect": "dishes/staple/炒年糕.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-9558c250c670",
+      "type": "tips_qa",
+      "query": "食材相克与禁忌要注意什么",
+      "expect": "tips/食材相克与禁忌.md",
+      "rank": 1
+    },
+    {
+      "id": "tip-002",
+      "type": "tips_qa",
+      "query": "怎么判断油温到几成热",
+      "expect": "tips/advanced/油温判断技巧.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-3a84626fc522",
+      "type": "dish_qa",
+      "query": "烤箱版巴斯克芝士蛋糕要多久能做好",
+      "expect": "dishes/dessert/烤箱版巴斯克芝士蛋糕/烤箱版巴斯克芝士蛋糕.md",
+      "rank": 1
+    }
+  ]
+}

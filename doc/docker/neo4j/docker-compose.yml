@@ -1,0 +1,25 @@
+services:
+  neo4j:
+    image: neo4j:5.26.28-community
+    restart: always
+    container_name: yeahwhat2eat-neo4j
+
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+
+    environment:
+      NEO4J_AUTH: neo4j/password123
+      NEO4J_PLUGINS: '["apoc"]'
+      NEO4J_dbms_security_procedures_unrestricted: apoc.*
+
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:7474 >/dev/null 2>&1 || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+    volumes:
+      - ./neo4j_data:/data
+      - ./neo4j_logs:/logs

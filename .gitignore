@@ -1,0 +1,126 @@
+# ========================
+# Python / FastAPI Backend
+# ========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# Virtual Environments
+.venv/
+venv/
+env/
+.env
+
+# Pytest / Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Alembic
+alembic/versions/*.pyc
+
+# ========================
+# AI / ML Models & Data
+# ========================
+# ⚠️ 严禁提交大模型与向量索引
+models/
+checkpoints/
+*.pt
+*.pth
+*.onnx
+*.bin
+*.safetensors
+*.gguf
+
+# Sentence-Transformers Cache
+.cache/torch/
+.cache/huggingface/
+.cache/sentence_transformers/
+
+# Qdrant Local Storage
+qdrant_storage/
+storage/
+
+# Neo4j Local Data (若使用本地挂载卷)
+neo4j/data/
+neo4j/logs/
+neo4j/plugins/
+
+# ========================
+# Database (SQLite)
+# ========================
+*.db
+*.sqlite
+*.sqlite3
+*-wal
+*-shm
+*-journal
+
+# ========================
+# 业务数据（不可提交：SQLite/Kùzu/Qdrant 文件/打标备份等）
+# ========================
+backend/data/
+backend/_dir_*.txt
+
+# ========================
+# 发布产物（镜像打包 / 数据备份输出）
+# ========================
+releases/
+backups/
+
+# ========================
+# Frontend (Vue3 + Vite)
+# ========================
+node_modules/
+frontend/dist/
+frontend/.vite/
+*.tsbuildinfo
+.eslintcache
+
+# ========================
+# Docker & Deployment
+# ========================
+doc/docker/volumes/
+doc/docker/data/
+doc/docker/**/neo4j_data/
+doc/docker/**/neo4j_logs/
+doc/docker/**/qdrant_data/
+docker-compose.override.yml
+
+# ========================
+# 数据源图片（HowToCook 原仓库走 Git LFS，本地多为缺失的指针文本；
+# 不随发布记录入库，部署经卷挂载数据源目录，ETL 对缺失图容错）
+# ========================
+data/HowToCook-1.6.0/**/*.jpg
+data/HowToCook-1.6.0/**/*.jpeg
+data/HowToCook-1.6.0/**/*.png
+data/HowToCook-1.6.0/**/*.bmp
+data/HowToCook-1.6.0/**/*.webp
+
+# ========================
+# IDE & OS Files
+# ========================
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ========================
+# Secrets & Config
+# ========================
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json

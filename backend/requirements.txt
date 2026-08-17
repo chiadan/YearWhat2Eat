@@ -1,0 +1,56 @@
+# ─────────────────────────────────────────────────────────────
+# 「是啊吃什么」后端依赖（版本精确锁定，决策 9 ✅）
+# 安装: pip install -r requirements.txt
+# 升级依赖 = 显式修改版本号 + 重跑测试与评测（§13），杜绝隐式漂移
+# 注：langchain/langgraph 以本机实际可用版本为准（1.x），
+#     其余版本为锁定初值，M1 首次安装后 pip freeze > requirements.lock 最终固化
+# ─────────────────────────────────────────────────────────────
+
+# ── 核心 Web ────────────────────────────────────────────────
+fastapi==0.115.6
+uvicorn[standard]==0.32.1
+pydantic==2.10.4
+pydantic-settings==2.7.1
+
+# ── 数据库 ──────────────────────────────────────────────────
+sqlmodel==0.0.22                 # SQLite ORM（含 SQLAlchemy 2.0）
+alembic==1.14.0                  # 表结构迁移
+
+# ── 外部存储客户端（§12 存储可替换：provider 切换，接口见 core/clients/base.py） ──
+neo4j==5.26.0                        # 图库默认（graph_store_provider=neo4j）
+qdrant-client==1.12.1                # 向量库默认（vector_store_provider=qdrant）
+pymilvus==2.5.4                      # 向量库可替换（vector_store_provider=milvus；版本为 2.5 稳定线，如装不上按 pip 提示微调）
+psycopg2-binary==2.9.10              # 关系型可替换（database_url 填 postgresql+psycopg2://...）
+kuzu==0.11.3                         # Kùzu 嵌入式图数据库（graph_store_provider=kuzu；官方原生 API）
+# 注：langchain-kuzu 0.4.2 运行时依赖 langchain.chains（langchain 0.3 时代 API），与 langchain 1.x 不兼容，勿加
+# 注：langchain-community 包与 langchain 1.x 存在依赖冲突（其依赖 langchain-classic 旧线），勿加
+# 向量库 LangChain 集成（可选，provider=qdrant_lc/milvus_lc 扩展位）：langchain-qdrant / langchain-milvus
+#   —— 与 langchain 1.x 配套时版本同 1.x 线；因 langchain vectorstore 的文本级 API 与原始点操作
+#      存在阻抗（add_texts 会重复 embed），默认实现保留原生客户端（接口已抽象，可换库）
+
+# ── LLM / RAG 编排 ──────────────────────────────────────────
+langchain==1.2.12
+langchain-openai==1.3.1          # DeepSeek/OpenAI 兼容（base_url 接入，§10 多 Provider）
+langchain-anthropic==1.2.0       # Anthropic 接入（§10 多 Provider）
+                                 # ★ 必须与 langchain 1.x 对齐：0.3.x 要求 langchain-core<1.0，
+                                 #   与 langchain 1.2.x 冲突；1.3.0 对应尚在 alpha 的 langchain 1.3 线，勿用
+langgraph==1.1.2
+
+# ── 本地推理（默认 CPU 版 torch）────────────────────────────
+# CUDA 用户先执行:
+#   pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu121
+# 再安装本文件其余依赖
+sentence-transformers==3.3.1
+torch==2.5.1
+
+# ── 认证与安全 ──────────────────────────────────────────────
+slowapi==0.1.9                   # 接口限流
+PyJWT==2.10.1
+passlib[bcrypt]==1.7.4           # 密码哈希（需搭配 bcrypt==4.0.1；bcrypt>=4.1 移除 __about__ 导致 passlib 自检崩溃）
+bcrypt==4.0.1
+cryptography==42.0.8             # BYOK：用户自定义 DeepSeek Key 加密存储（§10）
+
+# ── 其它 ────────────────────────────────────────────────────
+httpx==0.28.1                    # OpenAI SDK 传输层
+cachetools==5.5.0                # 内存二级缓存
+python-multipart==0.0.20

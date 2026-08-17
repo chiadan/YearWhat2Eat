@@ -1,0 +1,52 @@
+# 「是啊吃什么」Lite 一键部署（§12 M6）：SQLite + Kùzu + Qdrant 文件全部嵌入后端，
+# 零外部依赖（无需任何数据库容器），前后端分离（nginx + uvicorn 单 worker）。
+# 用法：
+#   cp doc/docker/.env.example .env    # 在 doc/docker/ 下
+#   docker compose -f doc/docker/lite/docker-compose.yml up -d --build
+# 首次启动：backend entrypoint 自动初始化（dish_meta 为空时 ETL，需 DEEPSEEK_API_KEY）
+services:
+  backend:
+    build:
+      context: ../../../backend
+    restart: always
+    container_name: yeahwhat2eat-lite-backend
+    environment:
+      # ── Lite：三库全部文件嵌入（§12 M6） ──
+      SQLITE_PATH: /data/yeahwhat2eat.db
+      GRAPH_STORE_PROVIDER: kuzu
+      KUZU_DB_PATH: /data/kuzu
+      VECTOR_STORE_PROVIDER: qdrant
+      QDRANT_LOCAL_PATH: /data/qdrant
+      # ── 数据源（卷挂载，只读） ──
+      DATA_SOURCE_DIR: /data/HowToCook-1.6.0
+      # ── LLM / 安全（部署 .env 提供） ──
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      JWT_SECRET: ${JWT_SECRET:-change-me-to-random-32+bytes}
+      APP_ENV: ${APP_ENV:-prod}
+      # ── 代理透传（可选，勿写死端口）：容器访问外网（DeepSeek API 等）需要代理时，
+      #    在部署 .env 或 shell 环境设置 HTTP_PROXY/HTTPS_PROXY（如 http://127.0.0.1:7897）即透传；
+      #    未设置则空（直连）。NO_PROXY 保证内部服务（本机/后端）不走代理。
+      HTTP_PROXY: ${HTTP_PROXY:-}
+      HTTPS_PROXY: ${HTTPS_PROXY:-}
+      NO_PROXY: ${NO_PROXY:-localhost,127.0.0.1,backend,frontend}
+    volumes:
+      - ../../../data/HowToCook-1.6.0:/data/HowToCook-1.6.0:ro
+      - backend_data:/data
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+
+  frontend:
+    build:
+      context: ../../../frontend
+      args:
+        VITE_API_BASE_URL: /api/v1
+        VITE_APP_NAME: ${VITE_APP_NAME:-是啊吃什么}
+    restart: always
+    container_name: yeahwhat2eat-lite-frontend
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    depends_on:
+      - backend
+
+volumes:
+  backend_data:

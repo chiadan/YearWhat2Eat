@@ -1,0 +1,171 @@
+{
+  "version": "0.1-draft",
+  "note": "AI 生成的 golden_qa 初版草稿（决策 11 ✅）。M2 前需扩充至 100~200 条、人工审核修订后移入 backend/tests/eval/golden_qa.json 作为评测基准。",
+  "schema": {
+    "type": "recommend|dish_qa|tips_qa",
+    "expect": "结构化约束（推荐类）/ 期望引用与关键词（问答类）",
+    "expect_rewrite": "期望的 query_rewriter 扩写结果（§6.4），用于扩写评测（实体 F1）"
+  },
+  "items": [
+    {
+      "id": "rec-001",
+      "type": "recommend",
+      "query": "3 人晚餐想吃辣",
+      "user_profile": null,
+      "expect": { "people": 3, "meal_type": "晚餐", "meat_count": 2, "veg_count": 2, "spicy": true, "avoids": [] },
+      "expect_rewrite": { "rewritten_query": "三人晚餐，想吃辣味的菜", "entities": { "meal_type": ["晚餐"], "people": 3, "flavors": ["辣"] } }
+    },
+    {
+      "id": "rec-002",
+      "type": "recommend",
+      "query": "一个人晚上随便吃点，不想太麻烦",
+      "user_profile": { "skill_level": "新手" },
+      "expect": { "people": 1, "meal_type": "晚餐", "difficulty_max": 3, "fast": true },
+      "expect_rewrite": { "rewritten_query": "一人晚餐，简单快手，半小时内", "entities": { "meal_type": ["晚餐"], "people": 1, "max_time_min": 30 } }
+    },
+    {
+      "id": "rec-003",
+      "type": "recommend",
+      "query": "两个人早餐吃什么",
+      "user_profile": null,
+      "expect": { "people": 2, "meal_type": "早餐", "meat_count": 1, "veg_count": 1 },
+      "expect_rewrite": { "rewritten_query": "两人早餐", "entities": { "meal_type": ["早餐"], "people": 2 } }
+    },
+    {
+      "id": "rec-004",
+      "type": "recommend",
+      "query": "周末请 4 个朋友来家里吃晚饭，想做点硬菜",
+      "user_profile": { "skill_level": "熟练" },
+      "expect": { "people": 4, "meal_type": "晚餐", "meat_count": 3, "veg_count": 2, "hearty": true, "animal_diversity": true },
+      "expect_rewrite": { "rewritten_query": "四人聚餐晚餐，肉类硬菜，招待朋友", "entities": { "meal_type": ["晚餐"], "people": 4, "flavors": ["浓郁"] } }
+    },
+    {
+      "id": "rec-005",
+      "type": "recommend",
+      "query": "最近在减肥，一个人晚餐想吃清淡的",
+      "user_profile": { "diet_type": "减脂" },
+      "expect": { "people": 1, "meal_type": "晚餐", "diet_type": "减脂", "flavors": ["清淡"], "avoid_heavy": true },
+      "expect_rewrite": { "rewritten_query": "减脂晚餐，清淡低油", "entities": { "meal_type": ["晚餐"], "diet_type": ["减脂"], "flavors": ["清淡"] } }
+    },
+    {
+      "id": "rec-006",
+      "type": "recommend",
+      "query": "不吃香菜，两个人中午吃什么",
+      "user_profile": { "avoid_list": ["香菜"] },
+      "expect": { "people": 2, "meal_type": "午餐", "avoids": ["香菜"], "no_coriander": true },
+      "expect_rewrite": { "rewritten_query": "两人午餐，不含香菜", "entities": { "meal_type": ["午餐"], "people": 2, "avoids": ["香菜"] } }
+    },
+    {
+      "id": "rec-007",
+      "type": "recommend",
+      "query": "家里只有微波炉和电饭煲，两个人能做什么菜",
+      "user_profile": { "tools": ["微波炉", "电饭煲"] },
+      "expect": { "people": 2, "tools": ["微波炉", "电饭煲"], "tool_match": true },
+      "expect_rewrite": { "rewritten_query": "只用微波炉和电饭煲可做的菜", "entities": { "tools": ["微波炉", "电饭煲"] } }
+    },
+    {
+      "id": "rec-008",
+      "type": "recommend",
+      "query": "冬天晚餐想喝汤，两个人",
+      "user_profile": null,
+      "expect": { "people": 2, "meal_type": "晚餐", "include_soup": true, "season": "冬" },
+      "expect_rewrite": { "rewritten_query": "两人冬天晚餐，想喝热汤", "entities": { "meal_type": ["晚餐"], "people": 2, "category": ["soup"] } }
+    },
+    {
+      "id": "rec-009",
+      "type": "recommend",
+      "query": "想吃鱼，两个人，不想太麻烦，30 分钟内搞定",
+      "user_profile": { "skill_level": "进阶" },
+      "expect": { "people": 2, "max_time_min": 30, "main_ingredient": "鱼", "fast": true },
+      "expect_rewrite": { "rewritten_query": "半小时内能完成的鱼料理", "entities": { "ingredients": ["鱼"], "max_time_min": 30 } }
+    },
+    {
+      "id": "rec-010",
+      "type": "recommend",
+      "query": "给小孩做点甜口的菜，三个人",
+      "user_profile": { "family": "有小孩" },
+      "expect": { "people": 3, "flavors": ["甜"], "kid_friendly": true },
+      "expect_rewrite": { "rewritten_query": "三人份，甜口，适合小孩的菜", "entities": { "people": 3, "flavors": ["甜"] } }
+    },
+    {
+      "id": "rec-011",
+      "type": "recommend",
+      "query": "深夜一个人饿了，想快速煮个面",
+      "user_profile": null,
+      "expect": { "people": 1, "meal_type": "夜宵", "category": ["staple"] },
+      "expect_rewrite": { "rewritten_query": "深夜夜宵，快速煮面", "entities": { "meal_type": ["夜宵"], "max_time_min": 20, "category": ["staple"] } }
+    },
+    {
+      "id": "rec-012",
+      "type": "recommend",
+      "query": "家里有鸡胸肉和青椒，两个人能做什么",
+      "user_profile": null,
+      "expect": { "people": 2, "use_ingredients": ["鸡胸肉", "青椒"], "ingredient_match": true },
+      "expect_rewrite": { "rewritten_query": "用鸡胸肉和青椒做的菜", "entities": { "ingredients": ["鸡胸肉", "青椒"] } }
+    },
+    {
+      "id": "qa-001",
+      "type": "dish_qa",
+      "query": "宫保鸡丁怎么勾芡",
+      "user_profile": null,
+      "expect": { "ref_doc": "dishes/meat_dish/宫保鸡丁/宫保鸡丁.md", "keywords": ["水淀粉", "收汁"] },
+      "expect_rewrite": { "rewritten_query": "宫保鸡丁 勾芡 步骤", "entities": { "dish_names": ["宫保鸡丁"], "techniques": ["勾芡"] } }
+    },
+    {
+      "id": "qa-002",
+      "type": "dish_qa",
+      "query": "红烧肉炒糖色有什么技巧",
+      "user_profile": null,
+      "expect": { "ref_doc": "tips/advanced/糖色的炒制.md", "keywords": ["糖色", "小火"] },
+      "expect_rewrite": { "rewritten_query": "红烧肉 炒糖色 技巧", "entities": { "dish_names": ["红烧肉"], "techniques": ["炒糖色"] } }
+    },
+    {
+      "id": "qa-003",
+      "type": "dish_qa",
+      "query": "清蒸鲈鱼要蒸多久",
+      "user_profile": null,
+      "expect": { "ref_doc": "dishes/aquatic/清蒸鲈鱼/清蒸鲈鱼.md", "keywords": ["蒸", "时间"] },
+      "expect_rewrite": { "rewritten_query": "清蒸鲈鱼 蒸制时间", "entities": { "dish_names": ["清蒸鲈鱼"], "techniques": ["蒸"] } }
+    },
+    {
+      "id": "qa-004",
+      "type": "dish_qa",
+      "query": "蛋炒饭怎么才能粒粒分明",
+      "user_profile": null,
+      "expect": { "ref_doc": "dishes/staple/蛋炒饭.md", "keywords": ["隔夜饭", "粒粒分明"] },
+      "expect_rewrite": { "rewritten_query": "蛋炒饭 粒粒分明 做法", "entities": { "dish_names": ["蛋炒饭"] } }
+    },
+    {
+      "id": "qa-005",
+      "type": "dish_qa",
+      "query": "水煮鱼最后淋热油是为什么",
+      "user_profile": null,
+      "expect": { "ref_doc": "dishes/aquatic/水煮鱼.md", "keywords": ["热油", "激香"] },
+      "expect_rewrite": { "rewritten_query": "水煮鱼 淋热油 作用", "entities": { "dish_names": ["水煮鱼"] } }
+    },
+    {
+      "id": "qa-006",
+      "type": "dish_qa",
+      "query": "西红柿炒鸡蛋先炒蛋还是先炒西红柿",
+      "user_profile": null,
+      "expect": { "ref_doc": "dishes/vegetable_dish/西红柿炒鸡蛋.md", "keywords": ["先炒鸡蛋"] },
+      "expect_rewrite": { "rewritten_query": "西红柿炒鸡蛋 先后顺序", "entities": { "dish_names": ["西红柿炒鸡蛋"] } }
+    },
+    {
+      "id": "tip-001",
+      "type": "tips_qa",
+      "query": "焯水一般要多久，怎么判断好了",
+      "user_profile": null,
+      "expect": { "ref_doc": "tips/learn/学习焯水.md", "keywords": ["焯水", "变色"] },
+      "expect_rewrite": { "rewritten_query": "焯水时间与判断标准", "entities": { "techniques": ["焯水"] } }
+    },
+    {
+      "id": "tip-002",
+      "type": "tips_qa",
+      "query": "怎么判断油温到几成热",
+      "user_profile": null,
+      "expect": { "ref_doc": "tips/advanced/油温判断技巧.md", "keywords": ["油温", "筷子"] },
+      "expect_rewrite": { "rewritten_query": "油温判断 几成热 方法", "entities": { "techniques": ["油温判断"] } }
+    }
+  ]
+}

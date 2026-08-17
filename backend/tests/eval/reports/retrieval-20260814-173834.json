@@ -1,0 +1,358 @@
+{
+  "timestamp": "2026-08-14 17:38:34",
+  "golden_version": "0.2-auto-draft",
+  "items_evaluated": 48,
+  "recall_at_5": 0.9792,
+  "mrr_at_10": 0.9792,
+  "targets": {
+    "recall_at_5": 0.8,
+    "mrr_at_10": 0.7
+  },
+  "misses": [
+    {
+      "id": "qa-002",
+      "type": "dish_qa",
+      "query": "红烧肉炒糖色有什么技巧",
+      "expect": "tips/advanced/糖色的炒制.md",
+      "rank": null
+    }
+  ],
+  "results": [
+    {
+      "id": "auto-qa-a0ab3bffe95d",
+      "type": "dish_qa",
+      "query": "怎么做徽派红烧肉",
+      "expect": "dishes/meat_dish/徽派红烧肉/徽派红烧肉.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-417bb98a1b80",
+      "type": "dish_qa",
+      "query": "柱候牛腩怎么做",
+      "expect": "dishes/meat_dish/柱候牛腩/柱候牛腩.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-55cdd02c566d",
+      "type": "tips_qa",
+      "query": "微波炉一般怎么做",
+      "expect": "tips/learn/微波炉.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-55cdd02c566d",
+      "type": "tips_qa",
+      "query": "微波炉要注意什么",
+      "expect": "tips/learn/微波炉.md",
+      "rank": 1
+    },
+    {
+      "id": "qa-004",
+      "type": "dish_qa",
+      "query": "蛋炒饭怎么才能粒粒分明",
+      "expect": "dishes/staple/蛋炒饭.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-3b2c2c2d4540",
+      "type": "dish_qa",
+      "query": "蒸花卷的步骤是什么",
+      "expect": "dishes/breakfast/蒸花卷.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-607035e51e8e",
+      "type": "dish_qa",
+      "query": "虎皮肘子怎么做",
+      "expect": "dishes/meat_dish/虎皮肘子.md",
+      "rank": 1
+    },
+    {
+      "id": "tip-001",
+      "type": "tips_qa",
+      "query": "焯水一般要多久，怎么判断好了",
+      "expect": "tips/learn/学习焯水.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-59a36f117702",
+      "type": "tips_qa",
+      "query": "学习焯水要注意什么",
+      "expect": "tips/learn/学习焯水.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-97b808bb32ab",
+      "type": "dish_qa",
+      "query": "生汆丸子汤需要注意什么",
+      "expect": "dishes/soup/生汆丸子汤.md",
+      "rank": 1
+    },
+    {
+      "id": "qa-006",
+      "type": "dish_qa",
+      "query": "西红柿炒鸡蛋先炒蛋还是先炒西红柿",
+      "expect": "dishes/vegetable_dish/西红柿炒鸡蛋.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-d82acdc56844",
+      "type": "dish_qa",
+      "query": "猪皮冻需要注意什么",
+      "expect": "dishes/meat_dish/猪皮冻/猪皮冻.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-1748ca0a7075",
+      "type": "dish_qa",
+      "query": "微波葱姜黑鳕鱼需要注意什么",
+      "expect": "dishes/aquatic/微波葱姜黑鳕鱼.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-55cdd02c566d",
+      "type": "tips_qa",
+      "query": "怎么微波炉",
+      "expect": "tips/learn/微波炉.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-d7f381869ed1",
+      "type": "dish_qa",
+      "query": "杀猪菜要多久能做好",
+      "expect": "dishes/meat_dish/杀猪菜.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-36c7ccdb27d2",
+      "type": "dish_qa",
+      "query": "小炒黄牛肉要多久能做好",
+      "expect": "dishes/meat_dish/小炒黄牛肉/小炒黄牛肉.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-c78ba7392ccf",
+      "type": "dish_qa",
+      "query": "怎么做小炒藕丁",
+      "expect": "dishes/vegetable_dish/小炒藕丁/小炒藕丁.md",
+      "rank": 1
+    },
+    {
+      "id": "qa-005",
+      "type": "dish_qa",
+      "query": "水煮鱼最后淋热油是为什么",
+      "expect": "dishes/aquatic/水煮鱼.md",
+      "rank": 1
+    },
+    {
+      "id": "qa-001",
+      "type": "dish_qa",
+      "query": "宫保鸡丁怎么勾芡",
+      "expect": "dishes/meat_dish/宫保鸡丁/宫保鸡丁.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-05b440602dd4",
+      "type": "dish_qa",
+      "query": "醪糟小汤圆怎么做",
+      "expect": "dishes/staple/醪糟小汤圆.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-7e6225fe2286",
+      "type": "dish_qa",
+      "query": "蒜香酱油怎么做",
+      "expect": "dishes/condiment/蒜香酱油.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-8aac24c1786c",
+      "type": "dish_qa",
+      "query": "雷椒皮蛋要多久能做好",
+      "expect": "dishes/vegetable_dish/雷椒皮蛋.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-ca398ad5cd41",
+      "type": "dish_qa",
+      "query": "冬瓜茶的步骤是什么",
+      "expect": "dishes/drink/冬瓜茶.md",
+      "rank": 1
+    },
+    {
+      "id": "qa-003",
+      "type": "dish_qa",
+      "query": "清蒸鲈鱼要蒸多久",
+      "expect": "dishes/aquatic/清蒸鲈鱼/清蒸鲈鱼.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-bfd3b1dfdcfd",
+      "type": "tips_qa",
+      "query": "去腥要注意什么",
+      "expect": "tips/learn/去腥.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-db5e54933716",
+      "type": "dish_qa",
+      "query": "温泉蛋怎么做",
+      "expect": "dishes/breakfast/温泉蛋/温泉蛋.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-80dff4bed452",
+      "type": "dish_qa",
+      "query": "金针菇汤需要注意什么",
+      "expect": "dishes/soup/金针菇汤.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-520e3e16bf13",
+      "type": "dish_qa",
+      "query": "怎么做螺蛳粉",
+      "expect": "dishes/staple/螺蛳粉.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-80dff4bed452",
+      "type": "dish_qa",
+      "query": "金针菇汤要多久能做好",
+      "expect": "dishes/soup/金针菇汤.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-947d9f7f1e39",
+      "type": "dish_qa",
+      "query": "响油鳝丝要多久能做好",
+      "expect": "dishes/aquatic/响油鳝丝.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-db5e54933716",
+      "type": "dish_qa",
+      "query": "温泉蛋需要注意什么",
+      "expect": "dishes/breakfast/温泉蛋/温泉蛋.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-a7e0727f734c",
+      "type": "dish_qa",
+      "query": "蛋炒饭的步骤是什么",
+      "expect": "dishes/staple/蛋炒饭.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-57baeb1f0401",
+      "type": "dish_qa",
+      "query": "莴笋叶煎饼需要注意什么",
+      "expect": "dishes/vegetable_dish/莴笋叶煎饼/莴笋叶煎饼.md",
+      "rank": 1
+    },
+    {
+      "id": "qa-002",
+      "type": "dish_qa",
+      "query": "红烧肉炒糖色有什么技巧",
+      "expect": "tips/advanced/糖色的炒制.md",
+      "rank": null
+    },
+    {
+      "id": "auto-qa-a2c99279d978",
+      "type": "dish_qa",
+      "query": "怎么做水煮肉片",
+      "expect": "dishes/meat_dish/水煮肉片.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-14c2def0a243",
+      "type": "tips_qa",
+      "query": "怎么食品安全",
+      "expect": "tips/learn/食品安全.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-b589db4300db",
+      "type": "dish_qa",
+      "query": "无厨师机蜂蜜面包要多久能做好",
+      "expect": "dishes/dessert/无厨师机蜂蜜面包/无厨师机蜂蜜面包.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-c2319ceda2d3",
+      "type": "dish_qa",
+      "query": "口水鸡需要注意什么",
+      "expect": "dishes/meat_dish/口水鸡/口水鸡.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-55cdd02c566d",
+      "type": "tips_qa",
+      "query": "怎么微波炉",
+      "expect": "tips/learn/微波炉.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-b7fe181b8eb2",
+      "type": "tips_qa",
+      "query": "糖色的炒制有什么讲究",
+      "expect": "tips/advanced/糖色的炒制.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-582b9794972a",
+      "type": "dish_qa",
+      "query": "怎么做荷兰豆炒腊肠",
+      "expect": "dishes/meat_dish/荷兰豆炒腊肠/荷兰豆炒腊肠.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-d0ed2e37aa32",
+      "type": "dish_qa",
+      "query": "牛排怎么做",
+      "expect": "dishes/meat_dish/牛排/牛排.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-49bfd449eda1",
+      "type": "tips_qa",
+      "query": "高级专业术语要注意什么",
+      "expect": "tips/advanced/高级专业术语.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-3083b0cc253b",
+      "type": "dish_qa",
+      "query": "尖叫牛蛙怎么做",
+      "expect": "dishes/meat_dish/尖叫牛蛙/尖叫牛蛙.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-1ed01ecb8f3f",
+      "type": "dish_qa",
+      "query": "炒年糕的步骤是什么",
+      "expect": "dishes/staple/炒年糕.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-tip-9558c250c670",
+      "type": "tips_qa",
+      "query": "食材相克与禁忌要注意什么",
+      "expect": "tips/食材相克与禁忌.md",
+      "rank": 1
+    },
+    {
+      "id": "tip-002",
+      "type": "tips_qa",
+      "query": "怎么判断油温到几成热",
+      "expect": "tips/advanced/油温判断技巧.md",
+      "rank": 1
+    },
+    {
+      "id": "auto-qa-3a84626fc522",
+      "type": "dish_qa",
+      "query": "烤箱版巴斯克芝士蛋糕要多久能做好",
+      "expect": "dishes/dessert/烤箱版巴斯克芝士蛋糕/烤箱版巴斯克芝士蛋糕.md",
+      "rank": 1
+    }
+  ]
+}

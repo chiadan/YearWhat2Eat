@@ -1,0 +1,284 @@
+/* 五套主流主题 Design Tokens（需求：多主题可选，组件风格统一）
+ * 1. Solarized Light（经典低饱和）
+ * 2. Solarized Dark
+ * 3. GitHub Light（白色 + #0969da）
+ * 4. GitHub Dark（#0d1117 + #58a6ff）
+ * 5. Nord（北欧冷色，极简高级感）
+ *
+ * 每套主题同时覆盖 Element Plus 变量（--el-*），保证组件库与自定义样式统一；
+ * 暗色主题额外挂 html.dark class（Element Plus 暗色联动）。
+ */
+:root {
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-full: 999px;
+}
+
+/* ═══ 1. Solarized Light ═══ */
+:root[data-theme='solarized-light'] {
+  --bg-primary: #fdf6e3;
+  --bg-secondary: #eee8d5;
+  --bg-hover: #e4ddc9;
+  --text-primary: #657b83;
+  --text-secondary: #93a1a1;
+  --text-strong: #586e75;
+  --border: rgba(101, 123, 131, 0.25);
+  --accent: #268bd2;
+  --success: #859900;
+  --warning: #b58900;
+  --danger: #dc322f;
+  --info: #2aa198;
+  --highlight: #6c71c4;
+  --shadow: 0 2px 8px rgba(88, 110, 117, 0.12);
+  --code-bg: #eee8d5;
+
+  --el-color-primary: #268bd2;
+  --el-color-primary-light-3: color-mix(in srgb, #268bd2 70%, #fff);
+  --el-color-primary-light-5: color-mix(in srgb, #268bd2 50%, #fff);
+  --el-color-primary-light-7: color-mix(in srgb, #268bd2 30%, #fff);
+  --el-color-primary-light-9: color-mix(in srgb, #268bd2 10%, #fff);
+  --el-color-primary-dark-2: color-mix(in srgb, #268bd2 80%, #000);
+  --el-bg-color: #eee8d5;
+  --el-bg-color-overlay: #fdf6e3;
+  --el-fill-color-blank: #fdf6e3;
+  --el-fill-color-light: #e4ddc9;
+  --el-text-color-primary: #657b83;
+  --el-text-color-regular: #586e75;
+  --el-text-color-secondary: #93a1a1;
+  --el-border-color: rgba(101, 123, 131, 0.3);
+  --el-border-color-light: rgba(101, 123, 131, 0.2);
+  /* 遮罩（v-loading/全屏）随主题底色，防暗色主题闪白屏 */
+  --el-mask-color: rgba(253, 246, 227, 0.9);
+  --el-mask-color-extra-light: rgba(253, 246, 227, 0.85);
+}
+
+/* ═══ 2. Solarized Dark ═══ */
+:root[data-theme='solarized-dark'] {
+  --bg-primary: #002b36;
+  --bg-secondary: #073642;
+  --bg-hover: #0a3d4a;
+  --text-primary: #839496;
+  --text-secondary: #93a1a1;
+  --text-strong: #eee8d5;
+  --border: rgba(131, 148, 150, 0.25);
+  --accent: #268bd2;
+  --success: #859900;
+  --warning: #b58900;
+  --danger: #cb4b16;
+  --info: #2aa198;
+  --highlight: #d33682;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --code-bg: #073642;
+
+  --el-color-primary: #268bd2;
+  --el-color-primary-light-3: color-mix(in srgb, #268bd2 70%, #fff);
+  --el-color-primary-light-5: color-mix(in srgb, #268bd2 50%, #fff);
+  --el-color-primary-light-7: color-mix(in srgb, #268bd2 30%, #fff);
+  --el-color-primary-light-9: color-mix(in srgb, #268bd2 10%, #fff);
+  --el-color-primary-dark-2: color-mix(in srgb, #268bd2 80%, #000);
+  --el-bg-color: #073642;
+  --el-bg-color-overlay: #073642;
+  --el-fill-color-blank: #073642;
+  --el-fill-color-light: #0a3d4a;
+  --el-text-color-primary: #839496;
+  --el-text-color-regular: #93a1a1;
+  --el-text-color-secondary: #586e75;
+  --el-border-color: rgba(131, 148, 150, 0.3);
+  --el-border-color-light: rgba(131, 148, 150, 0.2);
+  /* 遮罩随主题底色（暗色主题不闪白屏） */
+  --el-mask-color: rgba(0, 43, 54, 0.9);
+  --el-mask-color-extra-light: rgba(0, 43, 54, 0.85);
+}
+
+/* ═══ 3. GitHub Light ═══ */
+:root[data-theme='github-light'] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f6f8fa;
+  --bg-hover: #eef1f4;
+  --text-primary: #1f2328;
+  --text-secondary: #59636e;
+  --text-strong: #1f2328;
+  --border: rgba(31, 35, 40, 0.15);
+  --accent: #0969da;
+  --success: #1a7f37;
+  --warning: #9a6700;
+  --danger: #cf222e;
+  --info: #0969da;
+  --highlight: #8250df;
+  --shadow: 0 2px 8px rgba(31, 35, 40, 0.08);
+  --code-bg: #f6f8fa;
+
+  --el-color-primary: #0969da;
+  --el-color-primary-light-3: color-mix(in srgb, #0969da 70%, #fff);
+  --el-color-primary-light-5: color-mix(in srgb, #0969da 50%, #fff);
+  --el-color-primary-light-7: color-mix(in srgb, #0969da 30%, #fff);
+  --el-color-primary-light-9: color-mix(in srgb, #0969da 10%, #fff);
+  --el-color-primary-dark-2: color-mix(in srgb, #0969da 80%, #000);
+  --el-bg-color: #f6f8fa;
+  --el-bg-color-overlay: #ffffff;
+  --el-fill-color-blank: #ffffff;
+  --el-fill-color-light: #eef1f4;
+  --el-text-color-primary: #1f2328;
+  --el-text-color-regular: #59636e;
+  --el-text-color-secondary: #59636e;
+  --el-border-color: rgba(31, 35, 40, 0.18);
+  --el-border-color-light: rgba(31, 35, 40, 0.12);
+  /* 遮罩随主题底色 */
+  --el-mask-color: rgba(255, 255, 255, 0.9);
+  --el-mask-color-extra-light: rgba(255, 255, 255, 0.85);
+}
+
+/* ═══ 4. GitHub Dark ═══ */
+:root[data-theme='github-dark'] {
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-hover: #1f2630;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-strong: #f0f6fc;
+  --border: rgba(240, 246, 252, 0.12);
+  --accent: #58a6ff;
+  --success: #3fb950;
+  --warning: #d29922;
+  --danger: #f85149;
+  --info: #58a6ff;
+  --highlight: #bc8cff;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --code-bg: #161b22;
+
+  --el-color-primary: #58a6ff;
+  --el-color-primary-light-3: color-mix(in srgb, #58a6ff 70%, #fff);
+  --el-color-primary-light-5: color-mix(in srgb, #58a6ff 50%, #fff);
+  --el-color-primary-light-7: color-mix(in srgb, #58a6ff 30%, #fff);
+  --el-color-primary-light-9: color-mix(in srgb, #58a6ff 10%, #fff);
+  --el-color-primary-dark-2: color-mix(in srgb, #58a6ff 80%, #000);
+  --el-bg-color: #161b22;
+  --el-bg-color-overlay: #161b22;
+  --el-fill-color-blank: #161b22;
+  --el-fill-color-light: #1f2630;
+  --el-text-color-primary: #e6edf3;
+  --el-text-color-regular: #8b949e;
+  --el-text-color-secondary: #8b949e;
+  --el-border-color: rgba(240, 246, 252, 0.16);
+  --el-border-color-light: rgba(240, 246, 252, 0.1);
+  /* 遮罩随主题底色（暗色主题不闪白屏） */
+  --el-mask-color: rgba(13, 17, 23, 0.9);
+  --el-mask-color-extra-light: rgba(13, 17, 23, 0.85);
+}
+
+/* ═══ 5. Nord ═══ */
+:root[data-theme='nord'] {
+  --bg-primary: #eceff4;
+  --bg-secondary: #e5e9f0;
+  --bg-hover: #d8dee9;
+  --text-primary: #2e3440;
+  --text-secondary: #4c566a;
+  --text-strong: #2e3440;
+  --border: rgba(46, 52, 64, 0.18);
+  --accent: #5e81ac;
+  --success: #a3be8c;
+  --warning: #ebcb8b;
+  --danger: #bf616a;
+  --info: #88c0d0;
+  --highlight: #b48ead;
+  --shadow: 0 2px 8px rgba(46, 52, 64, 0.12);
+  --code-bg: #e5e9f0;
+
+  --el-color-primary: #5e81ac;
+  --el-color-primary-light-3: color-mix(in srgb, #5e81ac 70%, #fff);
+  --el-color-primary-light-5: color-mix(in srgb, #5e81ac 50%, #fff);
+  --el-color-primary-light-7: color-mix(in srgb, #5e81ac 30%, #fff);
+  --el-color-primary-light-9: color-mix(in srgb, #5e81ac 10%, #fff);
+  --el-color-primary-dark-2: color-mix(in srgb, #5e81ac 80%, #000);
+  --el-bg-color: #e5e9f0;
+  --el-bg-color-overlay: #eceff4;
+  --el-fill-color-blank: #eceff4;
+  --el-fill-color-light: #d8dee9;
+  --el-text-color-primary: #2e3440;
+  --el-text-color-regular: #4c566a;
+  --el-text-color-secondary: #4c566a;
+  --el-border-color: rgba(46, 52, 64, 0.2);
+  --el-border-color-light: rgba(46, 52, 64, 0.14);
+  /* 遮罩随主题底色 */
+  --el-mask-color: rgba(236, 239, 244, 0.9);
+  --el-mask-color-extra-light: rgba(236, 239, 244, 0.85);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family:
+    'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', -apple-system, 'Segoe UI',
+    Roboto, sans-serif;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* 页面容器（百分比自适应：左右各留约 12% 白边，中屏铺满；聊天页用 .page-wide 全宽） */
+.page-container {
+  width: 100%;
+  max-width: min(76%, 1700px);
+  margin: 0 auto;
+  padding: 16px;
+}
+
+@media (max-width: 1280px) {
+  .page-container {
+    max-width: 100%; /* 屏幕较小时铺满 */
+  }
+}
+
+/* 聊天页：铺满整行（无左右白边） */
+.page-wide {
+  max-width: none;
+  padding: 0 16px;
+}
+
+/* 通用卡片（圆角 + 柔和阴影） */
+.app-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+/* 滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--text-secondary);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+/* Element Plus 暗色联动（§10.1）：暗色主题挂 html.dark，组件库内部暗色判断生效 */
+html.dark {
+  color-scheme: dark;
+}

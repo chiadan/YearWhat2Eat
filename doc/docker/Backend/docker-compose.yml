@@ -1,0 +1,48 @@
+# 后端服务（§12 M6 企业级部署）：PG + Milvus + Neo4j 各自独立容器
+# 三库连接参数/密码全部可经部署 .env 覆盖（doc/docker/.env.example）
+services:
+  backend:
+    build:
+      context: ../../../backend
+    restart: always
+    container_name: yeahwhat2eat-backend
+    environment:
+      # ── 关系型：PostgreSQL（可替换 SQLite，§12 存储可替换） ──
+      DATABASE_URL: postgresql+psycopg2://${PG_USER:-postgres}:${PG_PASSWORD:-postgres123}@pg:5432/${PG_DB:-yeahwhat2eat}
+      # ── 向量库：Milvus（可替换 Qdrant） ──
+      VECTOR_STORE_PROVIDER: ${VECTOR_STORE_PROVIDER:-milvus}
+      MILVUS_URI: http://milvus:19530
+      MILVUS_TOKEN: ${MILVUS_TOKEN:-}
+      QDRANT_URL: http://qdrant:6333
+      # ── 图库：Neo4j（可替换 Kùzu 嵌入式） ──
+      GRAPH_STORE_PROVIDER: ${GRAPH_STORE_PROVIDER:-neo4j}
+      NEO4J_URI: bolt://neo4j:7687
+      NEO4J_USER: ${NEO4J_USER:-neo4j}
+      NEO4J_PASSWORD: ${NEO4J_PASSWORD:-password123}
+      KUZU_DB_PATH: /data/kuzu
+      # ── 数据源（卷挂载，只读）与业务数据 ──
+      DATA_SOURCE_DIR: /data/HowToCook-1.6.0
+      SQLITE_PATH: /data/yeahwhat2eat.db
+      # ── LLM / 安全（部署 .env 提供） ──
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      JWT_SECRET: ${JWT_SECRET:-change-me-to-random-32+bytes}
+      APP_ENV: ${APP_ENV:-prod}
+      # ── 代理透传（可选）：宿主机有 HTTP 代理（如 clash 7897）时，容器经代理访问外网
+      HTTP_PROXY: ${HTTP_PROXY:-}
+      HTTPS_PROXY: ${HTTPS_PROXY:-}
+      NO_PROXY: ${NO_PROXY:-localhost,127.0.0.1,pg,milvus,neo4j,qdrant,etcd,minio,backend,frontend}
+    volumes:
+      - ../../../data/HowToCook-1.6.0:/data/HowToCook-1.6.0:ro
+      - backend_data:/data
+    depends_on:
+      pg:
+        condition: service_healthy
+      milvus:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+
+volumes:
+  backend_data:

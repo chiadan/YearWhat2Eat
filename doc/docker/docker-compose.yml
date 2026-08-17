@@ -1,0 +1,12 @@
+# 「是啊吃什么」企业级一键部署（§12 M6）：PG + Milvus + Neo4j 每库一个容器 + 前后端
+# 用法：
+#   cp doc/docker/.env.example .env   # 在 doc/docker/ 下（或 export 同名变量）
+#   docker compose -f doc/docker/docker-compose.yml up -d --build
+#   # 首次需初始化数据（entrypoint 自动：dish_meta 为空时 ETL）
+include:
+  - path: Backend/docker-compose.yml
+  - path: Frontend/docker-compose.yml
+  - path: neo4j/docker-compose.yml
+  - path: qdrant/docker-compose.yml
+  - path: pg/docker-compose.yml
+  - path: milvus/docker-compose.yml
