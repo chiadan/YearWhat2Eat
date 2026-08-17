@@ -258,6 +258,6 @@ M1 数据管道 ✅ → M2 基础问答 ✅ → M3 推荐 Agent ✅ → M4 千�
 <img src="doc/image/readme_cost_image.png" alt="首页" width="780" />
 ## ⚖️ 数据源与许可
 
-- **本项目代码**：[MIT License](LICENSE)（Copyright (c) 2026 jiahao）——允许商用/修改/分发，保留版权声明即可
+  - **本项目代码**：[MIT License](LICENSE)（Copyright (c) 2026 dan chia）——允许商用/修改/分发，保留版权声明即可
 - **菜谱数据**：[Anduin2017/HowToCook](https://github.com/Anduin2017/HowToCook) v1.6.0，采用 **The Unlicense**（公有领域
   Public Domain，见 `data/HowToCook-1.6.0/LICENSE`）——数据可自由使用，与本项目 MIT 许可无冲突
