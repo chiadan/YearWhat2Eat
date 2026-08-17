@@ -68,6 +68,8 @@ class Settings(BaseSettings):
     data_source_dir: str = "../data/HowToCook-1.6.0"
 
     # ── 检索参数（§6.5） ─────────────────────────────
+    # 对话偏好提取（§8.5）：聊天结束后 LLM 提取偏好信号写画像；false 关闭（节省调用）
+    preference_extract_enabled: bool = True
     retrieve_top_k: int = 30
     rerank_top_k: int = 15
     collection_dishes: str = "dishes"

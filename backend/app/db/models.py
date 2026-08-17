@@ -59,6 +59,8 @@ class UserProfile(SQLModel, table=True):
     family_size: int = Field(default=2)
     budget_level: str = Field(default="中等")
     goal: str = Field(default="均衡")                 # 快手 | 省事 | 大餐 | 健康
+    # 偏好来源日志（§8.5 对话偏好提取）：[{type, value, confidence, source, created_at}]
+    preference_log: str = Field(default="[]", sa_column=Column(JSON, nullable=False))
     updated_at: datetime = Field(default_factory=utcnow, sa_column=Column(DateTime, nullable=False))
 
 

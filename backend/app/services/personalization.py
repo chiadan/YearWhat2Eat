@@ -6,13 +6,22 @@ personal(d) = Σ_k w_k × match_k(d) / Σ w_k
   match_难度 = 画像水平匹配 ? 1 : 0.5          （w=0.15）
   match_工具 = 工具具备 ? 1 : 0                （w=0.15）
   match_目标 = 快手目标且时长<20min ? 1 : 0.5  （w=0.10）
+菜系加分（§8.5 对话偏好提取）：preference_log 中 cuisine 信号命中 -> match_菜系 = min(1, 0.8 + 0.2×confidence)。
 """
 from __future__ import annotations
+
+from app.db.json_utils import json_load
 
 _W = {"flavor": 0.40, "cuisine": 0.20, "difficulty": 0.15, "tool": 0.15, "goal": 0.10}
 
 _SKILL_DIFF = {"新手": 3, "进阶": 4, "熟练": 5}
 _FLAVOR_KEYWORDS = {"辣": ["辣"], "甜": ["甜"], "酸": ["酸"], "清淡": ["清淡", "清爽"]}
+
+
+def _cuisine_signals(profile: dict) -> list[dict]:
+    """§8.5 对话提取的菜系偏好信号（[{value, confidence}]）。"""
+    log = json_load(profile.get("preference_log"), [])
+    return [s for s in log if isinstance(s, dict) and s.get("type") == "cuisine"]
 
 
 def _dish_spiciness(item: dict) -> int:
@@ -46,8 +55,15 @@ def personal_score(item: dict, profile: dict | None) -> float:
         flavor_matches.append(1.0 if (hit and level >= 4) else 0.6)
     matches.append((_W["flavor"], sum(flavor_matches) / len(flavor_matches)))
 
-    # 菜系（M4 无菜系行为统计 -> 0.8 基线；M4 后接入行为占比）
-    matches.append((_W["cuisine"], 0.8))
+    # 菜系（§8.5 对话偏好：cuisine 信号命中提升；否则 0.8 基线）
+    cuisine_match = 0.8
+    dish_cuisines = [c for c in (item.get("cuisines") or []) if c]
+    if dish_cuisines:
+        for sig in _cuisine_signals(profile):
+            if sig.get("value") in dish_cuisines:
+                cuisine_match = min(1.0, 0.8 + 0.2 * float(sig.get("confidence") or 0.6))
+                break
+    matches.append((_W["cuisine"], cuisine_match))
 
     # 难度
     diff = item.get("difficulty")

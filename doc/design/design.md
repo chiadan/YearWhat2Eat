@@ -1,6 +1,6 @@
 # 「今天吃什么」RAG Agent 系统设计文档
 
-> 版本：v0.17（M1~M6 全部完成 + 0.1 定版打磨：收藏状态初始化与取消对称信号、详情页加载优化、跨平台 Python 部署脚本；本文件为设计与实现对照的权威依据）
+> 版本：v0.18（M1~M6 全部完成 + 0.1 定版打磨：收藏状态初始化与取消对称信号、详情页加载优化、跨平台 Python 部署脚本、**对话偏好提取（§8.5）**；本文件为设计与实现对照的权威依据）
 > 技术栈：LangChain + LangGraph + DeepSeek API + FastAPI + Vue3；存储默认选型 Neo4j + Qdrant + SQLite（三库均可替换：Kùzu/Milvus/PostgreSQL，§12.0）
 > 数据源：`data/HowToCook-1.6.0`（程序员做饭指南，社区菜谱仓库）
 
@@ -617,6 +617,26 @@ novelty(d)        = MMR：score - 0.3 × max(cos(d, 已选菜))   （λ=0.7）
 - **时间维度**：当前时段（早/午/晚/夜宵）→ 约束 meal_type；周末/工作日 → 时间预算不同。
 - **一餐内多样**：荤素公式 + 肉类多样（不重复动物）+ 口味互补（一辣一清淡）+ MMR 去重。
 - **多轮反馈**：上一轮"太辣了" → 后续轮次辣度权重下调（会话内即时生效）。
+
+### 8.5 对话偏好提取（进阶版，v0.18 已实现）
+
+**目标**：聊天中说的偏好（"我不吃香菜"、"最近在减肥"）**跨会话永久记住**，弥补 §8.2 行为信号（仅收藏/评分/做过）覆盖不到的口语偏好。
+
+**机制**（`services/preference_extractor.py` + `rag/prompts/preference_extractor.py`，prompt version 1）：
+
+1. **触发**：SSE 回答流结束后，`/chat/stream` 以 `asyncio.create_task` 后台触发（不阻塞响应、失败静默）；开关 `PREFERENCE_EXTRACT_ENABLED`（默认 true，.env 可关）。
+2. **提取**：LLM 从最近 10 条用户消息 + 当前画像摘要中提取**新增/变化信号**（避免重复），输出结构化 JSON：`{signals: [{type, value, direction?, confidence, reason}]}`；`type ∈ avoid | flavor | cuisine | tool | diet | skill`；**confidence < 0.6 丢弃**。
+3. **合并**（`merge_signals`，幂等）：
+   - `avoid`：并集加入 `avoid_list`（rule_filter 硬过滤直接生效）；
+   - `flavor`：对应口味维度 ±1（direction up/down，上限 5 / 下限 1，flavor_spicy/sweet/sour/light）；
+   - `tool`：并集加入 `tools`（特殊厨具软加权生效）；
+   - `diet` / `skill`：confidence ≥ 0.8 才覆盖（避免误判）；
+   - `cuisine`：只写入 `preference_log`（personal_score 菜系加分消费，§6.5）；
+   - 全部信号带**来源与时间戳**落 `user_profiles.preference_log`（JSON：`{type, value, confidence, source: chat, created_at}`），已有同 value 信号不重复写入。
+4. **消费**：`avoid/tool/diet/skill` 经现有画像字段自动生效（rule_filter / personal_score 无需改动）；`cuisine` 信号使 personal_score 菜系项从 0.8 基线提升（命中 +0.2×confidence）。
+5. **回滚可见**：个人中心问卷可手动改回自动学习的字段（avoid_list 等，`PUT /users/me/profile` 覆盖）。
+
+**数据流**：聊天消息 -> LLM 提取信号 -> 合并画像（preference_log 记录来源）-> 缓存失效 + 画像重算 -> 下次检索/推荐/打分立即生效。
 
 ---
 

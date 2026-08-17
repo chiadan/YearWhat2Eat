@@ -187,6 +187,13 @@ async def chat_stream(
             yield _error_frame(exc.code, exc.message, getattr(exc, "retryable", False))
         except Exception as exc:  # noqa: BLE001
             yield _error_frame("INTERNAL_ERROR", f"处理失败: {type(exc).__name__}: {exc}", True)
+        finally:
+            # §8.5 对话偏好提取：流结束后后台触发（不阻塞响应、失败静默、可配置关闭）
+            if settings.preference_extract_enabled and effective_user_id and effective_user_id.isdigit():
+                from app.services import preference_extractor
+                from app.services.chat_service import get_llm
+
+                preference_extractor.schedule_extract(get_llm(settings), int(effective_user_id))
 
     return StreamingResponse(
         gen(),

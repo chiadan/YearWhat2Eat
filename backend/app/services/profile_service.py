@@ -70,6 +70,8 @@ def profile_to_dict(profile: UserProfile) -> dict:
         "family_size": profile.family_size,
         "budget_level": profile.budget_level,
         "goal": profile.goal,
+        # §8.5 对话偏好提取来源日志（[{type, value, confidence, source, created_at}]）
+        "preference_log": json_load(profile.preference_log, []),
     }
 
 

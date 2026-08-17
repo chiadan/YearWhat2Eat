@@ -58,6 +58,7 @@
 - **引用通用性（§9.1）**：sources 参考菜谱适用于所有检索类意图——问答（dish_qa/tips_qa）= 检索命中（dish_qa 聚焦点名菜）；推荐（recommend/plan_menu）= 今日菜单中的菜（source="plan"）；plan 为空 = 检索候选兜底；仅 chitchat 无引用（无检索）
 - **前端渲染要点（§10）**：正文菜名全量链接化（`/dishes/names` 模块级缓存）+ **`[n]` 引用替换为菜名链接**（`MdRender.sourceMap`，引用前已出现菜名则保留角标——勿用纯 endsWith 判断，markdown 加粗会失效导致菜名重复）；参考菜谱 `SourceCard` 竖排列表（编号+菜名+箭头）；助手消息纵向排列（正文->菜单->参考菜谱，`.msg` 必须 `flex-direction: column`）；过程状态指示条消费 `status` 帧；软删除单轮问答 hover 按钮
 - **菜谱浏览与收藏（§10/§8.2）**：详情接口 `/dishes/{id}` 返回 `is_favorite`（可选鉴权，未登录 false）供前端**初始化收藏状态**；收藏/取消信号由后端内置——`add_favorite` 写 `like`、`remove_favorite` 写 `dislike`（§8.2 对称），**前端禁止重复上报 feedback**；详情页加载成功后上报 `view`（fire-and-forget，热门榜/画像聚合用）；**详情页加载规则**：进入/切换菜谱即清空旧数据（不残留旧内容）、详情先行渲染、**相关菜后台加载不阻塞主内容**、竞态保护（过期响应丢弃）
+- **对话偏好提取（§8.5，v0.18）**：聊天结束后后台 LLM 提取偏好信号写画像（"我不吃香菜"永久记住）——`services/preference_extractor.py`：读最近 10 条 user 消息 -> `complete_json` 结构化提取（prompts 的 `preference_extract` v1.0）-> `_parse_signals`（type 白名单 avoid/flavor/cuisine/tool/diet/skill，**confidence<0.6 丢弃**）-> `merge_signals` 幂等合并（avoid/tool 并集、flavor ±1 clip 1..5、diet/skill ≥0.8 覆盖、cuisine 仅记 `preference_log`）-> 清 AnswerCache；触发点 `chat.py` 的 `gen()` finally（开关 `PREFERENCE_EXTRACT_ENABLED`，迁移 0012）；**注意**：LLM 提取失败静默、不得阻塞 SSE 响应；`preference_log` 是来源日志（带 created_at），同 type+value 不重复写；personal_score 菜系项消费 cuisine 信号（0.8 基线 -> 命中 +0.2×confidence）
 - **软删除单轮问答（§9）**：`chat_messages.hidden`（迁移 0010）——`PATCH /chat/messages/{id}` `{hidden}` 成对隐藏 user+assistant；聊天加载与 AI 上下文均排除 hidden，数据行保留（导出含全部）；done 帧带 `message_ids` 供前端删除入口
 
 ## 常用命令
