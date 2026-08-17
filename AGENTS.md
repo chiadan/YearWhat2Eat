@@ -4,7 +4,7 @@
 
 ## 项目一句话
 
-"今天吃什么"（YeahWhat2Eat）：千人千面菜谱推荐 RAG Agent。FastAPI 后端 + Vue3 前端，LangChain/LangGraph 编排，DeepSeek 生成，Neo4j 图谱 + Qdrant 向量 + SQLite 业务真源。
+"今天吃什么"（YeahWhat2Eat）：千人千面菜谱推荐 RAG Agent。FastAPI 后端 + Vue3 前端，LangChain/LangGraph 编排，DeepSeek 生成；**三存储均可替换**（关系型 SQLite 默认/可换 PG，向量 Qdrant 默认/可换 Milvus，图 Neo4j 默认/可换 Kùzu），SQLite 为默认业务真源。
 
 ## ⚠️ 首要规则
 

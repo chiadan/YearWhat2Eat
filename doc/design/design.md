@@ -1,7 +1,7 @@
 # 「今天吃什么」RAG Agent 系统设计文档
 
 > 版本：v0.17（M1~M6 全部完成 + 0.1 定版打磨：收藏状态初始化与取消对称信号、详情页加载优化、跨平台 Python 部署脚本；本文件为设计与实现对照的权威依据）
-> 技术栈：LangChain + LangGraph + DeepSeek API + Neo4j + Qdrant + FastAPI + Vue3 + SQLite
+> 技术栈：LangChain + LangGraph + DeepSeek API + FastAPI + Vue3；存储默认选型 Neo4j + Qdrant + SQLite（三库均可替换：Kùzu/Milvus/PG，§12.0）
 > 数据源：`data/HowToCook-1.6.0`（程序员做饭指南，社区菜谱仓库）
 
 ---
