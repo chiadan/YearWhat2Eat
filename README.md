@@ -9,6 +9,7 @@
 ## 📑 目录
 
 - [✨ 功能特性](#功能特性)
+- [🧭 系统架构](#系统架构)
 - [🖼️ 界面预览](#界面预览)
 - [🧱 技术栈](#技术栈)
 - [🚀 快速开始](#快速开始)
@@ -36,6 +37,38 @@
 - 🛒 **购物清单**：一键导出 Markdown 购物清单（含人数换算定量）
 - 🌗 **5 套主流主题**：Solarized 浅/深、GitHub 浅/深、Nord——所有组件（含 Element Plus）风格统一，随时切换
 - 👤 **账号体系**：注册/登录/游客模式（游客数据可一键转正合并）；**强制登录**——未登录访问任意页面跳转登录页（游客也算登录态，千人千面前置）
+
+## 🧭 系统架构
+
+**整体架构**：
+
+<img src="doc/image/readme_project_ architecture_image.png" alt="项目整体架构图" width="860" />
+
+**架构描述（文字版，可直接交给多模态模型生成架构图）**：
+
+> 本项目为**前后端分离的千人千面菜谱推荐 RAG Agent**，浏览器访问，按"前端 -> API -> 服务/Agent -> 存储 -> 外部 LLM"五层组织：
+>
+> **前端层（Vue3 + TypeScript + Element Plus）**：页面含推荐首页（规则推荐毫秒级）、聊天页（SSE 流式 + 过程状态条）、菜谱列表、菜谱详情（收藏/评分/相关菜）、个人中心（画像问卷/AI 设置/用量统计/收藏/行为历史/历史会话）、登录注册；关键组件 StreamChat（SSE 客户端）、MdRender（markdown + 菜名链接 + 引用替换）、DishCard/SourceCard/MenuCard/FlavorTags/RatingStars/ProfileForm/ThemeToggle（5 套主题）；Pinia 状态（user/theme/aiConfig）；http 拦截器处理 JWT 刷新与 401 单飞。与后端通信：REST（/api/v1/*）+ SSE（/chat/stream 流式）。
+>
+> **API 层（FastAPI + Pydantic v2 + SQLModel）**：auth（注册/登录/JWT/游客转正）、users（画像/反馈/收藏/历史/AI 用量/BYOK/多 Provider）、dishes（列表/详情/相关/热门/菜名映射）、chat（SSE 流式，LangGraph 驱动）、admin（ETL 触发）、health。
+>
+> **Agent 层（LangGraph）**：分层 State（Input/Output/Context/Query/Retrieval/Planning）；状态图：intent_router（意图识别 + personalize 分流）-> query_rewriter（扩写 + 指代解析）-> query_analyzer（约束解析）-> retrieve（三路并行 Send）-> rerank（RRF 融合 + bge-reranker 精排）-> rank_fuse（融合打分）-> planner（荤素规划，仅推荐）或 generate（SSE 流式生成）；节点=单文件（app/rag/nodes/）；chitchat 直通 generate。
+>
+> **检索器（三路互补）**：向量召回（Qdrant/Milvus，bge-small-zh embedding）、图召回（Neo4j/Kùzu 预置 Cypher 模板 T1~T4）、规则硬过滤（忌口/时长/难度/工具，千人千面）。
+>
+> **存储层（统一接口 + 工厂切换，全部可替换）**：关系型 SQLite（默认，文件）<-> PostgreSQL（企业级容器）；向量 Qdrant（默认）<-> Milvus（企业级容器）；图 Neo4j（默认容器）<-> Kùzu（嵌入式文件）；抽象于 core/clients/base.py，工厂 core/clients/factory.py。
+>
+> **外部依赖**：DeepSeek API（LLM，deepseek-v4-flash，可 BYOK/多 Provider）；本地 sentence-transformers（embedding/reranker，CUDA 自动）；数据源 data/HowToCook-1.6.0（只读，357 菜 + 18 tips）。
+>
+> **部署形态**：本地开发（uvicorn:8000 + vite:5173 + 中间件容器）；Lite 模式（SQLite+Kùzu+Qdrant 文件全嵌入后端，frontend+backend 两容器，零外部依赖）；企业级模式（PostgreSQL+Milvus+Neo4j 每库一容器 + 前后端，三库参数 .env 自定义）。
+>
+> **核心数据流**：用户提问 -> intent_router 意图识别（chitchat 直答；其余走检索）-> 查询扩写 -> 约束解析 -> 三路并行检索 -> RRF 融合 + reranker 精排 -> 融合打分 -> planner 输出今日菜单（推荐）或直接 generate -> SSE 流式回答（正文 + 引用菜谱 + 菜单）-> 行为反馈（view/like/rating/made）落 SQLite -> 画像聚合更新 + Neo4j 用户偏好镜像。
+
+**LangGraph 状态图**（一次提问的节点流转，由 LangGraph 从 `backend/app/rag/graph.py` 实测导出，与代码一一对应；分层 State 定义见 [`design.md §6.1`](doc/design/design.md)）：
+
+<img src="doc/image/readme_core_process .png" alt="核心处理流程（LangGraph 状态图）" width="860" />
+
+**场景分流**：`intent_router` 判定 `personalize=true`（开放式推荐）时千人千面硬过滤生效；点名具体菜/做法/技巧（`dish_qa`/`tips_qa`）走全量检索不拦截，回答只引用点名菜；推荐结果经 `planner` 输出今日菜单，问答/闲聊直达 `generate`。
 
 ## 🖼️ 界面预览
 
@@ -139,7 +172,7 @@ python doc/docker/deploy.py lite
 #    首次运行自动生成 doc/docker/.env，编辑填入 DEEPSEEK_API_KEY 后重新执行即可
 #    重复部署自动复用 .env + Docker 层缓存，秒级完成
 
-# ② 部署企业级模式（PG + Milvus + Neo4j 每库一个容器 + 前后端）
+# ② 部署企业级模式（PostgreSQL + Milvus + Neo4j 每库一个容器 + 前后端）
 python doc/docker/deploy.py enterprise
 
 # 常用管理
@@ -231,7 +264,7 @@ YeahWhat2Eat/
 
 M1 数据管道 ✅ → M2 基础问答 ✅ → M3 推荐 Agent ✅ → M4 千人千面 ✅ → M5 前端 ✅ → **M6 部署 ✅（Lite 与企业级两种模式测试通过）**
 
-> 最近新增：多模型接入（OpenAI 兼容/Anthropic + BYOK）、AI 用量统计与每日预算、会话分组（默认/自定义，拖拽移动 + 组内新建）、具体菜谱问答与推荐检索分流（意图 agent 判定 + 点名菜聚焦 + 指代解析）、回答正文菜名全量链接化（引用带菜名）、AI 过程状态指示、软删除单轮问答、会话滚动摘要记忆、**存储可替换（SQLite/PG + Qdrant/Milvus + Neo4j/Kùzu）**、**Lite/企业级双模式部署 + 镜像离线分发 + 数据隔离备份**、**菜谱收藏状态初始化与收藏/取消即时反馈**、**详情页加载优化（相关菜不阻塞主内容）**。详见 [`doc/design/design.md`](doc/design/design.md)（v0.17）。
+> 最近新增：多模型接入（OpenAI 兼容/Anthropic + BYOK）、AI 用量统计与每日预算、会话分组（默认/自定义，拖拽移动 + 组内新建）、具体菜谱问答与推荐检索分流（意图 agent 判定 + 点名菜聚焦 + 指代解析）、回答正文菜名全量链接化（引用带菜名）、AI 过程状态指示、软删除单轮问答、会话滚动摘要记忆、**存储可替换（SQLite/PostgreSQL + Qdrant/Milvus + Neo4j/Kùzu）**、**Lite/企业级双模式部署 + 镜像离线分发 + 数据隔离备份**、**菜谱收藏状态初始化与收藏/取消即时反馈**、**详情页加载优化（相关菜不阻塞主内容）**。详见 [`doc/design/design.md`](doc/design/design.md)（v0.17）。
 
 ## ⚖️ 数据源与许可
 

@@ -1,7 +1,7 @@
 # 「今天吃什么」RAG Agent 系统设计文档
 
 > 版本：v0.17（M1~M6 全部完成 + 0.1 定版打磨：收藏状态初始化与取消对称信号、详情页加载优化、跨平台 Python 部署脚本；本文件为设计与实现对照的权威依据）
-> 技术栈：LangChain + LangGraph + DeepSeek API + FastAPI + Vue3；存储默认选型 Neo4j + Qdrant + SQLite（三库均可替换：Kùzu/Milvus/PG，§12.0）
+> 技术栈：LangChain + LangGraph + DeepSeek API + FastAPI + Vue3；存储默认选型 Neo4j + Qdrant + SQLite（三库均可替换：Kùzu/Milvus/PostgreSQL，§12.0）
 > 数据源：`data/HowToCook-1.6.0`（程序员做饭指南，社区菜谱仓库）
 
 ---
@@ -109,7 +109,7 @@
 | **Qdrant** | 向量检索（语义召回） | 整菜文档向量（推荐召回）、步骤/技巧分块向量（问答召回）、用户口味向量（可选） |
 | **DeepSeek API** | 大模型 | 意图理解、约束解析、工具调用、回答生成（`deepseek-v4-flash`）；embedding / reranker 由 `BAAI/bge-small-zh-v1.5` / `bge-reranker-v2-m3` 承担（§7） |
 
-> 原则：Neo4j / Qdrant 里的图谱与向量**均可由 SQLite 中的元数据 + 原始 md 重建**（幂等 ETL），SQLite 是唯一需要备份的业务真源。
+> 原则：Neo4j / Qdrant 里的图谱与向量**均可由关系型库中的元数据 + 原始 md 重建**（幂等 ETL）；关系型真源（默认 SQLite，企业级为 PostgreSQL）是唯一需要备份的业务数据。
 
 ---
 
@@ -332,55 +332,22 @@ class AgentState(TypedDict):
 
 ### 6.2 图结构（节点与边 · Mermaid）
 
+> 下图由 **LangGraph `get_graph().draw_mermaid()` 从 `app/rag/graph.py` 实测导出**（v0.17），与代码一一对应；设计预留的独立 `ToolNode` 工具循环与 `memory_update` 记忆回写节点**尚未实现为图节点**——chitchat 直答与记忆注入在 `generate` 内部完成，行为流水经 chat API / 前端 feedback 落库（§8.2）。
+
 ```mermaid
 flowchart TD
-    START([START]) --> intent_router
+    START([START]) --> intent_router["intent_router 意图识别 agent<br/>写: query.intent / confidence / personalize"]
 
-    subgraph 理解层["理解层 · ContextState + QueryState"]
-        intent_router["intent_router 意图 agent<br/>读: input.query, context.profile<br/>写: query.intent, query.confidence, query.personalize"]
-        query_rewriter["query_rewriter 查询扩写<br/>写: query.rewritten, query.entities, sub_queries"]
-        query_analyzer["query_analyzer 约束解析<br/>写: query.constraints（含上轮约束继承）"]
-    end
-
-    subgraph 检索层["检索层 · RetrievalState"]
-        retrieve["retrieve 并行分发<br/>(LangGraph Send fan-out)"]
-        vector_search["vector_search 向量召回<br/>Qdrant cosine top-30（阈值≥0.35）"]
-        graph_search["graph_search 图召回<br/>Neo4j T1~T4 模板"]
-        rule_filter["rule_filter 规则召回<br/>硬约束过滤（忌口/时长/难度/工具）"]
-        rerank["rerank 精排<br/>RRF(k=60) top-30 → bge-reranker top-15<br/>写: retrieval.reranked"]
-        rank_fuse["rank_fuse 融合打分<br/>§6.5 公式 → final_score"]
-    end
-
-    subgraph 规划层["规划层 · PlanningState（仅 recommend / plan_menu）"]
-        planner["planner 菜单规划<br/>荤素公式 + 动物多样 + MMR<br/>写: planning.plan"]
-    end
-
-    subgraph 生成层["生成层 · OutputState"]
-        generate["generate 流式生成<br/>写: output.answer / sources / plan"]
-        memory_update["memory_update 记忆回写<br/>写: memory.feedback_events"]
-    end
-
-    ToolNode["ToolNode 工具循环<br/>荤素计算/人数换算/相克检查/购物清单<br/>（≤ MAX_TOOL_ROUNDS=5 轮）"]
-
-    intent_router -->|"intent=chitchat"| chitchat["chitchat_node 闲聊<br/>直接回复，不检索"]
-    chitchat --> END([END])
-    intent_router -->|"其余意图"| query_rewriter
-    query_rewriter --> query_analyzer
-    query_analyzer --> retrieve
-    retrieve --> vector_search & graph_search & rule_filter
-    vector_search --> rerank
-    graph_search --> rerank
-    rule_filter --> rerank
-    rerank --> rank_fuse
-    rank_fuse -->|"recommend / plan_menu"| planner
-    rank_fuse -->|"dish_qa / tips_qa / shopping_list"| generate
-    planner -->|"调用工具"| ToolNode
-    ToolNode --> planner
+    intent_router -->|"chitchat 闲聊"| generate["generate 流式生成<br/>闲聊直答（不检索）"]
+    intent_router -->|"rag"| query_rewriter["query_rewriter 查询扩写<br/>写: query.rewritten / entities / sub_queries"]
+    query_rewriter --> query_analyzer["query_analyzer 约束解析<br/>写: query.constraints（含上轮约束继承）"]
+    query_analyzer --> retrieve["retrieve 三路并行分发<br/>(LangGraph Send fan-out)"]
+    retrieve --> rerank["rerank 融合精排<br/>RRF(k=60) top-30 -> bge-reranker top-15<br/>写: retrieval.reranked"]
+    rerank --> rank_fuse["rank_fuse 融合打分<br/>写: retrieval.reranked[].final_score"]
+    rank_fuse -->|"plan（recommend / plan_menu）"| planner["planner 菜单规划<br/>写: planning.plan"]
+    rank_fuse -->|"generate（dish_qa / tips_qa）"| generate
     planner --> generate
-    generate -->|"调用工具"| ToolNode
-    ToolNode --> generate
-    generate --> memory_update
-    memory_update --> END
+    generate --> END([END])
 ```
 
 **与 LangGraph 的对应关系**（节点 = `app/rag/nodes/` 一个文件，状态读写与 §6.1 分层 State 字段一一对应）：
@@ -391,25 +358,24 @@ flowchart TD
 | query_rewriter | `add_node` | `query.intent` | `query.rewritten`、`query.entities`、`query.sub_queries` |
 | query_analyzer | `add_node` | `query.rewritten`、`context.session_history` | `query.constraints` |
 | retrieve | `add_node`，内部用 **`Send` API** 并行分发三路检索器 | `query.*`、`context.profile` | `retrieval.vector_hits`、`graph_hits`、`rule_hits` |
-| rerank | `add_node` | `retrieval.*`、`query.rewritten` | `retrieval.reranked` |
+| rerank | `add_node`（内部两步：RRF 融合 k=60 → bge-reranker 精排 top-15；**预留拆分**为 fusion + rerank 两节点，§6.2 讨论） | `retrieval.*`、`query.rewritten` | `retrieval.reranked` |
 | rank_fuse | `add_node` | `retrieval.reranked`、`context.profile` | `retrieval.reranked[].final_score` |
 | planner | `add_node` + 条件边（仅推荐模式进入） | `retrieval.reranked` | `planning.ratio`、`meat_candidates`、`veg_candidates`、`plan` |
-| generate | `add_node` + 工具循环条件边（`ToolNode` 回边） | `planning.plan`、`retrieval.*`、`context.session_history` | `output.answer`、`output.sources`、`output.plan` |
-| memory_update | `add_node`（终节点） | `output.*` | `memory.feedback_events` → 落 SQLite / Neo4j / Qdrant |
+| generate | `add_node`（终节点；内部处理 chitchat 直答 prompt / summary 注入；工具调用为设计预留） | `planning.plan`、`retrieval.*`、`context.session_history` | `output.answer`、`output.sources`、`output.plan` |
 
-**条件边与循环（对应 `add_conditional_edges`）**：
+**条件边与循环（对应 `add_conditional_edges`，与 `app/rag/graph.py` 一致）**：
 
-1. `intent_router → chitchat_node | query_rewriter`：按 `query.intent` 分流——chitchat 短路直答，其余进入检索链路；
-2. `rank_fuse → planner | generate`：仅 `recommend / plan_menu` 进 planner，`dish_qa / tips_qa / shopping_list` 直通 generate；
-3. `generate ⇄ ToolNode`、`planner ⇄ ToolNode`：工具调用回边，累计轮数 > `MAX_TOOL_ROUNDS`（5）强制退出（§7.3）；
+1. `intent_router → generate | query_rewriter`：按 `query.intent` 分流——`chitchat` 直通 generate 直答（无独立 chitchat 节点），其余进检索链路；
+2. `rank_fuse → planner | generate`：仅 `recommend / plan_menu` 进 planner，`dish_qa / tips_qa` 直通 generate；
+3. **工具循环（§7.3 设计预留，未实现）**：`generate ⇄ ToolNode`、`planner ⇄ ToolNode` 回边尚未落代码——当前 generate 直接生成，购物清单经独立 API 导出（§9.4）；
 4. **并行合并**：三路检索经 `Send` 并行执行，结果按 `Annotated[list, operator.add]` reducer 合并进 `RetrievalState`（§6.1），与 Mermaid 的 fan-out / join 一一对应；图定义集中在 `app/rag/graph.py`，条件边逻辑与节点实现分离，降低歧义。
 
 **关键设计**：
 
 1. **意图路由 + 查询扩写先行**：`intent_router` 基于"原文 + 画像"输出 `{intent, confidence}`（低置信度 < 0.7 走默认 recommend 兜底）；随后 `query_rewriter` 把口语扩写成检索语言并抽取实体（§6.4），推荐/问答/闲聊走不同子图，避免无谓检索，省 token、降延迟。
 2. **检索三路并行 + 精排**（LangGraph 并行节点）：向量语义召回 + 图谱关系推理 + 规则硬过滤，三者互为补充；三路合并去重后进入 `rerank` 节点，用 `bge-reranker-v2-m3` 交叉编码精排（top-K 30 → 15），再交给融合打分。图查询用**预置 Cypher 模板 + 参数填充**，不由 LLM 自由写 Cypher（防幻觉、防注入）。
-3. **工具调用循环**：LangGraph 标准 `ToolNode` + 条件边。注册工具：`calculate_menu_ratio(people)`（荤素公式）、`scale_ingredients(dish_id, people)`（原料换算）、`get_dish_detail(dish_id)`、`check_conflicts(ingredient_a, ingredient_b)`、`build_shopping_list(dish_ids, people)`。LLM 需要时自动循环调用再生成。
-4. **记忆回写**：每次交互结束，行为流水落 SQLite；画像聚合更新；Neo4j 用户偏好关系增量更新。多轮会话内（chat_sessions）携带对话历史进入 `generate`，实现追问（"第二步再说细一点"）。
+3. **工具调用循环（§7.3 设计预留）**：LangGraph 标准 `ToolNode` + 条件边为设计目标（注册工具：`calculate_menu_ratio(people)`、`scale_ingredients(dish_id, people)`、`get_dish_detail(dish_id)`、`check_conflicts(ingredient_a, ingredient_b)`、`build_shopping_list(dish_ids, people)`）；当前版本未实现为图节点——购物清单导出走独立 API（§9.4），生成直接输出。
+4. **记忆回写**：每次交互结束，行为流水经 chat API / 前端 feedback 落 SQLite（§8.2，图内无 memory_update 节点）；画像聚合更新；Neo4j 用户偏好关系增量更新。多轮会话内（chat_sessions）携带对话历史进入 `generate`，实现追问（"第二步再说细一点"）。
 5. **可观测**：`trace` 记录每节点耗时、检索命中、重排分数，前端/日志可查，便于调优。
 6. **流式输出**：图以 `astream` 运行，节点事件与 LLM token 增量实时映射为 SSE 帧（协议见 §9.1）；事件顺序 `status → sources → tool → text → plan → done`，保证前端"先见候选卡片、再见正文"的体验，首字延迟（TTFT）为第一优化目标。
 7. **多轮上下文管理**（已实现）：`session_history` 采用"**最近 10 轮全文 + 更早轮次滚动摘要**"策略——消息数超过 20 条后，每次对话结束后台任务把窗口外最旧消息 + 旧摘要压缩成新摘要（LLM，200 字内），存 `chat_sessions.summary`；加载时 `ContextState.summary` 随最近 10 轮全文一起注入 `generate`（生成）与 `query_analyzer`（早期约束继承）；不删除消息行（聊天历史展示完整）；摘要失败静默不影响主流程。
@@ -1029,7 +995,7 @@ YeahWhat2Eat/
 
 **Lite 模式（`doc/docker/lite/`，单机/测试首选）**：SQLite + Kùzu + **Qdrant 文件嵌入**（`QDRANT_LOCAL_PATH`，`QdrantClient(path=...)` 无需服务器）全部落在 backend 数据卷 `/data`，零外部依赖——仅 frontend（nginx）+ backend（uvicorn 单 worker）两个容器；`docker-entrypoint.sh` 自动迁移 + dish_meta 为空时自动 ETL（有 tags_backup 走 `--skip-tag` 秒级）；测试联调可叠加 `docker-compose.dev.yml`（复用宿主 `backend/data` 现成数据）。
 
-**企业级模式（`doc/docker/docker-compose.yml`，根编排）**：**PG + Milvus + Neo4j 每库一个容器** + Backend/Frontend 容器——用 Compose `include` 聚合六份子 compose（Backend / Frontend / neo4j / qdrant / pg / milvus，要求 Compose **v2.20+**）；三库连接参数/密码/端口全部经部署 `.env`（`doc/docker/.env.example`）自定义（`${VAR:-默认}` 注入）；backend `depends_on` 各库 healthcheck（`service_healthy`）；Qdrant 容器保留（企业级亦可 `VECTOR_STORE_PROVIDER=qdrant` 切换）。
+**企业级模式（`doc/docker/docker-compose.yml`，根编排）**：**PostgreSQL + Milvus + Neo4j 每库一个容器** + Backend/Frontend 容器——用 Compose `include` 聚合六份子 compose（Backend / Frontend / neo4j / qdrant / pg / milvus，要求 Compose **v2.20+**）；三库连接参数/密码/端口全部经部署 `.env`（`doc/docker/.env.example`）自定义（`${VAR:-默认}` 注入）；backend `depends_on` 各库 healthcheck（`service_healthy`）；Qdrant 容器保留（企业级亦可 `VECTOR_STORE_PROVIDER=qdrant` 切换）。
 
 **三库自定义参数**（两种模式通用）：部署 `.env` 提供全部连接项——关系型 `PG_USER/PG_PASSWORD/PG_DB/PG_PORT`（或 `DATABASE_URL` 直接指定）、向量 `VECTOR_STORE_PROVIDER/MILVUS_URI/MILVUS_TOKEN/QDRANT_URL/QDRANT_LOCAL_PATH`、图 `GRAPH_STORE_PROVIDER/NEO4J_USER/NEO4J_PASSWORD/KUZU_DB_PATH`；密码默认简单值（postgres123 / password123），生产必须修改。
 
@@ -1523,7 +1489,7 @@ export default defineConfig({
 | **M3 推荐 Agent** | LangGraph 全图：意图路由/约束解析/三路检索/reranker 精排/融合重排/荤素规划/工具调用 | "3 人晚餐想吃辣" 能输出合理菜单组合与理由 |
 | **M4 千人千面** | 画像问卷 + 行为流水 + 个性化打分 + Neo4j 用户偏好 + 反馈闭环 | 同一问题两个画像用户得到不同推荐；👎/做过后推荐变化 |
 | **M5 前端** | 全部页面 + SSE 流式 + 认证 | 前后端联调通过，可走完"推荐→追问→收藏→评价"闭环 |
-| **M6 打磨部署** | **Lite（SQLite+Kùzu+Qdrant 文件嵌入）与企业级（PG+Milvus+Neo4j 每库一容器）两种模式**、三库可替换（§12.0）、部署 .env 自定义参数、镜像打包离线分发（build_release.py）、数据隔离与备份（backup.py）、代理透传（不写死端口）、跨平台一键部署脚本（deploy.py，Windows/Linux/macOS 通用） | 两种模式均 `docker compose up -d --build` 一键启动并全链路验证通过（本机实测：health 全绿、357 菜入库、规则推荐毫秒级、认证/聊天可用）；Lite 数据在命名卷与本地隔离；企业级 PG/Milvus/Neo4j 数据落各自容器；镜像可 save/load 离线部署 |
+| **M6 打磨部署** | **Lite（SQLite+Kùzu+Qdrant 文件嵌入）与企业级（PostgreSQL+Milvus+Neo4j 每库一容器）两种模式**、三库可替换（§12.0）、部署 .env 自定义参数、镜像打包离线分发（build_release.py）、数据隔离与备份（backup.py）、代理透传（不写死端口）、跨平台一键部署脚本（deploy.py，Windows/Linux/macOS 通用） | 两种模式均 `docker compose up -d --build` 一键启动并全链路验证通过（本机实测：health 全绿、357 菜入库、规则推荐毫秒级、认证/聊天可用）；Lite 数据在命名卷与本地隔离；企业级 PostgreSQL/Milvus/Neo4j 数据落各自容器；镜像可 save/load 离线部署 |
 
 ---
 
@@ -1564,8 +1530,8 @@ export default defineConfig({
 15. ✅ **会话管理与用量预算**：AI 自动摘要标题（可手动改名锁定）+ 归档/分叉/导出 Markdown；AI 用量统计 + 每日 token 上限防刷（§10.2 / §9 API）。
 16. ✅ **检索场景分流**：**意图 agent（intent_router）一次 LLM 调用输出 `intent + personalize`**——开放式推荐（personalize=true）走千人千面硬过滤；点名具体菜/做法/技巧问答（false）全量检索不拦截；LLM 失败时按菜名点名规则兜底（§6.5 召回④）。
 17. ✅ **会话分组**：会话可归入自定义分组，未分组进默认分组；聊天页侧边栏与个人中心历史会话按组展示；分组为派生字段（chat_sessions.group），无独立表（§10 会话管理）。
-18. ✅ **存储可替换**：三存储接口抽象——关系型 SQLAlchemy（SQLite 默认/PG 可换）、向量 `VectorStoreClient`（Qdrant 默认/Milvus 可换）、图 `GraphStoreClient`（Neo4j 默认/**Kùzu 可换**——原生 Python API、嵌入式零部署、Cypher 兼容）；factory + provider 配置切换，业务零改动（§12.0）。
-19. ✅ **两种部署模式**：Lite（SQLite+Kùzu+Qdrant 文件嵌入后端、零外部依赖、命名卷数据隔离）与企业级（PG+Milvus+Neo4j 每库一容器 + 前后端，三库参数经部署 .env 自定义）；Compose v2.20 include 聚合（§12.1）。
+18. ✅ **存储可替换**：三存储接口抽象——关系型 SQLAlchemy（SQLite 默认/PostgreSQL 可换）、向量 `VectorStoreClient`（Qdrant 默认/Milvus 可换）、图 `GraphStoreClient`（Neo4j 默认/**Kùzu 可换**——原生 Python API、嵌入式零部署、Cypher 兼容）；factory + provider 配置切换，业务零改动（§12.0）。
+19. ✅ **两种部署模式**：Lite（SQLite+Kùzu+Qdrant 文件嵌入后端、零外部依赖、命名卷数据隔离）与企业级（PostgreSQL+Milvus+Neo4j 每库一容器 + 前后端，三库参数经部署 .env 自定义）；Compose v2.20 include 聚合（§12.1）。
 20. ✅ **数据隔离与备份**：业务数据全部在 docker 卷；dev override 仅测试；`backup.py` 卷打包/pg_dump 备份与恢复；代理经 `HTTP_PROXY` 环境变量透传不写死端口（§12.1）。
 
 > 全部决策已确认 ✅，按 M1 数据管道开始编码。

@@ -4,7 +4,19 @@
 
 ## 项目一句话
 
-"今天吃什么"（YeahWhat2Eat）：千人千面菜谱推荐 RAG Agent。FastAPI 后端 + Vue3 前端，LangChain/LangGraph 编排，DeepSeek 生成；**三存储均可替换**（关系型 SQLite 默认/可换 PG，向量 Qdrant 默认/可换 Milvus，图 Neo4j 默认/可换 Kùzu），SQLite 为默认业务真源。
+"今天吃什么"（YeahWhat2Eat）：千人千面菜谱推荐 RAG Agent。FastAPI 后端 + Vue3 前端，LangChain/LangGraph 编排，DeepSeek 生成；**三存储均可替换**（关系型 SQLite 默认/可换 PostgreSQL，向量 Qdrant 默认/可换 Milvus，图 Neo4j 默认/可换 Kùzu），SQLite 为默认业务真源。
+
+## 系统架构总览（给 AI 的整体地图；详细版见 README「系统架构」）
+
+按"前端 -> API -> 服务/Agent -> 存储 -> 外部 LLM"分层，所有改动先定位到层再动手：
+
+- **前端层**（`frontend/src/`）：Vue3 + TS + Element Plus。`views/`（Home 规则推荐 / Chat SSE 流式 / DishList / DishDetail / Profile / Login / Register）、`components/`（StreamChat、MdRender、DishCard、SourceCard、MenuCard、FlavorTags、RatingStars、ProfileForm、ThemeToggle）、`api/`（http 拦截器：JWT 刷新 401 单飞）、`stores/`（Pinia：user/theme/aiConfig）、`router/`（强制登录守卫）、`styles/tokens.css`（5 主题）。
+- **API 层**（`backend/app/api/v1/`）：auth / users（画像/反馈/收藏/历史/用量/BYOK/多 Provider）/ dishes / chat（SSE）/ admin / health；依赖注入 `deps.py`（JWT、可选鉴权、admin）。
+- **服务层**（`backend/app/services/`）：dish_service（列表/详情/相关/热门）、feedback_service（行为流水 + 收藏 + Neo4j 镜像）、profile_service（画像聚合）、recommend_service（规则推荐）、auth_service。
+- **Agent 层**（`backend/app/rag/`）：LangGraph 图 `graph.py`（8 节点：intent_router -> query_rewriter -> query_analyzer -> retrieve[三路并行 Send] -> rerank -> rank_fuse -> planner/generate）；节点 = `nodes/` 单文件；检索器 `retrievers/`（向量/图/规则）；`rule_engine.py` 硬过滤与荤素规划（与 recommend_service 共享单一实现）；`state.py` 分层 State；prompts 带版本号。
+- **存储层**（`backend/app/core/clients/`）：ABC `base.py` + 工厂 `factory.py`；provider：relational（SQLite/PG）、vector（qdrant/milvus）、graph（neo4j/kuzu）；业务层**禁止绕过工厂直连**。
+- **模型与外部**：DeepSeek API（LLM，BYOK/多 Provider 经 `core/clients/llm.py` contextvars）、本地 sentence-transformers（embedding/reranker，`device=auto`）、数据源 `data/HowToCook-1.6.0`（只读）。
+- **部署**：`doc/docker/`——Lite（SQLite+Kùzu+Qdrant 文件嵌入两容器）/ 企业级（PostgreSQL+Milvus+Neo4j 每库一容器）；跨平台脚本 deploy.py / build_release.py / backup.py。
 
 ## ⚠️ 首要规则
 
@@ -90,7 +102,7 @@ python scripts/diagnostics/build_graph.py           # 图构建冒烟 + 意图/�
 
 # 一键部署（§12 M6，两种模式；推荐用跨平台 Python 脚本，Windows/Linux/macOS 通用）
 python doc/docker/deploy.py lite          # Lite 模式（SQLite+Kùzu+Qdrant 文件嵌入，零外部依赖）
-python doc/docker/deploy.py enterprise    # 企业级模式（PG+Milvus+Neo4j 每库一容器 + 前后端）
+python doc/docker/deploy.py enterprise    # 企业级模式（PostgreSQL+Milvus+Neo4j 每库一容器 + 前后端）
 python doc/docker/deploy.py status        # 查看运行状态
 python doc/docker/deploy.py down          # 停止两种模式
 # 手动方式（等价的底层命令）：
@@ -98,7 +110,7 @@ cp doc/docker/.env.example doc/docker/.env        # 填 DEEPSEEK_API_KEY 等
 docker compose -f doc/docker/lite/docker-compose.yml up -d --build
 # 测试联调可叠加 dev override（复用本机 backend/data 数据）：
 #   docker compose -f doc/docker/lite/docker-compose.yml -f doc/docker/lite/docker-compose.dev.yml up -d --build
-# 企业级：PG + Milvus + Neo4j 每库一个容器 + 前后端（三库参数均在 doc/docker/.env 自定义）
+# 企业级：PostgreSQL + Milvus + Neo4j 每库一个容器 + 前后端（三库参数均在 doc/docker/.env 自定义）
 docker compose -f doc/docker/docker-compose.yml up -d --build
 # 访问 http://localhost:8080（端口由 .env 的 FRONTEND_PORT 控制）
 
@@ -115,7 +127,7 @@ python doc/docker/build_release.py enterprise  # 企业级前后端镜像包
 1. **分层依赖**：`api → services → repositories + rag → core/clients`；禁止反向依赖与循环导入（import-linter 把关）；`schemas`（API DTO）/ `db/models`（ORM）/ `rag/state`（Agent State）三套模型互不混用
 2. **单 worker**：部署必须 `uvicorn --workers 1`（本地模型只加载一份，防止内存/显存翻倍）
 3. **数据源只读**：`data/HowToCook-1.6.0/` 只读，任何修正走 `overrides.json`，不直接改原始 md
-4. **SQLite 是唯一业务真源**：Neo4j/Qdrant 均可由 ETL 幂等重建；表结构变更必须走 alembic 迁移
+4. **关系型库是唯一业务真源**（默认 SQLite，可换 PostgreSQL）：Neo4j/Qdrant 均可由 ETL 幂等重建；表结构变更必须走 alembic 迁移
 5. **Cypher 不自由生成**：图查询只用预置模板 + 参数填充（§6.5 T1~T4），禁止 LLM 直接写 Cypher
 6. **密钥不进版本库**：所有配置走 `.env`（由 `.env.example` 手动复制）；生产必须改 Neo4j 默认密码
 7. **流式协议**：AI 回答必须走 SSE（§9.1 事件顺序 `status → sources → tool → text → plan → done`），请求带 `message_id`（幂等）、响应带 `trace_id`
